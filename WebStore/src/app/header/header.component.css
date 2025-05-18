@@ -1,0 +1,57 @@
+/* Grundlegende Styles für den Header */
+:host {
+    display: block;
+    width: 100%;
+    background-color: aliceblue;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Logo-Bereich */
+#Logo {
+    float: left;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Navigationsmenü */
+#Nav-Menu {
+    display: inline-block;
+    margin: 0 40px;
+    vertical-align: middle;
+}
+
+/* Aktionen (z.B. Warenkorb, Login) */
+#Action-Menu {
+    float: right;
+    padding: 10px 20px;
+}
+
+/* Konzept-Phase: Jedes div als Viereck sichtbar machen */
+#Logo, #Nav-Menu, #Action-Menu {
+    min-width: 120px;
+    min-height: 80px;
+    margin: 10px;
+    border: 2px dashed #0074D9;
+    background: #e3e3e3;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    line-height: 80px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Responsive Anpassung */
+@media (max-width: 768px) {
+    #Logo, #Action-Menu {
+        float: none;
+        display: block;
+        text-align: center;
+    }
+    #Nav-Menu {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+    }
+}
