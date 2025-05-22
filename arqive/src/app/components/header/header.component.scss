@@ -14,13 +14,15 @@
 }
 
 .logo h1 {
-    font-size: 48px;
-    font-family: Michroma;
-    font-weight: 600;
-    font-weight: bold;
-    letter-spacing: 25%;
-    text-align: center;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    font-family: 'Michroma', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #000000;
+
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  margin: 0;
+  display: inline-block;
 }
 
 .menu p {
