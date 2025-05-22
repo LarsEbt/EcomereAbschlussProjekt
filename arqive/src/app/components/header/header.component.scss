@@ -2,15 +2,55 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   background-color: #f8f9fa;
-  height: 164px;
+  height: 120px;
+  min-height: 120px;
+  max-height: 120px;
+  width: 100vw;         // volle Bildschirmbreite
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;           // kein Innenabstand
 }
 
-.h1 {
-  font-size: 48px;
+.logo h1 {
+    font-size: 48px;
     font-family: Michroma;
-    font-weight: 400;
+    font-weight: 600;
+    font-weight: bold;
     letter-spacing: 25%;
     text-align: center;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.menu p {
+  font-size: 24px;
+    font-family: Inter;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: 0%;
+}
+.menu {
+    display: flex;
+  align-items: center;
+  padding: 0;
+  margin-left: 80px;
+  border: 0;
+  width: auto;
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.icons {
+  display: flex;
+  gap: 32px; // Abstand zwischen den Icons
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin-right: 80px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
 }
