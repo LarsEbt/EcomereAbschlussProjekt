@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f8f9fa;
+  background-color: white;
   height: 120px;
   min-height: 120px;
   max-height: 120px;
@@ -13,7 +13,7 @@
   padding: 0;           // kein Innenabstand
 }
 
-.logo h1 {
+.logo h1{
     font-family: 'Michroma', sans-serif;
   font-size: 48px;
   font-weight: 700;
