@@ -1,9 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 body {
   margin: 0;
   padding: 0;
+}
+
+.page-background {
+  background-color: #eeeeee;
+  padding: 0 1rem;
+}
+
+.page-wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  background-color: white; /* optional – falls du weißen Inhalt willst */
+  padding: 0 2rem; /* innerer Abstand im Inhalt */
 }

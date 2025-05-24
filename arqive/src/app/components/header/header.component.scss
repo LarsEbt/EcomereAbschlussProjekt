@@ -6,15 +6,15 @@
   height: 120px;
   min-height: 120px;
   max-height: 120px;
-  width: 100vw;         // volle Bildschirmbreite
+  width: 100%; // volle Bildschirmbreite
   box-sizing: border-box;
   overflow: hidden;
   margin: 0;
-  padding: 0;           // kein Innenabstand
+  padding: 0; // kein Innenabstand
 }
 
-.logo h1{
-    font-family: 'Michroma', sans-serif;
+.logo h1 {
+  font-family: "Michroma", sans-serif;
   font-size: 48px;
   font-weight: 700;
   color: #000000;
@@ -27,13 +27,13 @@
 
 .menu p {
   font-size: 24px;
-    font-family: Inter;
-    font-weight: 500;
-    line-height: 150%;
-    letter-spacing: 0%;
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0%;
 }
 .menu {
-    display: flex;
+  display: flex;
   align-items: center;
   padding: 0;
   margin-left: 80px;

@@ -26,8 +26,8 @@ p {
   color: #828282;
 }
 
-#head{
-    font-size: 48px;
+#head {
+  font-size: 48px;
 }
 
 ul {
@@ -79,91 +79,136 @@ ul {
   margin-top: 2px;
 }
 
-.cardImg {
-  width: 405px;
-  height: 405px;
+.cardImg img {
+  width: 100%;
+  height: 100%;
 }
 
 #ul1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1rem;
   list-style: none;
 }
-.cardText h3{
-    margin-bottom: 0px;
+.cardText h3 {
+  margin-bottom: 0px;
 }
-.cardText p{
-    margin-top: 0px;
-   
-}
-
-
-
-#div3{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 80px;
-}
-#card-left{
-    margin-right: 50px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+.cardText p {
+  margin-top: 0px;
 }
 
-#div3 h1{
-    font-size: 48px;
-    margin-top: 0px;
-    font-weight: 600;
+#div3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 80px;
+}
+#card-left {
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-#div3 h3{
-    margin-bottom: 0px;
-}
-#div3 p{
-    margin-top: 0px;
-}
-#buttons{
-    margin-top: auto;
-    max-width: 440px;
-    max-height: 60px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    column-gap: 16px;
-    
-    
-}
-#bOne{
-    background-color: #000;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    
-}
-#bTwo{
-    background-color: #E6E6E6;
-    color: #000;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+#div3 h1 {
+  font-size: 48px;
+  margin-top: 0px;
+  font-weight: 600;
 }
 
+#div3 h3 {
+  margin-bottom: 0px;
+}
+#div3 p {
+  margin-top: 0px;
+}
+#buttons {
+  margin-top: auto;
+  max-width: 440px;
+  max-height: 60px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 16px;
+}
+#bOne {
+  background-color: #000;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#bTwo {
+  background-color: #e6e6e6;
+  color: #000;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+#card-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
+#kunden {
+  margin-top: 100px;
+  max-width: 100%;
+  max-height: 270px;
+}
+#kunden h1 {
+  font-size: 48px;
+}
 
+#kunden p {
+  font-size: 24px;
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0%;
+  color: black;
+}
 
+#ul2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  list-style: none;
+}
+.cardKunde {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+  padding: 2%;
+
+  border: #e6e6e6 solid 1px;
+  border-radius: 12px;
+}
+.kunde {
+  margin-top: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  gap: 16px;
+  margin-top: auto;
+}
 
 #div4 {
-  margin-top: 4rem;
+  margin-top: 200px;
   text-align: center;
+
+  //background-color:#eeeeee;
+  //margin-right: 0;
+  //margin-left: 0;
 }
 
 #div4 button {
