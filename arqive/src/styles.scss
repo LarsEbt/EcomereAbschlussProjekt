@@ -9,12 +9,12 @@ body {
 
 .page-background {
   background-color: #eeeeee;
-  padding: 0 1rem;
+  padding: 0; // 🔧 kein Padding mehr – zerstört Layout!
 }
 
 .page-wrapper {
   max-width: 1440px;
   margin: 0 auto;
-  background-color: white; /* optional – falls du weißen Inhalt willst */
-  padding: 0 2rem; /* innerer Abstand im Inhalt */
+  background-color: white;
+ 
 }

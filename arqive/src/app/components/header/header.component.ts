@@ -1,12 +1,23 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  dropdownOffen = false;
+  isOverlay = false;
 
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter((event: any) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.isOverlay = event.url.includes('/product-browser');
+      });
+  }
 }
