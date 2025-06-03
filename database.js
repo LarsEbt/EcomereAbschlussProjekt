@@ -33,7 +33,7 @@ async function addProduct(product) {
 async function main() {
   try {
     // Neues Produkt hinzufügen
-    const newProduct = { name: 'Testprodukt', description: 'Dies ist ein Testprodukt.', price: 19.99};
+    const newProduct = { name: 'Testprodukt',description: 'Dies ist ein Testprodukt.', price: 19.99};
     const newProductId = await addProduct(newProduct);
     console.log(`Neues Produkt eingefügt mit ID: ${newProductId}`);
 
