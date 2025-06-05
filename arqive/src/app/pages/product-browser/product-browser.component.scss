@@ -19,14 +19,33 @@
 }
 
 .banner-text {
+  font-size: 24px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
-  font-family: Michroma, sans-serif;
   text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+  
+}
+.banner-text h1 {
+  font-size: 48px;
+  font-family: Michroma;
+  font-weight: 600;
+  letter-spacing: 25%;
+  text-align: center;
+  margin: 0;
+}
+.banner-text a{
+  text-decoration: none;
+  color: white;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+.banner-text p{
+  margin: 0;
+  font-weight: 300;
 }
 
 .shop-page {
@@ -41,15 +60,15 @@
   font-family: Inter, sans-serif;
 }
 
-.filter{
+.filter {
   width: 100%;
   height: 178px;
   background-color: antiquewhite;
 }
 
-.handtaschen h1{
-    font-size: 48px;
-    margin-top: 0;  
+.handtaschen h1 {
+  font-size: 48px;
+  margin-top: 0;
 }
 
 .showList h3 {
@@ -57,10 +76,9 @@
   margin-bottom: 0;
 }
 
-.showList p{
+.showList p {
   margin: 0;
 }
-
 
 .showList {
   padding: 0;
@@ -84,18 +102,18 @@
 
 .image-wrapper {
   flex: 1;
-  overflow:inherit;
+  overflow: inherit;
   box-sizing: border-box;
 }
 
 .image-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  border: 1px solid #ccc; /* optional: Rahmen um das Bild */
+  object-fit:contain;
+  border: 1px solid #ededed; /* optional: Rahmen um das Bild */
   border-radius: 8px; /* optional: abgerundete Ecken */
   box-sizing: border-box;
-  
+  margin-bottom: 10px;
 }
 
 // Grid-Zuweisung
@@ -111,8 +129,7 @@
   grid-area: item3;
 }
 
-
-.NormalProductList{
+.NormalProductList {
   width: 100%;
   padding: 0;
   display: grid;
@@ -124,6 +141,6 @@
   margin-top: 5px;
   margin-bottom: 0;
 }
-.NormalProductList p{
+.NormalProductList p {
   margin: 0;
 }
