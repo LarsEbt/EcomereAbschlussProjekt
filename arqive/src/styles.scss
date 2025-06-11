@@ -8,8 +8,6 @@ body {
   font-family: Inter, sans-serif;
 }
 
-
-
 .page-background {
   background-color: #eeeeee;
   padding: 0;
@@ -17,8 +15,7 @@ body {
 }
 
 .page-wrapper {
-  max-width: 1440px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   background-color: white;
- 
 }
