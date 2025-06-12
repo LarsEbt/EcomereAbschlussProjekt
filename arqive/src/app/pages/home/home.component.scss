@@ -1,5 +1,5 @@
 .homepage {
-  margin: 0 80px;
+  margin-top: 100px;
 }
 
 h1 {
@@ -40,7 +40,7 @@ ul {
   list-style: none;
 }
 
-#div1 h1{
+#div1 h1 {
   margin-top: 0px;
 }
 
@@ -64,7 +64,7 @@ ul {
 }
 
 #img1 {
-  margin-top: 66px;
+  margin-top: 50px;
   width: 100%;
   height: 640px;
   overflow: hidden;
@@ -102,15 +102,25 @@ ul {
 }
 
 #div3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between; /* Spreads items to edges */
   margin-top: 80px;
+  width: 100%;
+  position: relative; /* Make it a positioning context for absolute elements */
+  min-height: 700px; /* Ensure enough height for the container */
 }
 #card-left {
-  margin-right: 50px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 700px; /* Set explicit height for proper spacing */
+  margin-right: 0; /* Remove the right margin */
+  align-items: flex-start; /* Align children to the left */
+  max-width: 470px; /* Set a maximum width */
+}
+
+.text-box {
+  width: 100%;
+  max-width: 515px;
 }
 
 #div3 h1 {
@@ -126,12 +136,11 @@ ul {
   margin-top: 0px;
 }
 #buttons {
-  margin-top: auto;
-  max-width: 440px;
-  max-height: 60px;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  column-gap: 16px;
+  width: 440px;
+  height: 60px;
+  display: flex;
+  gap: 16px;
+  margin-top: auto; /* Push buttons to bottom of flex container */
 }
 #bOne {
   background-color: #000;
@@ -142,6 +151,9 @@ ul {
   font-size: 24px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  flex: 2; /* Takes 2/3 of the available space */
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: 280px; /* Set explicit width */
 }
 #bTwo {
   background-color: #e6e6e6;
@@ -151,9 +163,15 @@ ul {
   border-radius: 8px;
   font-size: 24px;
   cursor: pointer;
+  white-space: nowrap; /* Prevent text from wrapping */
   transition: background-color 0.3s ease;
+  flex: 1; /* Takes 1/3 of the available space */
 }
 
+#card-right {
+  height: 704px;
+  width: 706px;
+}
 #card-right img {
   width: 100%;
   height: 100%;
@@ -163,7 +181,7 @@ ul {
 #kunden {
   margin-top: 100px;
   max-width: 100%;
-  max-height: 270px;
+  /* Removed max-height restriction which might be causing layout issues */
 }
 #kunden h1 {
   font-size: 48px;
@@ -180,35 +198,51 @@ ul {
 
 #ul2 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  grid-template-columns: repeat(
+    3,
+    minmax(0, 1fr)
+  ); /* Using minmax to ensure columns don't shrink too much */
+  gap: 32px !important; /* Added !important to override any conflicting styles */
   list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Ensure full width */
 }
 .cardKunde {
   width: 100%;
-  height: 100%;
+  height: auto; /* Changed from 100% to auto to prevent layout issues */
   display: flex;
   flex-direction: column;
   align-items: left;
   text-align: left;
-  padding: 2%;
-
+  padding: 24px; /* Explicit padding in pixels instead of percentage */
+  box-sizing: border-box; /* Make sure padding is included in width calculation */
   border: #e6e6e6 solid 1px;
   border-radius: 12px;
+  margin: 0; /* Ensure no margins interfere with grid gap */
 }
 .kunde {
-  margin-top: 0px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  text-align: left;
-  gap: 16px;
   margin-top: auto;
+  display: flex; /* Changed from grid to flex for simpler layout */
+  align-items: center;
+  gap: 16px;
+}
+
+.kunde img {
+  width: 48px; /* Set explicit width for the avatar */
+  height: 48px; /* Set explicit height for the avatar */
+  border-radius: 50%; /* Optional: makes the avatar round */
+}
+
+.kunde h3 {
+  margin: 0; /* Remove default margins */
 }
 
 #div4 {
   margin-top: 200px;
   text-align: center;
+  width: 100% !important; // trying to fix the width issue
+  margin: 0 !important;
 
   //background-color:#eeeeee;
   //margin-right: 0;

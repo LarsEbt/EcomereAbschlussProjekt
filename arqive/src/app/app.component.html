@@ -1,21 +1,17 @@
-<div class="page-background">
+<!-- Zentriert den Header -->
+<div class="page-wrapper">
+  <app-header></app-header>
+</div>
 
-  <!-- Zentriert den Header -->
-  <div class="page-wrapper">
-    <app-header></app-header>
+<!-- Optionales Bild, nimmt volle Breite -->
+<ng-container *ngIf="isShopPage">
+  <div class="banner-wrapper">
+    <img src="Headerwithimage.png" class="shop-banner" />
   </div>
+</ng-container>
 
-  <!-- Optionales Bild, nimmt volle Breite -->
-  <ng-container *ngIf="isShopPage">
-    <div class="banner-wrapper">
-      <img src="Headerwithimage.png" class="shop-banner" />
-    </div>
-  </ng-container>
-
-  <!-- Hauptinhalt + Footer -->
-  <div class="page-wrapper">
-    <router-outlet></router-outlet>
-    <app-footer></app-footer>
-  </div>
-
+<!-- Hauptinhalt + Footer -->
+<div class="page-wrapper">
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
 </div>
