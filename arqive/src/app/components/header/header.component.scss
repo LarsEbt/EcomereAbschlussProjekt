@@ -2,23 +2,33 @@
   width: 100%;
   background-color: white;
   padding: 0;
+  position: relative; /* Normale Position im Dokumentenfluss */
+  z-index: 1000; /* Header immer über allem anderen */
 
   &.overlay {
     background-color: transparent;
-    position: absolute;
+    position: absolute; /* Absolute Position für Overlay-Modus */
     top: 0;
     left: 0;
-    z-index: 100;
+    right: 0;
+    z-index: 100; /* Höher als Banner */
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      rgba(0, 0, 0, 0) 100%
+    ); /* Stärkerer und längerer Schatten-Übergang für bessere Lesbarkeit */
   }
 }
 
 .header-container {
-  margin: 0 auto;
   height: 120px;
   display: flex;
-
   justify-content: space-between;
+  padding: 0 100px; /* 100px Padding links und rechts */
+  box-sizing: border-box;
   align-items: center;
+  padding: 0 100px; /* Konsistentes Padding von 100px links und rechts */
 }
 
 .logo-hidden {
@@ -27,15 +37,22 @@
   }
 }
 
-.logo h1 {
+.logo a h1 {
   font-family: "Michroma", sans-serif;
+  font-weight: 400;
   font-size: 48px;
-  font-weight: 700;
-  color: #000000;
-  margin: 0;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-align: center;
+
+  text-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2),
+    0px -1px 1px rgba(255, 255, 255, 0.3);
+
+  /* 4) schärfere Kanten auf Webkit */
+  -webkit-font-smoothing: antialiased;
 }
 
-.logo h1 a {
+.logo a {
   color: inherit;
   text-decoration: none;
 }
@@ -52,7 +69,7 @@
   display: flex;
   align-items: center;
   padding: 0;
-  margin-left: 80px;
+
   width: auto;
   height: auto;
   flex: 0 0 auto;
@@ -73,7 +90,6 @@
   align-items: center;
   list-style: none;
   padding: 0;
-  margin-right: 80px;
 }
 
 .icon {
