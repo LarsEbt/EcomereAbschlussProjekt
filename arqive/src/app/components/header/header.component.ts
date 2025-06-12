@@ -14,6 +14,10 @@ export class HeaderComponent {
   isOverlay = false;
 
   constructor(private router: Router) {
+    // Sofort den Overlay-Status setzen
+    this.isOverlay = this.router.url.includes('/product-browser');
+
+    // Bei Routenwechseln den Overlay-Status aktualisieren
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {

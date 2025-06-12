@@ -1,63 +1,81 @@
 .shop-page {
   position: relative;
+  width: 100%; /* Nimmt 100% der Breite des Elternelements ein */
+  margin: 0; /* Kein Margin */
+  padding: 0; /* Kein Padding */
+  box-sizing: border-box; /* Größen inklusive Padding und Border berechnen */
+  overflow-x: hidden; /* Verhindert horizontale Überläufe */
+}
+
+.banner-container {
+  position: relative;
+  width: 100vw; /* Volle Viewport-Breite */
+  margin-left: calc(
+    -50vw + 50%
+  ); /* Zentriert das Element und dehnt es auf volle Breite aus */
+  padding: 0;
+  overflow: hidden; /* Verhindert Überläufe */
+}
+
+.banner-wrapper {
+  position: relative;
+  width: 100%; /* Volle Breite des Containers */
+  padding: 0;
+  //text-align: center; /* Zentriert das Bild */
+}
+
+.image-container {
   width: 100%;
+  line-height: 0; /* Verhindert unerwünschte Abstände */
 }
 
 .shop-banner {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center; /* optional: Fokus oben */
-  display: block;
+  width: 100%; /* Nutzt die volle Breite */
+  height: auto; /* Automatische Höhe behält das Seitenverhältnis bei */
+  display: block; /* Verhindert Leerräume unter dem Bild */
+  margin: 0; /* Keine Margins */
 }
 
-.shop-banner {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.banner-text {
-  font-size: 24px;
+.banner-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
-  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
-  
-}
-.banner-text h1 {
-  font-size: 48px;
-  font-family: Michroma;
-  font-weight: 600;
-  letter-spacing: 25%;
-  text-align: center;
-  margin: 0;
-}
-.banner-text a{
-  text-decoration: none;
-  color: white;
-  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
-}
-
-.banner-text p{
-  margin: 0;
-  font-weight: 300;
-}
-
-.shop-page {
-  position: relative;
+  z-index: 20;
   width: 100%;
-  /* kein padding-top */
+  padding: 0 100px; /* Behält die 100px Seitenabstände bei */
+
+  h1 {
+    font-family: "Michroma", sans-serif;
+    font-weight: 400;
+    font-size: 64px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.7); /* Stärkerer Schatten */
+  }
+
+  p {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.7); /* Stärkerer Schatten */
+  }
 }
 
 .shop-content {
-  margin-right: 20px;
-  margin-left: 20px;
+  width: 100%; /* Volle Breite */
+  max-width: 1600px; /* Maximale Breite für große Displays */
+  padding: 0 100px; /* 100px Padding links und rechts */
+  margin: 0 auto; /* Zentriert den Inhalt */
+  margin-top: 50px; /* Abstand zum Banner */
   font-family: Inter, sans-serif;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  background-color: white; /* Weißer Hintergrund für den Inhalt */
 }
 
 .filter {
@@ -109,7 +127,7 @@
 .image-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit:contain;
+  object-fit: contain;
   border: 1px solid #ededed; /* optional: Rahmen um das Bild */
   border-radius: 8px; /* optional: abgerundete Ecken */
   box-sizing: border-box;
@@ -143,4 +161,42 @@
 }
 .NormalProductList p {
   margin: 0;
+}
+
+.details {
+  width: 100%;
+  max-width: 1600px;
+  padding: 0 100px;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-family: Inter, sans-serif;
+  box-sizing: border-box;
+}
+
+.details h1 {
+  font-size: 48px;
+  margin-top: 0;
+}
+
+.detailsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+  padding: 0;
+}
+
+.detailsListItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.detailsListItem h3 {
+  margin-bottom: 0;
+}
+
+.detailsListItem p {
+  margin-top: 8px;
 }

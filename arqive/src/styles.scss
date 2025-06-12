@@ -3,19 +3,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 body {
-  margin: 0 100px;
+  margin: 0;
   padding: 0;
   font-family: Inter, sans-serif;
+  overflow-x: hidden; /* Verhindert horizontales Scrollen */
+  width: 100%; /* Stellt sicher, dass der Body die volle Breite einnimmt */
 }
+
+/* Wir verwenden jetzt .content-wrapper in app.component.scss für den 100px Abstand */
 
 .page-background {
   background-color: #eeeeee;
   padding: 0;
-  font-family: Inter, sans-serif; // 🔧 kein Padding mehr – zerstört Layout!
+  font-family: Inter, sans-serif;
 }
 
 .page-wrapper {
   width: 100%;
   margin: 0;
   background-color: white;
+}
+
+/* Full-Width-Elemente überschreiben den Standardabstand */
+.full-width {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }

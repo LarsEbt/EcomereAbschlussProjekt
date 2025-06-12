@@ -1,5 +1,8 @@
 .homepage {
   margin-top: 100px;
+  padding: 0 100px; /* 100px Padding links und rechts für konsistenten Abstand */
+  box-sizing: border-box;
+  width: 100%; /* Volle Breite mit Padding innerhalb */
 }
 
 h1 {
@@ -46,7 +49,7 @@ ul {
 
 #div1 {
   max-width: 980px;
-  min-width: 980px;
+  width: 100%; /* Anstatt min-width, besser responsive */
 }
 
 #div1 button {
@@ -65,7 +68,7 @@ ul {
 
 #img1 {
   margin-top: 50px;
-  width: 100%;
+  width: 100%; /* Nimmt die volle verfügbare Breite ein (mit Respekt zum Padding der Homepage) */
   height: 640px;
   overflow: hidden;
   position: relative;
@@ -108,6 +111,7 @@ ul {
   width: 100%;
   position: relative; /* Make it a positioning context for absolute elements */
   min-height: 700px; /* Ensure enough height for the container */
+  gap: 30px; /* Gap zwischen den Elementen */
 }
 #card-left {
   display: flex;
@@ -136,7 +140,8 @@ ul {
   margin-top: 0px;
 }
 #buttons {
-  width: 440px;
+  width: 100%; /* Responsive statt feste Breite */
+  max-width: 440px;
   height: 60px;
   display: flex;
   gap: 16px;
@@ -153,7 +158,7 @@ ul {
   transition: background-color 0.3s ease;
   flex: 2; /* Takes 2/3 of the available space */
   white-space: nowrap; /* Prevent text from wrapping */
-  width: 280px; /* Set explicit width */
+  /* Keine explizite Breite, um flexibles Layout zu ermöglichen */
 }
 #bTwo {
   background-color: #e6e6e6;
@@ -170,7 +175,8 @@ ul {
 
 #card-right {
   height: 704px;
-  width: 706px;
+  width: 100%; /* Statt fester Breite, responsives Layout */
+  max-width: 706px; /* Maximale Breite beibehalten */
 }
 #card-right img {
   width: 100%;
@@ -180,8 +186,8 @@ ul {
 
 #kunden {
   margin-top: 100px;
+  width: 100%;
   max-width: 100%;
-  /* Removed max-height restriction which might be causing layout issues */
 }
 #kunden h1 {
   font-size: 48px;
@@ -202,7 +208,7 @@ ul {
     3,
     minmax(0, 1fr)
   ); /* Using minmax to ensure columns don't shrink too much */
-  gap: 32px !important; /* Added !important to override any conflicting styles */
+  gap: 32px; /* Entfernt !important */
   list-style: none;
   margin: 0;
   padding: 0;
@@ -239,23 +245,46 @@ ul {
 }
 
 #div4 {
-  margin-top: 200px;
-  text-align: center;
-  width: 100% !important; // trying to fix the width issue
-  margin: 0 !important;
+  margin-top: 100px;
+  width: 100vw;
+  height: 240px;
+  background-color: #e6e6e6;
+  margin-left: -100px; /* Offset the homepage padding */
+  margin-right: -100px; /* Offset the homepage padding */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  //background-color:#eeeeee;
-  //margin-right: 0;
-  //margin-left: 0;
+.div4-content {
+  width: calc(100% - 200px); /* Account for the 100px padding on each side */
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-section {
+  text-align: left;
+}
+
+.text-section h1 {
+  margin: 0;
+}
+
+.buttons-section {
+  display: flex;
+  gap: 16px;
 }
 
 #div4 button {
-  margin: 1rem;
-  padding: 1rem 2rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1.2rem;
   background-color: black;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  white-space: nowrap;
 }

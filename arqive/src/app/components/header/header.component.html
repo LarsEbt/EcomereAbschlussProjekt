@@ -1,7 +1,7 @@
 <div class="header-outer" [class.overlay]="isOverlay">
   <div class="header-container" [class.logo-hidden]="isOverlay">
     <div class="menu" [class.white]="isOverlay">
-      <img src="Home.png" alt="" />
+      <a routerLink="/"><img src="Home.png" alt="" /></a>
     </div>
 
     <div class="logo" [class.hidden]="isOverlay">
@@ -12,13 +12,15 @@
 
     <div class="icons" [class.white]="isOverlay">
       <li class="icon">
-        <img src="/star.png" alt="Star" width="48" height="48" />
+        <a href=""><img src="/star.png" alt="Star" width="48" height="48" /></a>
       </li>
       <li class="icon">
-        <img src="/user.png" alt="User" width="48" height="48" />
+        <a href=""><img src="/user.png" alt="User" width="48" height="48" /></a>
       </li>
       <li class="icon">
-        <img src="/warenkorb.png" alt="Warenkorb" width="48" height="48" />
+        <a routerLink="/basket"
+          ><img src="/warenkorb.png" alt="Warenkorb" width="48" height="48"
+        /></a>
       </li>
     </div>
   </div>

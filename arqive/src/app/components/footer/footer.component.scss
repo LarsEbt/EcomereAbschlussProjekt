@@ -2,14 +2,20 @@
   border: none;
   height: 1px;
   background-color: #ccc; /* oder #000 für schwarz */
-  margin: 64px 5% 2rem; /* Abstand oben, links/rechts + nach unten */
+  margin: 64px 0 2rem; /* Abstand oben und unten, kein seitlicher Abstand */
+  width: 100vw; /* Volle Viewport-Breite */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 #footer {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 2rem 5%;
+  padding: 2rem 100px; /* Konsistente 100px Padding links und rechts */
   background-color: white;
   flex-wrap: wrap;
 }

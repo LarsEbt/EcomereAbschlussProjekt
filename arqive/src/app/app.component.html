@@ -1,17 +1,8 @@
-<!-- Zentriert den Header -->
-<div class="page-wrapper">
-  <app-header></app-header>
-</div>
+<!-- Header - immer sichtbar -->
+<app-header></app-header>
 
-<!-- Optionales Bild, nimmt volle Breite -->
-<ng-container *ngIf="isShopPage">
-  <div class="banner-wrapper">
-    <img src="Headerwithimage.png" class="shop-banner" />
-  </div>
-</ng-container>
+<!-- Hauptinhalt mit Router - kein Wrapper für spezielle Full-Width Seiten wie product-browser -->
+<router-outlet></router-outlet>
 
-<!-- Hauptinhalt + Footer -->
-<div class="page-wrapper">
-  <router-outlet></router-outlet>
-  <app-footer></app-footer>
-</div>
+<!-- Footer -->
+<app-footer></app-footer>
