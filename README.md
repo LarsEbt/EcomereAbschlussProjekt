@@ -100,11 +100,53 @@ Alternativ kannst du die Server in separaten Terminals in der richtigen Reihenfo
 
 ## Datenbankeinrichtung (optional)
 
-Das Projekt läuft standardmäßig mit simulierten Daten. Wenn du eine MySQL-Datenbank einrichten möchtest:
+Das Projekt kann entweder mit einer MySQL-Datenbank oder mit simulierten Daten laufen. Bei weniger als 12 Produkten in der Datenbank werden automatisch simulierte Produkte hinzugefügt.
 
-1. MySQL installieren und starten
-2. Datenbankschema importieren:
+### Einrichtung der MySQL-Datenbank:
+
+1. **MySQL installieren** (falls noch nicht vorhanden):
+
    ```
-   mysql -u root -p < schema.sql
+   sudo apt-get update && sudo apt-get install -y mysql-server
    ```
-3. `.env`-Datei basierend auf `.env.example` erstellen und Datenbankeinstellungen anpassen
+
+2. **MySQL starten und sichern**:
+
+   ```
+   sudo service mysql start
+   sudo mysql_secure_installation
+   ```
+
+3. **Datenbankschema und Beispieldaten importieren**:
+
+   ```
+   sudo mysql < schema.sql
+   ```
+
+4. **MySQL-Benutzer für die Anwendung einrichten**:
+
+   ```
+   sudo mysql -e "CREATE USER IF NOT EXISTS 'app'@'localhost' IDENTIFIED BY 'app'; GRANT ALL PRIVILEGES ON ECOMERCE.* TO 'app'@'localhost'; FLUSH PRIVILEGES;"
+   ```
+
+5. **Datenbankeinstellungen in der `.env`-Datei konfigurieren**:
+
+   ```
+   # Datenbank-Konfiguration
+   MYSQL_HOST=localhost
+   MYSQL_USER=app
+   MYSQL_PASSWORD=app
+   MYSQL_DATABASE=ECOMERCE
+   ```
+
+6. **Überprüfen, ob die Daten importiert wurden**:
+
+   ```
+   sudo mysql -e "USE ECOMERCE; SELECT COUNT(*) AS 'Anzahl Produkte' FROM products;"
+   ```
+
+   Sollte eine Anzahl größer als 0 zurückgeben.
+
+### Verwendung mit simulierten Daten:
+
+Wenn keine Datenbankverbindung hergestellt werden kann oder die Datenbank weniger als 12 Produkte enthält, verwendet das System automatisch simulierte Daten oder füllt die vorhandenen Daten auf.

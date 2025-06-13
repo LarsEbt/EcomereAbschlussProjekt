@@ -49,94 +49,6 @@ const simulatedProducts = [
     size: null,
     color: 'Gelb',
     stock: 20
-  },
-  {
-    id: 1005,
-    name: 'Silber-Kette',
-    description: 'Filigrane Silberkette mit Anhänger.',
-    price: 49.99,
-    imageUrl: 'placeholder3.jpg',
-    category: 'schmuck',
-    size: null,
-    color: 'Weiß',
-    stock: 25
-  },
-  {
-    id: 1006,
-    name: 'Designer-Uhr',
-    description: 'Hochwertige Designer-Uhr im modernen Look.',
-    price: 299.99,
-    imageUrl: 'placeholder3.jpg',
-    category: 'accessoires',
-    size: null,
-    color: 'Schwarz',
-    stock: 5
-  },
-  {
-    id: 1007,
-    name: 'Shopper Tasche',
-    description: 'Große Shopper Tasche für den Alltag.',
-    price: 129.99,
-    imageUrl: 'placeholder1.jpg',
-    category: 'handtaschen',
-    size: 'Groß',
-    color: 'Blau',
-    stock: 12
-  },
-  {
-    id: 1008,
-    name: 'Mini-Rucksack',
-    description: 'Stylischer Mini-Rucksack für Damen.',
-    price: 89.99,
-    imageUrl: 'placeholder1.jpg',
-    category: 'handtaschen',
-    size: 'Klein',
-    color: 'Rot',
-    stock: 18
-  },
-  {
-    id: 1009,
-    name: 'Leder-Umhängetasche',
-    description: 'Hochwertige Umhängetasche aus echtem Leder.',
-    price: 179.99,
-    imageUrl: 'placeholder1.jpg',
-    category: 'handtaschen',
-    size: 'Mittel',
-    color: 'Braun',
-    stock: 7
-  },
-  {
-    id: 1010,
-    name: 'Vintage-Handtasche',
-    description: 'Handtasche im Vintage-Look mit goldenen Details.',
-    price: 139.99,
-    imageUrl: 'placeholder1.jpg',
-    category: 'handtaschen',
-    size: 'Mittel',
-    color: 'Schwarz',
-    stock: 9
-  },
-  {
-    id: 1011,
-    name: 'Sommer-Strandtasche',
-    description: 'Große Strandtasche für den Sommerurlaub.',
-    price: 69.99,
-    imageUrl: 'placeholder1.jpg',
-    category: 'handtaschen',
-    size: 'Groß',
-    color: 'Blau',
-    stock: 22
-  },
-  {
-    id: 1012,
-    name: 'Party-Clutch',
-    description: 'Glitzernde Clutch für Partys und Events.',
-    price: 59.99,
-    imageUrl: 'placeholder1.jpg',
-    category: 'handtaschen',
-    size: 'Klein',
-    color: 'Schwarz',
-    stock: 15
   }
 ];
 
@@ -179,86 +91,172 @@ try {
       return true;
     }
   };
-}
-
-// Wenn wir eine Datenbankverbindung haben, erweitern wir die Methoden um simulierte Daten aufzufüllen
-if (databaseConnected) {
-  // Original-Methoden speichern
-  const originalGetProducts = db.getProducts;
-  const originalGetProductsByCategory = db.getProductsByCategory;
-  
-  // Überschreiben der getProducts-Methode, um ggf. simulierte Daten hinzuzufügen
-  db.getProducts = async () => {
-    const dbProducts = await originalGetProducts();
-    console.log(`${dbProducts.length} Produkte aus der Datenbank geladen`);
-    
-    // Wenn weniger als 12 Produkte, fülle mit simulierten Daten auf
-    if (dbProducts.length < 12) {
-      console.log(`Füge ${12 - dbProducts.length} simulierte Produkte hinzu`);
-      
-      // Simulierte Produkte hinzufügen, aber nur so viele wie nötig
-      const productsToAdd = simulatedProducts.slice(0, 12 - dbProducts.length);
-      
-      // IDs der DB-Produkte extrahieren, um Konflikte zu vermeiden
-      const dbIds = dbProducts.map(p => p.id);
-      
-      // Simulierte Produkte mit garantiert eindeutigen IDs hinzufügen
-      const combinedProducts = [
-        ...dbProducts,
-        ...productsToAdd.map(p => {
-          // Stelle sicher, dass die simulierte ID nicht mit einer DB-ID kollidiert
-          if (dbIds.includes(p.id)) {
-            return { ...p, id: p.id + 10000 }; // Füge 10000 hinzu, um Konflikte zu vermeiden
-          }
-          return p;
-        })
-      ];
-      
-      return combinedProducts;
+      return true;
     }
-    
-    return dbProducts;
-  };
-  
-  // Überschreiben der getProductsByCategory-Methode, um ggf. simulierte Daten hinzuzufügen
-  db.getProductsByCategory = async (category) => {
-    const dbProducts = await originalGetProductsByCategory(category);
-    console.log(`${dbProducts.length} Produkte der Kategorie '${category}' aus der Datenbank geladen`);
-    
-    // Wenn weniger als 4 Produkte in dieser Kategorie, fülle mit simulierten Daten auf
-    if (dbProducts.length < 4) {
-      console.log(`Füge simulierte Produkte zur Kategorie '${category}' hinzu`);
-      
-      // Simulierte Produkte der passenden Kategorie finden
-      const categorySimProducts = simulatedProducts.filter(p => p.category === category);
-      
-      // Füge bis zu 4 Produkte hinzu (oder weniger, wenn nicht genug simulierte Produkte vorhanden sind)
-      const productsToAdd = categorySimProducts.slice(0, 4 - dbProducts.length);
-      
-      // IDs der DB-Produkte extrahieren, um Konflikte zu vermeiden
-      const dbIds = dbProducts.map(p => p.id);
-      
-      // Simulierte Produkte mit garantiert eindeutigen IDs hinzufügen
-      const combinedProducts = [
-        ...dbProducts,
-        ...productsToAdd.map(p => {
-          // Stelle sicher, dass die simulierte ID nicht mit einer DB-ID kollidiert
-          if (dbIds.includes(p.id)) {
-            return { ...p, id: p.id + 10000 }; // Füge 10000 hinzu, um Konflikte zu vermeiden
-          }
-          return p;
-        })
-      ];
-      
-      return combinedProducts;
-    }
-    
-    return dbProducts;
   };
 }
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Simulierte Produktdaten
+const simulatedProducts = [
+  {
+    id: 1,
+    name: 'Elegante Handtasche',
+    description: 'Eine elegante schwarze Handtasche für jeden Anlass.',
+    price: 149.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Mittel',
+    color: 'Schwarz',
+    stock: 10
+  },
+  {
+    id: 2,
+    name: 'Kleine Clutch',
+    description: 'Perfekte kleine Clutch für besondere Anlässe.',
+    price: 79.99,
+    imageUrl: 'placeholder2.png',
+    category: 'handtaschen',
+    size: 'Klein',
+    color: 'Weiß',
+    stock: 15
+  },
+  {
+    id: 3,
+    name: 'Business Tasche',
+    description: 'Geräumige Tasche für Business-Anlässe.',
+    price: 199.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Groß',
+    color: 'Braun',
+    stock: 8
+  },
+  {
+    id: 4,
+    name: 'Gold-Armband',
+    description: 'Elegantes Armband in Gold-Optik.',
+    price: 59.99,
+    imageUrl: 'placeholder3.jpg',
+    category: 'schmuck',
+    size: null,
+    color: 'Gelb',
+    stock: 20
+  },
+  {
+    id: 5,
+    name: 'Silber-Kette',
+    description: 'Filigrane Silberkette mit Anhänger.',
+    price: 49.99,
+    imageUrl: 'placeholder3.jpg',
+    category: 'schmuck',
+    size: null,
+    color: 'Weiß',
+    stock: 25
+  },
+  {
+    id: 6,
+    name: 'Designer-Uhr',
+    description: 'Hochwertige Designer-Uhr im modernen Look.',
+    price: 299.99,
+    imageUrl: 'placeholder3.jpg',
+    category: 'accessoires',
+    size: null,
+    color: 'Schwarz',
+    stock: 5
+  },
+  {
+    id: 7,
+    name: 'Shopper Tasche',
+    description: 'Große Shopper Tasche für den Alltag.',
+    price: 129.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Groß',
+    color: 'Blau',
+    stock: 12
+  },
+  {
+    id: 8,
+    name: 'Mini-Rucksack',
+    description: 'Stylischer Mini-Rucksack für Damen.',
+    price: 89.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Klein',
+    color: 'Rot',
+    stock: 18
+  },
+  {
+    id: 9,
+    name: 'Leder-Umhängetasche',
+    description: 'Hochwertige Umhängetasche aus echtem Leder.',
+    price: 179.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Mittel',
+    color: 'Braun',
+    stock: 7
+  },
+  {
+    id: 10,
+    name: 'Vintage-Handtasche',
+    description: 'Handtasche im Vintage-Look mit goldenen Details.',
+    price: 139.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Mittel',
+    color: 'Schwarz',
+    stock: 9
+  },
+  {
+    id: 11,
+    name: 'Sommer-Strandtasche',
+    description: 'Große Strandtasche für den Sommerurlaub.',
+    price: 69.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Groß',
+    color: 'Blau',
+    stock: 22
+  },
+  {
+    id: 12,
+    name: 'Party-Clutch',
+    description: 'Glitzernde Clutch für Partys und Events.',
+    price: 59.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Klein',
+    color: 'Schwarz',
+    stock: 15
+  },
+  // Neue Produkte
+  {
+    id: 13,
+    name: 'Luxus-Armband Gold',
+    description: 'Edles Armband aus echtem Gold mit Diamantbesatz.',
+    price: 499.99,
+    imageUrl: 'placeholder3.jpg',
+    category: 'schmuck',
+    size: null,
+    color: 'Gelb',
+    stock: 5
+  },
+  {
+    id: 14,
+    name: 'Premium Crossbody Bag',
+    description: 'Moderne Crossbody-Tasche aus veganem Leder.',
+    price: 129.99,
+    imageUrl: 'placeholder1.jpg',
+    category: 'handtaschen',
+    size: 'Klein',
+    color: 'Blau',
+    stock: 12
+  }
+];
 
 // Middleware
 app.use(cors());
