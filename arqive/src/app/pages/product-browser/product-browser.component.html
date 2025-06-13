@@ -15,7 +15,148 @@
 
   <div class="shop-content">
     <div class="filter">
-      <p>filter hier</p>
+      <div class="chekbox">
+        <p>Produkttyp</p>
+        <form class="checkbox-list">
+          <label>
+            <input
+              type="checkbox"
+              value="Handtaschen"
+              (change)="handleTypeChange($event, 'Handtaschen')"
+            />
+            Handtaschen
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Schmuck"
+              (change)="handleTypeChange($event, 'Schmuck')"
+            />
+            Schmuck
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Accessoires"
+              (change)="handleTypeChange($event, 'Accessoires')"
+            />
+            Accessoires
+          </label>
+        </form>
+      </div>
+
+      <div id="price-filter">
+        <p>Preis</p>
+        <div class="price-inputs">
+          <div class="price-input-group">
+            <span class="currency">€</span>
+            <input
+              type="number"
+              min="0"
+              max="10000"
+              [(ngModel)]="minPrice"
+              class="price-input"
+              id="minPrice"
+              placeholder="Min"
+            />
+          </div>
+          <span class="price-separator">-</span>
+          <div class="price-input-group">
+            <span class="currency">€</span>
+            <input
+              type="number"
+              min="0"
+              max="10000"
+              [(ngModel)]="maxPrice"
+              class="price-input"
+              id="maxPrice"
+              placeholder="Max"
+            />
+          </div>
+        </div>
+        <div class="price-slider">
+          <input
+            type="range"
+            min="0"
+            max="10000"
+            [(ngModel)]="minPrice"
+            step="100"
+            class="price-range min-range"
+            id="minPriceRange"
+            (change)="applyFilters()"
+          />
+          <input
+            type="range"
+            min="0"
+            max="10000"
+            [(ngModel)]="maxPrice"
+            step="100"
+            class="price-range max-range"
+            id="maxPriceRange"
+            (change)="applyFilters()"
+          />
+        </div>
+      </div>
+
+      <div class="color-checkbox">
+        <p>Farbe</p>
+        <form class="checkbox-list">
+          <label>
+            <input
+              type="checkbox"
+              value="Schwarz"
+              (change)="handleColorChange($event, 'Schwarz')"
+            />
+            Schwarz
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Weiß"
+              (change)="handleColorChange($event, 'Weiß')"
+            />
+            Weiß
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Braun"
+              (change)="handleColorChange($event, 'Braun')"
+            />
+            Braun
+          </label>
+        </form>
+      </div>
+
+      <div class="size-checkbox">
+        <p>Größe</p>
+        <form class="checkbox-list">
+          <label>
+            <input
+              type="checkbox"
+              value="Klein"
+              (change)="handleSizeChange($event, 'Klein')"
+            />
+            Klein
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Mittel"
+              (change)="handleSizeChange($event, 'Mittel')"
+            />
+            Mittel
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Groß"
+              (change)="handleSizeChange($event, 'Groß')"
+            />
+            Groß
+          </label>
+        </form>
+      </div>
     </div>
 
     <div class="handtaschen">
@@ -51,58 +192,34 @@
       </ul>
 
       <ul class="NormalProductList">
-        <li class="NormalProductListItem">
+        <!-- Platzhalter-Produkte, die später dynamisch mit TypeScript gefüllt werden -->
+        <!-- Mit *ngFor erstellen wir eine Schleife über unser Array von Produkten -->
+        <li
+          class="NormalProductListItem"
+          *ngFor="let product of handtaschenProducts"
+        >
           <div class="image-wrapper">
-            <img src="placeholder1.jpg" alt="bild" />
+            <img [src]="product.imageUrl" [alt]="product.name" />
           </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <h3 class="price">{{ product.price }}€</h3>
         </li>
 
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder1.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder1.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder1.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder1.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder1.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
+        <!-- Wenn noch keine Produkte geladen sind, zeigen wir Platzhalter an (werden später entfernt) -->
+        <ng-container *ngIf="handtaschenProducts.length === 0">
+          <li
+            class="NormalProductListItem"
+            *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+          >
+            <div class="image-wrapper">
+              <img src="placeholder1.jpg" alt="Platzhalter" />
+            </div>
+            <h3>Product Name</h3>
+            <p>Product Description</p>
+            <h3 class="price">10.99€</h3>
+          </li>
+        </ng-container>
       </ul>
     </div>
 
@@ -138,58 +255,33 @@
       </ul>
 
       <ul class="NormalProductList">
-        <li class="NormalProductListItem">
+        <!-- Dynamische Produktliste für Schmuck -->
+        <li
+          class="NormalProductListItem"
+          *ngFor="let product of schmuckProducts"
+        >
           <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
+            <img [src]="product.imageUrl" [alt]="product.name" />
           </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <h3 class="price">{{ product.price }}€</h3>
         </li>
 
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-
-        <li class="NormalProductListItem">
-          <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
+        <!-- Platzhalter wenn keine Produkte geladen sind -->
+        <ng-container *ngIf="schmuckProducts.length === 0">
+          <li
+            class="NormalProductListItem"
+            *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+          >
+            <div class="image-wrapper">
+              <img src="placeholder3.jpg" alt="Platzhalter" />
+            </div>
+            <h3>Product Name</h3>
+            <p>Product Description</p>
+            <h3 class="price">10.99€</h3>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>
