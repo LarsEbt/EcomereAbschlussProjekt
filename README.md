@@ -33,25 +33,42 @@ Dieses Projekt ist ein E-Commerce-Prototyp mit einer Angular-Frontend-Anwendung 
 
 ### Starten der Anwendung
 
-Du kannst beide Server (Backend und Frontend) mit einem einzigen Befehl starten:
+Du kannst beide Server (Backend und Frontend) auf verschiedene Arten starten:
+
+1. **Parallel starten** (mit concurrently):
 
 ```
 npm run dev:all
 ```
 
-Oder separat:
+2. **Sequentiell starten** (erst Backend, dann Frontend):
 
-- **Backend-Server:** `npm run dev`
-- **Frontend-Server:** `npm run frontend`
+```
+npm run start:sequential
+```
+
+3. **Separat in verschiedenen Terminals**:
+   - **Backend-Server:** `npm run dev`
+   - **Frontend-Server:** `npm run frontend`
 
 Die Anwendung ist dann verfügbar unter:
 
 - Frontend: http://localhost:4200
-- Backend-API: http://localhost:3000/api/products
+- Backend-API: http://localhost:3000/api/products (oder ein anderer Port, wenn 3000 belegt ist)
 
 ### Fehlerbehebung
 
-Wenn du eine Fehlermeldung wie `Error: listen EADDRINUSE: address already in use :::3000` siehst, bedeutet das, dass der Port 3000 bereits von einem anderen Prozess verwendet wird. Um das Problem zu beheben:
+#### Port bereits in Benutzung
+
+Wenn du eine Fehlermeldung wie `Error: listen EADDRINUSE: address already in use :::3000` siehst, bedeutet das, dass der Port 3000 bereits von einem anderen Prozess verwendet wird.
+
+Das Backend wurde jetzt so konfiguriert, dass es automatisch auf den nächsten freien Port (3001, 3002, usw.) ausweicht, wenn Port 3000 belegt ist. Du musst nichts Besonderes tun - achte einfach auf die Ausgabe im Terminal, um zu sehen, auf welchem Port der Server tatsächlich läuft.
+
+Alternativ kannst du auch alle laufenden Node-Prozesse beenden:
+
+```
+pkill -f "node server.js" && pkill -f nodemon
+```
 
 1. Beende alle laufenden Node-Prozesse:
    ```

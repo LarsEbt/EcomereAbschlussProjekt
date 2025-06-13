@@ -8,7 +8,8 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "frontend": "cd arqive && npm start",
-    "dev:all": "concurrently \"npm run dev\" \"npm run frontend\""
+    "dev:all": "concurrently \"npm run dev\" \"npm run frontend\"",
+    "start:sequential": "echo 'Starte Backend...' && npm run dev & echo 'Warte 5 Sekunden...' && sleep 5 && echo 'Starte Frontend...' && npm run frontend"
   },
   "repository": {
     "type": "git",

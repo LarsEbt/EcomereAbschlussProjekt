@@ -293,8 +293,22 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'arqive/dist/index.html'));
 });
 
-// Server starten
-app.listen(PORT, () => {
-  console.log(`Server läuft auf Port ${PORT}`);
-  console.log(`API verfügbar unter: http://localhost:${PORT}/api/products`);
-});
+// Server starten mit Fallback auf alternative Ports
+const startServer = (port) => {
+  const server = app.listen(port)
+    .on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        console.log(`Port ${port} ist bereits belegt, versuche Port ${port + 1}...`);
+        startServer(port + 1);
+      } else {
+        console.error('Server-Fehler:', err);
+      }
+    })
+    .on('listening', () => {
+      const actualPort = server.address().port;
+      console.log(`Server läuft auf Port ${actualPort}`);
+      console.log(`API verfügbar unter: http://localhost:${actualPort}/api/products`);
+    });
+};
+
+startServer(PORT);
