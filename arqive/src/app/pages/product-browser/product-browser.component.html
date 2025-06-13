@@ -15,7 +15,110 @@
 
   <div class="shop-content">
     <div class="filter">
-      <p>filter hier</p>
+      <div class="chekbox">
+        <p>Produkttyp</p>
+        <form action="/submit" method="post" class="checkbox-list">
+          <label>
+            <input type="checkbox" name="Handtaschen" id="1" />
+            Handtaschen
+          </label>
+          <label>
+            <input type="checkbox" name="Schmuck" id="2" />
+            Schmuck
+          </label>
+          <label>
+            <input type="checkbox" name="Accessoirs" id="3" />
+            Accessoires
+          </label>
+        </form>
+      </div>
+
+      <div id="price-filter">
+        <p>Preis</p>
+        <div class="price-inputs">
+          <div class="price-input-group">
+            <span class="currency">€</span>
+            <input
+              type="number"
+              min="0"
+              max="10000"
+              value="0"
+              class="price-input"
+              id="minPrice"
+              placeholder="Min"
+            />
+          </div>
+          <span class="price-separator">-</span>
+          <div class="price-input-group">
+            <span class="currency">€</span>
+            <input
+              type="number"
+              min="0"
+              max="10000"
+              value="10000"
+              class="price-input"
+              id="maxPrice"
+              placeholder="Max"
+            />
+          </div>
+        </div>
+        <div class="price-slider">
+          <input
+            type="range"
+            min="0"
+            max="10000"
+            value="0"
+            step="100"
+            class="price-range min-range"
+            id="minPriceRange"
+          />
+          <input
+            type="range"
+            min="0"
+            max="10000"
+            value="10000"
+            step="100"
+            class="price-range max-range"
+            id="maxPriceRange"
+          />
+        </div>
+      </div>
+
+      <div class="color-checkbox">
+        <p>Farbe</p>
+        <form action="/submit" method="post" class="checkbox-list">
+          <label>
+            <input type="checkbox" name="Schwarz" id="4" />
+            Schwarz
+          </label>
+          <label>
+            <input type="checkbox" name="Weiß" id="5" />
+            Weiß
+          </label>
+          <label>
+            <input type="checkbox" name="Braun" id="6" />
+            Braun
+          </label>
+        </form>
+      </div>
+
+      <div class="size-checkbox">
+        <p>Größe</p>
+        <form action="/submit" method="post" class="checkbox-list">
+          <label>
+            <input type="checkbox" name="Klein" id="7" />
+            Klein
+          </label>
+          <label>
+            <input type="checkbox" name="Mittel" id="8" />
+            Mittel
+          </label>
+          <label>
+            <input type="checkbox" name="Groß" id="9" />
+            Groß
+          </label>
+        </form>
+      </div>
     </div>
 
     <div class="handtaschen">
