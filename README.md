@@ -12,12 +12,14 @@ Dieses Projekt ist ein E-Commerce-Prototyp mit einer Angular-Frontend-Anwendung 
 ### Installation
 
 1. Repository klonen:
+
    ```
    git clone https://github.com/LarsEbt/EcomereAbschlussProjekt.git
    cd EcomereAbschlussProjekt
    ```
 
 2. Backend-Abhängigkeiten installieren:
+
    ```
    npm install
    ```
@@ -43,6 +45,7 @@ Oder separat:
 - **Frontend-Server:** `npm run frontend`
 
 Die Anwendung ist dann verfügbar unter:
+
 - Frontend: http://localhost:4200
 - Backend-API: http://localhost:3000/api/products
 
