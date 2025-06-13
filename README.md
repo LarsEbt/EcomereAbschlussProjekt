@@ -49,6 +49,24 @@ Die Anwendung ist dann verfügbar unter:
 - Frontend: http://localhost:4200
 - Backend-API: http://localhost:3000/api/products
 
+### Fehlerbehebung
+
+Wenn du eine Fehlermeldung wie `Error: listen EADDRINUSE: address already in use :::3000` siehst, bedeutet das, dass der Port 3000 bereits von einem anderen Prozess verwendet wird. Um das Problem zu beheben:
+
+1. Beende alle laufenden Node-Prozesse:
+   ```
+   pkill -f "node server.js" && pkill -f nodemon
+   ```
+2. Starte dann die Server neu:
+   ```
+   npm run dev:all
+   ```
+
+Alternativ kannst du die Server in separaten Terminals in der richtigen Reihenfolge starten:
+
+1. Zuerst den Backend-Server: `npm run dev`
+2. Dann in einem neuen Terminal den Frontend-Server: `npm run frontend`
+
 ## Funktionen
 
 - Produktkatalog mit Handtaschen und Schmuck
