@@ -9,7 +9,8 @@
     "dev": "nodemon server.js",
     "frontend": "cd arqive && npm start",
     "dev:all": "concurrently \"npm run dev\" \"npm run frontend\"",
-    "start:sequential": "echo 'Starte Backend...' && npm run dev & echo 'Warte 5 Sekunden...' && sleep 5 && echo 'Starte Frontend...' && npm run frontend"
+    "start:sequential": "powershell -Command \"Write-Host 'Starte Backend...' -ForegroundColor Green; npm run dev; Write-Host 'Warte 5 Sekunden...' -ForegroundColor Yellow; Start-Sleep -Seconds 5; Write-Host 'Starte Frontend...' -ForegroundColor Green; npm run frontend\"",
+    "start:dev": "concurrently -n \"Backend,Frontend\" -c \"green,blue\" \"npm run dev\" \"cd arqive && npm start\""
   },
   "repository": {
     "type": "git",

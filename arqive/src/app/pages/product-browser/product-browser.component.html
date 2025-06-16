@@ -157,131 +157,96 @@
           </label>
         </form>
       </div>
-    </div>
-
-    <div class="handtaschen">
+    </div>    <div class="handtaschen">
       <h1>Handtaschen</h1>
 
       <ul class="showList">
-        <li class="showListItem">
+        <!-- Die ersten 3 Handtaschen-Produkte aus der Datenbank -->
+        <li class="showListItem" *ngFor="let product of handtaschenProducts.slice(0, SHOW_LIST_COUNT)">
           <div class="image-wrapper">
-            <img src="placeholder1.jpg" alt="bild" />
+            <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name || product.Name" />
           </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
+          <h3>{{ product.Marke }}</h3>
+          <p>{{ product.name || product.Name }}</p>
+          <h3 class="price">{{ product.price }}€</h3>
         </li>
 
-        <li class="showListItem">
+        <!-- Platzhalter anzeigen, wenn weniger als 3 Produkte vorhanden sind -->
+        <li class="showListItem" *ngFor="let i of createRange(getShowListPlaceholderCount(handtaschenProducts))">
           <div class="image-wrapper">
-            <img src="placeholder2.png" alt="bild" />
+            <img src="placeholder1.jpg" alt="Platzhalter" />
           </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-
-        <li class="showListItem">
-          <div class="image-wrapper">
-            <img src="placeholder1.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
+          <h3>Marke</h3>
+          <p>Produktname</p>
+          <h3 class="price">0.00€</h3>
         </li>
       </ul>
 
       <ul class="NormalProductList">
-        <!-- Platzhalter-Produkte, die später dynamisch mit TypeScript gefüllt werden -->
-        <!-- Mit *ngFor erstellen wir eine Schleife über unser Array von Produkten -->
-        <li
-          class="NormalProductListItem"
-          *ngFor="let product of handtaschenProducts"
-        >
+        <!-- Restliche Handtaschen-Produkte (ab dem 4. Produkt) -->
+        <li class="NormalProductListItem" *ngFor="let product of handtaschenProducts.slice(SHOW_LIST_COUNT)">
           <div class="image-wrapper">
-            <img [src]="product.imageUrl" [alt]="product.name" />
+            <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name || product.Name" />
           </div>
-          <h3>{{ product.name }}</h3>
-          <p>{{ product.description }}</p>
+          <h3>{{ product.Marke }}</h3>
+          <p>{{ product.name || product.Name }}</p>
           <h3 class="price">{{ product.price }}€</h3>
         </li>
 
-        <!-- Wenn noch keine Produkte geladen sind, zeigen wir Platzhalter an (werden später entfernt) -->
-        <ng-container *ngIf="handtaschenProducts.length === 0">
-          <li
-            class="NormalProductListItem"
-            *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
-          >
-            <div class="image-wrapper">
-              <img src="placeholder1.jpg" alt="Platzhalter" />
-            </div>
-            <h3>Product Name</h3>
-            <p>Product Description</p>
-            <h3 class="price">10.99€</h3>
-          </li>
-        </ng-container>
+        <!-- Platzhalter anzeigen, wenn weniger als 12 Produkte insgesamt vorhanden sind -->
+        <li class="NormalProductListItem" *ngFor="let i of createRange(getNormalListPlaceholderCount(handtaschenProducts))">
+          <div class="image-wrapper">
+            <img src="placeholder1.jpg" alt="Platzhalter" />
+          </div>
+          <h3>Marke</h3>
+          <p>Produktname</p>
+          <h3 class="price">0.00€</h3>
+        </li>
       </ul>
-    </div>
-
-    <div class="schmuck">
+    </div>    <div class="schmuck">
       <h1>Accessoirs & Schmuck</h1>
       <ul class="showList">
-        <li class="showListItem">
+        <!-- Die ersten 3 Schmuck-Produkte aus der Datenbank -->
+        <li class="showListItem" *ngFor="let product of schmuckProducts.slice(0, SHOW_LIST_COUNT)">
           <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
+            <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name || product.Name" />
           </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
+          <h3>{{ product.Marke }}</h3>
+          <p>{{ product.name || product.Name }}</p>
+          <h3 class="price">{{ product.price }}€</h3>
         </li>
 
-        <li class="showListItem">
+        <!-- Platzhalter anzeigen, wenn weniger als 3 Produkte vorhanden sind -->
+        <li class="showListItem" *ngFor="let i of createRange(getShowListPlaceholderCount(schmuckProducts))">
           <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
+            <img src="placeholder3.jpg" alt="Platzhalter" />
           </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
-        </li>
-
-        <li class="showListItem">
-          <div class="image-wrapper">
-            <img src="placeholder3.jpg" alt="bild" />
-          </div>
-          <h3>Product Name</h3>
-          <p>Product Description</p>
-          <h3 class="price">10.99€</h3>
+          <h3>Marke</h3>
+          <p>Produktname</p>
+          <h3 class="price">0.00€</h3>
         </li>
       </ul>
 
       <ul class="NormalProductList">
-        <!-- Dynamische Produktliste für Schmuck -->
-        <li
-          class="NormalProductListItem"
-          *ngFor="let product of schmuckProducts"
-        >
+        <!-- Restliche Schmuck-Produkte (ab dem 4. Produkt) -->
+        <li class="NormalProductListItem" *ngFor="let product of schmuckProducts.slice(SHOW_LIST_COUNT)">
           <div class="image-wrapper">
-            <img [src]="product.imageUrl" [alt]="product.name" />
+            <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name || product.Name" />
           </div>
-          <h3>{{ product.name }}</h3>
-          <p>{{ product.description }}</p>
+          <h3>{{ product.Marke }}</h3>
+          <p>{{ product.name || product.Name }}</p>
           <h3 class="price">{{ product.price }}€</h3>
         </li>
 
-        <!-- Platzhalter wenn keine Produkte geladen sind -->
-        <ng-container *ngIf="schmuckProducts.length === 0">
-          <li
-            class="NormalProductListItem"
-            *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
-          >
-            <div class="image-wrapper">
-              <img src="placeholder3.jpg" alt="Platzhalter" />
-            </div>
-            <h3>Product Name</h3>
-            <p>Product Description</p>
-            <h3 class="price">10.99€</h3>
-          </li>
-        </ng-container>
+        <!-- Platzhalter anzeigen, wenn weniger als 12 Produkte insgesamt vorhanden sind -->
+        <li class="NormalProductListItem" *ngFor="let i of createRange(getNormalListPlaceholderCount(schmuckProducts))">
+          <div class="image-wrapper">
+            <img src="placeholder3.jpg" alt="Platzhalter" />
+          </div>
+          <h3>Marke</h3>
+          <p>Produktname</p>
+          <h3 class="price">0.00€</h3>
+        </li>
       </ul>
     </div>
   </div>
