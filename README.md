@@ -97,6 +97,47 @@ Alternativ kannst du die Server in separaten Terminals in der richtigen Reihenfo
 - `server.js` - Express-Backend
 - `database.js` - Datenbankverbindung
 - `schema.sql` - Datenbankschema
+- `data_insert.sql` - SQL-Skript mit Beispieldaten
+- `database_backup/` - Ordner für Datenbank-Dumps und Backups
+- `DATABASE_SETUP.md` - Detaillierte Anleitung zur Datenbankeinrichtung
+
+## Datenbank-Einrichtung
+
+Das Projekt verwendet eine MySQL-Datenbank. Folge diesen Schritten zur Einrichtung:
+
+### Kurzanleitung
+
+1. MySQL Server installieren und starten
+2. Datenbank erstellen mit `schema.sql`
+3. Testdaten importieren mit `data_insert.sql`
+4. `.env`-Datei basierend auf `.env.example` erstellen und anpassen
+
+Detaillierte Anweisungen findest du in der Datei [DATABASE_SETUP.md](DATABASE_SETUP.md).
+
+### Datenbank-Export/Import
+
+Für dieses Projekt ist bereits ein vollständiger Datenbank-Dump vorhanden:
+
+1. **Fertige Datenbank importieren**:
+   ```
+   mysql -u root -p ECOMERCE < database_backup/dump1.sql
+   ```
+   Alternativ kannst du den Dump mit MySQL Workbench importieren:
+   - Öffne MySQL Workbench
+   - Verbinde dich mit deinem MySQL-Server
+   - Wähle "Server" > "Data Import/Restore"
+   - Wähle "Import from Self-Contained File" und wähle `database_backup/dump1.sql`
+   - Wähle deine Zieldatenbank aus (ECOMERCE) oder erstelle eine neue
+   - Klicke auf "Start Import"
+
+2. **Eigenen Export erstellen** (falls notwendig):
+   ```
+   mysqldump -u root -p ECOMERCE > database_backup/db_backup_DATUM.sql
+   ```
+
+Weitere Details zu Datenbank-Exports und -Imports findest du in der README-Datei im `database_backup`-Ordner.
+
+Die Datenbankverbindung wird in der `.env`-Datei konfiguriert. Eine Beispieldatei `.env.example` liegt bei.
 
 ## Datenbankeinrichtung (optional)
 
