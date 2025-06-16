@@ -49,27 +49,3 @@ CREATE TABLE IF NOT EXISTS order_items (
     FOREIGN KEY (order_id) REFERENCES orders(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
-
--- Beispiel-Produkte einfügen
-INSERT INTO products (name, description, price, imageUrl, category, size, color, stock) VALUES
-('Elegante Handtasche', 'Eine elegante schwarze Handtasche für jeden Anlass.', 149.99, 'placeholder1.jpg', 'handtaschen', 'Mittel', 'Schwarz', 10),
-('Kleine Clutch', 'Perfekte kleine Clutch für besondere Anlässe.', 79.99, 'placeholder2.png', 'handtaschen', 'Klein', 'Weiß', 15),
-('Business Tasche', 'Geräumige Tasche für Business-Anlässe.', 199.99, 'placeholder1.jpg', 'handtaschen', 'Groß', 'Braun', 8),
-('Gold-Armband', 'Elegantes Armband in Gold-Optik.', 59.99, 'placeholder3.jpg', 'schmuck', NULL, 'Gelb', 20),
-('Silber-Kette', 'Filigrane Silberkette mit Anhänger.', 49.99, 'placeholder3.jpg', 'schmuck', NULL, 'Weiß', 25),
-('Designer-Uhr', 'Hochwertige Designer-Uhr im modernen Look.', 299.99, 'placeholder3.jpg', 'accessoires', NULL, 'Schwarz', 5);
-
--- Weitere 6 Produkte für die Handtaschen-Kategorie (um 3 Zeilen mit je 4 Spalten zu füllen)
-INSERT INTO products (name, description, price, imageUrl, category, size, color, stock) VALUES
-('Shopper Tasche', 'Große Shopper Tasche für den Alltag.', 129.99, 'placeholder1.jpg', 'handtaschen', 'Groß', 'Blau', 12),
-('Mini-Rucksack', 'Stylischer Mini-Rucksack für Damen.', 89.99, 'placeholder1.jpg', 'handtaschen', 'Klein', 'Rot', 18),
-('Leder-Umhängetasche', 'Hochwertige Umhängetasche aus echtem Leder.', 179.99, 'placeholder1.jpg', 'handtaschen', 'Mittel', 'Braun', 7),
-('Vintage-Handtasche', 'Handtasche im Vintage-Look mit goldenen Details.', 139.99, 'placeholder1.jpg', 'handtaschen', 'Mittel', 'Schwarz', 9),
-('Sommer-Strandtasche', 'Große Strandtasche für den Sommerurlaub.', 69.99, 'placeholder1.jpg', 'handtaschen', 'Groß', 'Blau', 22),
-('Party-Clutch', 'Glitzernde Clutch für Partys und Events.', 59.99, 'placeholder1.jpg', 'handtaschen', 'Klein', 'Schwarz', 15);
-
--- Neue Produkte hinzufügen
-INSERT INTO products (name, description, price, imageUrl, category, size, color, stock) VALUES
-('Luxus-Armband Gold', 'Edles Armband aus echtem Gold mit Diamantbesatz.', 499.99, 'placeholder3.jpg', 'schmuck', NULL, 'Gelb', 5),
-('Premium Crossbody Bag', 'Moderne Crossbody-Tasche aus veganem Leder.', 129.99, 'placeholder1.jpg', 'handtaschen', 'Klein', 'Blau', 12),
-('Designer-Ohrringe', 'Elegante Ohrringe mit modernem Design.', 89.99, 'placeholder3.jpg', 'schmuck', NULL, 'Weiß', 8);
