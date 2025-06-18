@@ -1,0 +1,139 @@
+#top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 100px;
+    padding: 20px;
+}
+
+.add-to-cart {
+    width: 100%;
+    /* Volle Breite innerhalb des Elternelements */
+    height: 52px;
+    background-color: #000;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    /* Verhindert Textumbruch */
+    margin-top: 20px;
+    /* Abstand nach oben */
+}
+
+.add-to-cart:hover {
+    background-color: #333;
+    /* Dunklere Farbe beim Hover */
+}
+
+.imgWrapper {
+    flex: 0 0 45%;
+    /* Bild nimmt 45% der Breite ein */
+    margin-right: 5%;
+}
+
+.imgWrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+#rechteSeite {
+    flex: 0 0 50%;
+    /* Rechte Seite nimmt 50% der Breite ein */
+}
+
+/* Styling für den unteren Bereich */
+#unten {
+    max-width: 1200px;
+    margin: 30px 100px;
+    /* Abstand oben und unten, links und rechts */
+    padding: 20px;
+}
+
+#unten h1 {
+    margin-bottom: 20px;
+}
+
+#unten ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    /* Reduzieren des Abstands zwischen den Elementen */
+    list-style: none;
+    padding: 0;
+    margin: 0 -7.5px;
+    /* Negativer Margin zum Ausgleich des Gaps */
+}
+
+#unten li {
+    flex: 0 0 calc(25% - 15px);
+    /* Anpassung für 4 Elemente pro Zeile */
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px;
+    transition: transform 0.3s ease;
+    box-sizing: border-box;
+    /* Stellt sicher, dass Padding nicht zur Breite addiert wird */
+    margin: 0 0 15px 0;
+    /* Unten etwas Abstand */
+}
+
+#unten li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#unten img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+}
+
+#unten h1 {
+    font-size: 1.2rem;
+    margin: 10px 0 5px;
+}
+
+#unten h2 {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 5px 0;
+}
+
+#unten p {
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #top {
+        flex-direction: column;
+    }
+
+    .imgWrapper,
+    #rechteSeite {
+        flex: 0 0 100%;
+        margin-right: 0;
+    }
+
+    #rechteSeite {
+        margin-top: 20px;
+    }
+
+    #unten li {
+        flex: 0 0 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    #unten li {
+        flex: 0 0 100%;
+    }
+}

@@ -23,22 +23,48 @@ export class ProductBrowserComponent implements OnInit {
   selectedSizes: string[] = [];
   selectedTypes: string[] = [];
 
-  constructor(private productService: ProductService) {}
+  // Math-Objekt für Template-Verwendung
+  Math = Math;
 
+  // Konstanten für die Anzahl der Produkte
+  readonly SHOW_LIST_COUNT = 3;
+  readonly TOTAL_PRODUCTS_PER_CATEGORY = 12;
+  
+  constructor(private productService: ProductService) {}
   ngOnInit(): void {
     // Produkte beim Initialisieren der Komponente laden
     this.loadProducts();
   }
-
   // Methode zum Laden der Produkte mit dem Service
   loadProducts(): void {
+    console.log('Starte Laden der Produkte...');
     this.productService.getProducts().subscribe({
       next: (products) => {
-        // Produkte nach Kategorie filtern
+        console.log(`${products.length} Produkte geladen, filtere nach Kategorien...`);
+        console.log('Verfügbare Kategorien:', [...new Set(products.map(p => p.category))]);
+        
+        // Debug - Ausgabe aller Produkte in der Konsole
+        console.log('Alle erhaltenen Produkte:', products);
+          // Produkte nach Kategorie filtern - unterstützt verschiedene Schreibweisen
         this.handtaschenProducts = products.filter(
-          (p) => p.category === 'handtaschen'
+          (p) => p.category && (
+            p.category.toLowerCase().trim() === 'handtasche' ||
+            p.category.toLowerCase().trim() === 'handtaschen'
+          )
         );
-        this.schmuckProducts = products.filter((p) => p.category === 'schmuck');
+        this.schmuckProducts = products.filter(
+          (p) => p.category && p.category.toLowerCase().trim() === 'schmuck'
+        );
+        
+        console.log(`Handtaschen: ${this.handtaschenProducts.length}, Schmuck: ${this.schmuckProducts.length}`);
+        
+        // Debug: Ausgabe der ersten Produkte jeder Kategorie
+        if (this.handtaschenProducts.length > 0) {
+          console.log('Erstes Handtaschen-Produkt:', this.handtaschenProducts[0]);
+        }
+        if (this.schmuckProducts.length > 0) {
+          console.log('Erstes Schmuck-Produkt:', this.schmuckProducts[0]);
+        }
       },
       error: (error) => {
         console.error('Fehler beim Laden der Produkte:', error);
@@ -47,6 +73,21 @@ export class ProductBrowserComponent implements OnInit {
         this.schmuckProducts = [];
       },
     });
+  }
+
+  // Methoden für Platzhalter-Berechnung
+  getShowListPlaceholderCount(products: Product[]): number {
+    return Math.max(0, this.SHOW_LIST_COUNT - products.length);
+  }
+
+  getNormalListPlaceholderCount(products: Product[]): number {
+    const remainingProducts = Math.max(0, products.length - this.SHOW_LIST_COUNT);
+    return Math.max(0, this.TOTAL_PRODUCTS_PER_CATEGORY - this.SHOW_LIST_COUNT - remainingProducts);
+  }
+
+  // Helper-Methode für Platzhalter-Arrays
+  createRange(count: number): number[] {
+    return Array(count).fill(0).map((_, i) => i);
   }
 
   // Handler für Typ-Änderungen
