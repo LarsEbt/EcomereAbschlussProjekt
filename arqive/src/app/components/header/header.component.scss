@@ -2,22 +2,25 @@
   width: 100%;
   background-color: white;
   padding: 0;
-  position: relative; /* Normale Position im Dokumentenfluss */
-  z-index: 1000; /* Header immer über allem anderen */
+  position: relative;
+  /* Normale Position im Dokumentenfluss */
+  z-index: 1000;
+  /* Header immer über allem anderen */
 
   &.overlay {
     background-color: transparent;
-    position: absolute; /* Absolute Position für Overlay-Modus */
+    position: absolute;
+    /* Absolute Position für Overlay-Modus */
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100; /* Höher als Banner */
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.6) 0%,
-      rgba(0, 0, 0, 0.3) 40%,
-      rgba(0, 0, 0, 0) 100%
-    ); /* Stärkerer und längerer Schatten-Übergang für bessere Lesbarkeit */
+    z-index: 100;
+    /* Höher als Banner */
+    background: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.6) 0%,
+        rgba(0, 0, 0, 0.3) 40%,
+        rgba(0, 0, 0, 0) 100%);
+    /* Stärkerer und längerer Schatten-Übergang für bessere Lesbarkeit */
   }
 }
 
@@ -25,10 +28,12 @@
   height: 120px;
   display: flex;
   justify-content: space-between;
-  padding: 0 100px; /* 100px Padding links und rechts */
+  padding: 0 100px;
+  /* 100px Padding links und rechts */
   box-sizing: border-box;
   align-items: center;
-  padding: 0 100px; /* Konsistentes Padding von 100px links und rechts */
+  padding: 0 100px;
+  /* Konsistentes Padding von 100px links und rechts */
 }
 
 .logo-hidden {
@@ -55,6 +60,16 @@
 .logo a {
   color: inherit;
   text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover h1 {
+    text-shadow: 0px 5px 8px rgba(0, 0, 0, 0.3),
+      0px -1px 1px rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.27em;
+    /* Leicht erhöhter Buchstabenabstand beim Hover */
+    transform: translateY(-2px);
+    /* Leicht nach oben bewegen für schwebendes Gefühl */
+  }
 }
 
 .white {
@@ -69,7 +84,6 @@
   display: flex;
   align-items: center;
   padding: 0;
-
   width: auto;
   height: auto;
   flex: 0 0 auto;
@@ -81,6 +95,21 @@
     line-height: 150%;
     letter-spacing: 0;
     margin: 0;
+  }
+
+  a {
+    display: inline-block;
+    transition: all 0.3s ease;
+
+    &:hover img {
+      transform: scale(1.15) translateY(-2px);
+      /* Leichte Vergrößerung und Anhebung */
+    }
+
+    &:active img {
+      transform: scale(0.95);
+      /* Beim Klicken leicht verkleinern für Feedback */
+    }
   }
 }
 
@@ -95,4 +124,39 @@
 .icon {
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
+  /* Sanfte Übergänge für alle Animationen */
+
+  a {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    img {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.15);
+      /* Icons werden beim Hover etwas größer */
+    }
+
+    /* Effekt für das Warenkorb-Icon */
+    &:hover img[alt="Warenkorb"] {
+      transform: scale(1.15) translateY(-2px);
+      /* Leicht nach oben bewegen */
+    }
+
+    /* Effekt für das Benutzer-Icon */
+    &:hover img[alt="User"] {
+      transform: scale(1.15) translateY(-2px);
+      /* Leicht nach oben bewegen */
+    }
+
+    /* Effekt für das Stern-Icon */
+    &:hover img[alt="Star"] {
+      transform: rotate(20deg) scale(1.15);
+      /* Drehung mit Skalierung */
+    }
+  }
 }
