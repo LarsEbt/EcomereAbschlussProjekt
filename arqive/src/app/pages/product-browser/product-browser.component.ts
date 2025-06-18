@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
 
-@Component({
-  selector: 'app-product-browser',
+@Component({  selector: 'app-product-browser',
   standalone: true,
   imports: [RouterLink, CommonModule, FormsModule],
   templateUrl: './product-browser.component.html',

@@ -6,14 +6,14 @@
         <!-- Bild behält natürliches Seitenverhältnis und verschiebt Inhalt nach unten -->
         <img src="Headerwithimage.png" alt="Shop Banner" class="shop-banner" />
       </div>
-      <div class="banner-overlay">
+      <div class="banner-overlay" routerLink="/">
         <h1>ARQIVE</h1>
         <p>Timeless Luxury. Crafted for the Bold.</p>
       </div>
     </div>
   </div>
 
-<a routerLink="/product-page">Product page</a>
+  <a routerLink="/product-page">Product page</a>
 
   <div class="shop-content">
     <div class="filter">
@@ -21,82 +21,39 @@
         <p>Produkttyp</p>
         <form class="checkbox-list">
           <label>
-            <input
-              type="checkbox"
-              value="Handtaschen"
-              (change)="handleTypeChange($event, 'Handtaschen')"
-            />
+            <input type="checkbox" value="Handtaschen" (change)="handleTypeChange($event, 'Handtaschen')" />
             Handtaschen
           </label>
           <label>
-            <input
-              type="checkbox"
-              value="Schmuck"
-              (change)="handleTypeChange($event, 'Schmuck')"
-            />
+            <input type="checkbox" value="Schmuck" (change)="handleTypeChange($event, 'Schmuck')" />
             Schmuck
           </label>
           <label>
-            <input
-              type="checkbox"
-              value="Accessoires"
-              (change)="handleTypeChange($event, 'Accessoires')"
-            />
+            <input type="checkbox" value="Accessoires" (change)="handleTypeChange($event, 'Accessoires')" />
             Accessoires
           </label>
         </form>
       </div>
-
       <div id="price-filter">
         <p>Preis</p>
         <div class="price-inputs">
           <div class="price-input-group">
             <span class="currency">€</span>
-            <input
-              type="number"
-              min="0"
-              max="10000"
-              [(ngModel)]="minPrice"
-              class="price-input"
-              id="minPrice"
-              placeholder="Min"
-            />
+            <input type="number" min="0" max="10000" [(ngModel)]="minPrice" class="price-input" id="minPrice"
+              placeholder="Min" />
           </div>
           <span class="price-separator">-</span>
           <div class="price-input-group">
             <span class="currency">€</span>
-            <input
-              type="number"
-              min="0"
-              max="10000"
-              [(ngModel)]="maxPrice"
-              class="price-input"
-              id="maxPrice"
-              placeholder="Max"
-            />
+            <input type="number" min="0" max="10000" [(ngModel)]="maxPrice" class="price-input" id="maxPrice"
+              placeholder="Max" />
           </div>
         </div>
         <div class="price-slider">
-          <input
-            type="range"
-            min="0"
-            max="10000"
-            [(ngModel)]="minPrice"
-            step="100"
-            class="price-range min-range"
-            id="minPriceRange"
-            (change)="applyFilters()"
-          />
-          <input
-            type="range"
-            min="0"
-            max="10000"
-            [(ngModel)]="maxPrice"
-            step="100"
-            class="price-range max-range"
-            id="maxPriceRange"
-            (change)="applyFilters()"
-          />
+          <input type="range" min="0" max="10000" [(ngModel)]="minPrice" step="100" class="price-range min-range"
+            id="minPriceRange" (change)="applyFilters()" />
+          <input type="range" min="0" max="10000" [(ngModel)]="maxPrice" step="100" class="price-range max-range"
+            id="maxPriceRange" (change)="applyFilters()" />
         </div>
       </div>
 
@@ -104,27 +61,15 @@
         <p>Farbe</p>
         <form class="checkbox-list">
           <label>
-            <input
-              type="checkbox"
-              value="Schwarz"
-              (change)="handleColorChange($event, 'Schwarz')"
-            />
+            <input type="checkbox" value="Schwarz" (change)="handleColorChange($event, 'Schwarz')" />
             Schwarz
           </label>
           <label>
-            <input
-              type="checkbox"
-              value="Weiß"
-              (change)="handleColorChange($event, 'Weiß')"
-            />
+            <input type="checkbox" value="Weiß" (change)="handleColorChange($event, 'Weiß')" />
             Weiß
           </label>
           <label>
-            <input
-              type="checkbox"
-              value="Braun"
-              (change)="handleColorChange($event, 'Braun')"
-            />
+            <input type="checkbox" value="Braun" (change)="handleColorChange($event, 'Braun')" />
             Braun
           </label>
         </form>
@@ -134,32 +79,21 @@
         <p>Größe</p>
         <form class="checkbox-list">
           <label>
-            <input
-              type="checkbox"
-              value="Klein"
-              (change)="handleSizeChange($event, 'Klein')"
-            />
+            <input type="checkbox" value="Klein" (change)="handleSizeChange($event, 'Klein')" />
             Klein
           </label>
           <label>
-            <input
-              type="checkbox"
-              value="Mittel"
-              (change)="handleSizeChange($event, 'Mittel')"
-            />
+            <input type="checkbox" value="Mittel" (change)="handleSizeChange($event, 'Mittel')" />
             Mittel
           </label>
           <label>
-            <input
-              type="checkbox"
-              value="Groß"
-              (change)="handleSizeChange($event, 'Groß')"
-            />
+            <input type="checkbox" value="Groß" (change)="handleSizeChange($event, 'Groß')" />
             Groß
           </label>
         </form>
       </div>
-    </div>    <div class="handtaschen">
+    </div>
+    <div class="handtaschen">
       <h1>Handtaschen</h1>
 
       <ul class="showList">
@@ -196,7 +130,8 @@
         </li>
 
         <!-- Platzhalter anzeigen, wenn weniger als 12 Produkte insgesamt vorhanden sind -->
-        <li class="NormalProductListItem" *ngFor="let i of createRange(getNormalListPlaceholderCount(handtaschenProducts))">
+        <li class="NormalProductListItem"
+          *ngFor="let i of createRange(getNormalListPlaceholderCount(handtaschenProducts))">
           <div class="image-wrapper">
             <img src="placeholder1.jpg" alt="Platzhalter" />
           </div>
@@ -205,7 +140,8 @@
           <h3 class="price">0.00€</h3>
         </li>
       </ul>
-    </div>    <div class="schmuck">
+    </div>
+    <div class="schmuck">
       <h1>Accessoirs & Schmuck</h1>
       <ul class="showList">
         <!-- Die ersten 3 Schmuck-Produkte aus der Datenbank -->
