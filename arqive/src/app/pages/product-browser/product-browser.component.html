@@ -100,10 +100,10 @@
         <!-- Die ersten 3 Handtaschen-Produkte aus der Datenbank -->
         <li class="showListItem" *ngFor="let product of handtaschenProducts.slice(0, SHOW_LIST_COUNT)">
           <div class="image-wrapper">
-            <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name || product.Name" />
+            <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name" />
           </div>
           <h3>{{ product.Marke }}</h3>
-          <p>{{ product.name || product.Name }}</p>
+          <p>{{ product.name }}</p>
           <h3 class="price">{{ product.price }}€</h3>
         </li>
 
@@ -122,10 +122,10 @@
         <!-- Restliche Handtaschen-Produkte (ab dem 4. Produkt) -->
         <li class="NormalProductListItem" *ngFor="let product of handtaschenProducts.slice(SHOW_LIST_COUNT)">
           <div class="image-wrapper">
-            <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name || product.Name" />
+            <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name" />
           </div>
           <h3>{{ product.Marke }}</h3>
-          <p>{{ product.name || product.Name }}</p>
+          <p>{{ product.name }}</p>
           <h3 class="price">{{ product.price }}€</h3>
         </li>
 
@@ -147,10 +147,10 @@
         <!-- Die ersten 3 Schmuck-Produkte aus der Datenbank -->
         <li class="showListItem" *ngFor="let product of schmuckProducts.slice(0, SHOW_LIST_COUNT)">
           <div class="image-wrapper">
-            <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name || product.Name" />
+            <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name" />
           </div>
           <h3>{{ product.Marke }}</h3>
-          <p>{{ product.name || product.Name }}</p>
+          <p>{{ product.name }}</p>
           <h3 class="price">{{ product.price }}€</h3>
         </li>
 
@@ -169,10 +169,10 @@
         <!-- Restliche Schmuck-Produkte (ab dem 4. Produkt) -->
         <li class="NormalProductListItem" *ngFor="let product of schmuckProducts.slice(SHOW_LIST_COUNT)">
           <div class="image-wrapper">
-            <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name || product.Name" />
+            <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name" />
           </div>
           <h3>{{ product.Marke }}</h3>
-          <p>{{ product.name || product.Name }}</p>
+          <p>{{ product.name }}</p>
           <h3 class="price">{{ product.price }}€</h3>
         </li>
 

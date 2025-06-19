@@ -36,16 +36,17 @@ export class ProductBrowserComponent implements OnInit {
   }
   // Methode zum Laden der Produkte mit dem Service
   loadProducts(): void {
-    const products = this.productService.getProducts();
-    this.handtaschenProducts = products.filter(
-      (p) => p.category && (
-        p.category.toLowerCase().trim() === 'handtasche' ||
-        p.category.toLowerCase().trim() === 'handtaschen'
-      )
-    );
-    this.schmuckProducts = products.filter(
-      (p) => p.category && p.category.toLowerCase().trim() === 'schmuck'
-    );
+    this.productService.getProducts().subscribe((products) => {
+      this.handtaschenProducts = products.filter(
+        (p) => p.category && (
+          p.category.toLowerCase().trim() === 'handtasche' ||
+          p.category.toLowerCase().trim() === 'handtaschen'
+        )
+      );
+      this.schmuckProducts = products.filter(
+        (p) => p.category && p.category.toLowerCase().trim() === 'schmuck'
+      );
+    });
   }
 
   // Methoden für Platzhalter-Berechnung
