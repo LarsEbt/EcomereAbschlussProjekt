@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, retry, tap } from 'rxjs/operators';
 
 // Produkt-Interface
 export interface Product {
   id: number;
-  Marke: string;
-  Name?: string;
-  name?: string;
+  name: string;
   description: string;
   price: number;
   imageUrl: string;
@@ -18,171 +13,46 @@ export interface Product {
   stock?: number;
 }
 
-// Datenbank-Status-Interface
-export interface DatabaseStatus {
-  connected: boolean;
-  error: string | null;
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  // Basis-URL für die API
-  private baseUrl = 'http://localhost';
-  private defaultPort = 3000;
-  private apiEndpoint = '/api/products';
-  private categoryEndpoint = '/api/category';
-  private statusEndpoint = '/api/status';
-  private currentPort: number;
-  
-  // Für Diagnose und UI-Feedback
-  private _isConnected: boolean = false;
-  private _connectionError: string | null = null;
+  // Dummy-Produkte für ein datenbankfreies Projekt
+  private products: Product[] = [
+    {
+      id: 1,
+      name: 'Beispielprodukt 1',
+      description: 'Beschreibung für Produkt 1',
+      price: 100,
+      imageUrl: 'placeholder1.jpg',
+      category: 'Handtasche',
+      color: 'Schwarz',
+      size: 'Mittel',
+      stock: 10,
+    },
+    {
+      id: 2,
+      name: 'Beispielprodukt 2',
+      description: 'Beschreibung für Produkt 2',
+      price: 200,
+      imageUrl: 'placeholder2.png',
+      category: 'Schmuck',
+      color: 'Weiß',
+      size: 'Klein',
+      stock: 5,
+    },
+    // ...weitere Dummy-Produkte nach Bedarf...
+  ];
 
-  constructor(private http: HttpClient) {
-    // Starte mit dem Standard-Port
-    this.currentPort = this.defaultPort;
-    // Prüfe den Datenbank-Status beim Starten
-    this.checkDatabaseStatus().subscribe();
-  }
-
-  // Getter für den Verbindungsstatus
-  get isConnected(): boolean {
-    return this._isConnected;
-  }
-
-  // Getter für den Verbindungsfehler
-  get connectionError(): string | null {
-    return this._connectionError;
-  }
-
-  // Hilfsmethode, um die aktuelle API-URL zu erhalten
-  private getApiUrl(): string {
-    return `${this.baseUrl}:${this.currentPort}${this.apiEndpoint}`;
+  getProducts(): Product[] {
+    return this.products;
   }
 
-  // Hilfsmethode, um die Kategorie-URL zu erhalten
-  private getCategoryUrl(category: string): string {
-    return `${this.baseUrl}:${this.currentPort}${this.categoryEndpoint}/${category}`;
+  getProductById(id: number): Product | undefined {
+    return this.products.find(p => p.id === id);
   }
-  
-  // Hilfsmethode, um die Status-URL zu erhalten
-  private getStatusUrl(): string {
-    return `${this.baseUrl}:${this.currentPort}${this.statusEndpoint}`;
-  }
-  // Allgemeine Fehlerbehandlung
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Ein unbekannter Fehler ist aufgetreten.';
-    
-    if (error.error instanceof Error) {
-      // Client-seitiger Fehler
-      errorMessage = `Fehler: ${error.error.message}`;
-    } else {
-      // Server-seitiger Fehler
-      errorMessage = `Status: ${error.status}, Nachricht: ${error.message}`;
-      if (error.error?.message) {
-        errorMessage += `, Details: ${error.error.message}`;
-      }
-    }
-    
-    console.error(errorMessage);
-    return throwError(() => new Error(errorMessage));
-  }
-  // Methode zum Prüfen des Datenbank-Status
-  checkDatabaseStatus(): Observable<DatabaseStatus> {
-    console.log('Versuche Verbindung zum Backend auf Port', this.currentPort);
-    return this.http.get<DatabaseStatus>(this.getStatusUrl())
-      .pipe(
-        tap(status => {
-          console.log('Datenbankstatus erhalten:', status);
-          this._isConnected = status.connected;
-          this._connectionError = status.error;
-        }),
-        retry(1),
-        catchError(error => {
-          console.error('Fehler bei der Statusabfrage:', error);
-          this._isConnected = false;
-          this._connectionError = 'Konnte keine Verbindung zum Server herstellen';
-          return of({ connected: false, error: this._connectionError });
-        })
-      );
-  }  // Methode zum Abrufen aller Produkte
-  getProducts(): Observable<Product[]> {
-    console.log('Rufe Produkte von URL ab:', this.getApiUrl());
-    return this.http.get<Product[]>(this.getApiUrl())
-      .pipe(
-        tap(products => {
-          console.log(`${products.length} Produkte erfolgreich abgerufen`);          // Füge relative Image-URL hinzu, falls nötig
-          products.forEach(product => {
-            // Standardisiere die Kategorie für die Anwendung
-            if (product.category) {
-              // Entferne Leerzeichen am Anfang und Ende der Kategorie
-              product.category = product.category.trim();
-              
-              // Konvertiere handtaschen zu Handtasche für die Anwendung
-              if (product.category.toLowerCase() === 'handtaschen') {
-                product.category = 'Handtasche';
-              }
-              // Stelle sicher, dass Schmuck richtig geschrieben ist
-              else if (product.category.toLowerCase() === 'schmuck') {
-                product.category = 'Schmuck';
-              }
-            }
-            
-            // Setze das Bild je nach Kategorie
-            if (!product.imageUrl) {
-              product.imageUrl = product.category && 
-                product.category.toLowerCase().includes('schmuck') ? 
-                'placeholder3.jpg' : 'placeholder1.jpg';
-            }
-          });
-          
-          // Zeige Kategorien in der Konsole
-          const categories = [...new Set(products.map(p => p.category))];
-          console.log('Verfügbare Kategorien:', categories);
-        }),
-        retry(1),
-        catchError(error => {
-          console.error('Fehler beim Abrufen der Produkte:', error);
-          this._isConnected = false;
-          if (error instanceof HttpErrorResponse) {
-            this._connectionError = `HTTP Error: ${error.status}, ${error.message}`;
-          } else {
-            this._connectionError = error.message || 'Unbekannter Fehler';
-          }
-          return throwError(() => error);
-        })
-      );
-  }
-  // Methode zum Abrufen eines einzelnen Produkts nach ID
-  getProductById(id: number): Observable<Product> {
-    console.log('Rufe Produkt mit ID ab:', id);
-    return this.http.get<Product>(`${this.getApiUrl()}/${id}`)
-      .pipe(
-        tap(product => {
-          console.log('Produkt erfolgreich abgerufen:', product);
-        }),
-        retry(1),
-        catchError(error => {
-          console.error(`Fehler beim Abrufen des Produkts mit ID ${id}:`, error);
-          return throwError(() => error);
-        })
-      );
-  }
-  // Methode zum Abrufen von Produkten nach Kategorie
-  getProductsByCategory(category: string): Observable<Product[]> {
-    console.log('Rufe Produkte für Kategorie ab:', category);
-    return this.http.get<Product[]>(this.getCategoryUrl(category))
-      .pipe(
-        tap(products => {
-          console.log(`${products.length} Produkte für Kategorie ${category} erfolgreich abgerufen`);
-        }),
-        retry(1),
-        catchError(error => {
-          console.error(`Fehler beim Abrufen der Produkte für Kategorie ${category}:`, error);
-          return throwError(() => error);
-        })
-      );
+
+  getProductsByCategory(category: string): Product[] {
+    return this.products.filter(p => p.category === category);
   }
 }

@@ -36,42 +36,16 @@ export class ProductBrowserComponent implements OnInit {
   }
   // Methode zum Laden der Produkte mit dem Service
   loadProducts(): void {
-    console.log('Starte Laden der Produkte...');
-    this.productService.getProducts().subscribe({
-      next: (products) => {
-        console.log(`${products.length} Produkte geladen, filtere nach Kategorien...`);
-        console.log('Verfügbare Kategorien:', [...new Set(products.map(p => p.category))]);
-        
-        // Debug - Ausgabe aller Produkte in der Konsole
-        console.log('Alle erhaltenen Produkte:', products);
-          // Produkte nach Kategorie filtern - unterstützt verschiedene Schreibweisen
-        this.handtaschenProducts = products.filter(
-          (p) => p.category && (
-            p.category.toLowerCase().trim() === 'handtasche' ||
-            p.category.toLowerCase().trim() === 'handtaschen'
-          )
-        );
-        this.schmuckProducts = products.filter(
-          (p) => p.category && p.category.toLowerCase().trim() === 'schmuck'
-        );
-        
-        console.log(`Handtaschen: ${this.handtaschenProducts.length}, Schmuck: ${this.schmuckProducts.length}`);
-        
-        // Debug: Ausgabe der ersten Produkte jeder Kategorie
-        if (this.handtaschenProducts.length > 0) {
-          console.log('Erstes Handtaschen-Produkt:', this.handtaschenProducts[0]);
-        }
-        if (this.schmuckProducts.length > 0) {
-          console.log('Erstes Schmuck-Produkt:', this.schmuckProducts[0]);
-        }
-      },
-      error: (error) => {
-        console.error('Fehler beim Laden der Produkte:', error);
-        // Im Fehlerfall leere Arrays behalten, damit die Platzhalter angezeigt werden
-        this.handtaschenProducts = [];
-        this.schmuckProducts = [];
-      },
-    });
+    const products = this.productService.getProducts();
+    this.handtaschenProducts = products.filter(
+      (p) => p.category && (
+        p.category.toLowerCase().trim() === 'handtasche' ||
+        p.category.toLowerCase().trim() === 'handtaschen'
+      )
+    );
+    this.schmuckProducts = products.filter(
+      (p) => p.category && p.category.toLowerCase().trim() === 'schmuck'
+    );
   }
 
   // Methoden für Platzhalter-Berechnung
@@ -121,9 +95,7 @@ export class ProductBrowserComponent implements OnInit {
 
   // Leere Methoden für UI-Elemente, die keine Funktionalität haben sollen
   applyFilters(): void {
-    // Diese Methode tut nichts mehr, da wir keine Filter im Backend verwenden
-    console.log('Filter UI wurde verwendet, aber hat keine Funktionalität');
-    // Wir laden einfach alle Produkte
+    // Keine Backend-Filterung mehr, ggf. Filter-Logik für Dummy-Produkte hier einbauen
     this.loadProducts();
   }
 
@@ -131,9 +103,5 @@ export class ProductBrowserComponent implements OnInit {
   updatePriceFilter(min: number, max: number): void {
     this.minPrice = min;
     this.maxPrice = max;
-    // Keine Filter-Anwendung mehr
-    console.log(
-      'Preis-Filter UI wurde verwendet, aber hat keine Funktionalität'
-    );
   }
 }
