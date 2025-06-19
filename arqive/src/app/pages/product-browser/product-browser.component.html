@@ -102,9 +102,9 @@
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name" />
           </div>
-          <h3>{{ product.Marke }}</h3>
+          <h3>{{ product.marke || product.Marke }}</h3>
           <p>{{ product.name }}</p>
-          <h3 class="price">{{ product.price }}€</h3>
+          <h3 class="price">{{ product.price || 0 }}€</h3>
         </li>
 
         <!-- Platzhalter anzeigen, wenn weniger als 3 Produkte vorhanden sind -->
@@ -124,9 +124,9 @@
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name" />
           </div>
-          <h3>{{ product.Marke }}</h3>
+          <h3>{{ product.marke || product.Marke }}</h3>
           <p>{{ product.name }}</p>
-          <h3 class="price">{{ product.price }}€</h3>
+          <h3 class="price">{{ product.price || 0 }}€</h3>
         </li>
 
         <!-- Platzhalter anzeigen, wenn weniger als 12 Produkte insgesamt vorhanden sind -->
@@ -149,9 +149,9 @@
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name" />
           </div>
-          <h3>{{ product.Marke }}</h3>
+          <h3>{{ product.marke || product.Marke }}</h3>
           <p>{{ product.name }}</p>
-          <h3 class="price">{{ product.price }}€</h3>
+          <h3 class="price">{{ product.price || 0 }}€</h3>
         </li>
 
         <!-- Platzhalter anzeigen, wenn weniger als 3 Produkte vorhanden sind -->
@@ -171,9 +171,9 @@
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name" />
           </div>
-          <h3>{{ product.Marke }}</h3>
+          <h3>{{ product.marke || product.Marke }}</h3>
           <p>{{ product.name }}</p>
-          <h3 class="price">{{ product.price }}€</h3>
+          <h3 class="price">{{ product.price || 0 }}€</h3>
         </li>
 
         <!-- Platzhalter anzeigen, wenn weniger als 12 Produkte insgesamt vorhanden sind -->

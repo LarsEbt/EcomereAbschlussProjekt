@@ -3,8 +3,11 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
-@Component({  selector: 'app-product-browser',
+@Component({  
+  selector: 'app-product-browser',
   standalone: true,
   imports: [RouterLink, CommonModule, FormsModule],
   templateUrl: './product-browser.component.html',
@@ -30,32 +33,46 @@ export class ProductBrowserComponent implements OnInit {
   readonly TOTAL_PRODUCTS_PER_CATEGORY = 12;
   
   constructor(private productService: ProductService) {}
+
   ngOnInit(): void {
     // Produkte beim Initialisieren der Komponente laden
     this.loadProducts();
   }
+
   // Methode zum Laden der Produkte mit dem Service
   loadProducts(): void {
-    this.productService.getProducts().subscribe((products) => {
-      this.handtaschenProducts = products.filter(
-        (p) => p.category && (
-          p.category.toLowerCase().trim() === 'handtasche' ||
-          p.category.toLowerCase().trim() === 'handtaschen'
-        )
-      );
-      this.schmuckProducts = products.filter(
-        (p) => p.category && p.category.toLowerCase().trim() === 'schmuck'
-      );
-    });
+    this.productService.getProducts()
+      .pipe(
+        catchError(error => {
+          console.error('Fehler beim Laden der Produkte:', error);
+          return of([]);
+        })
+      )
+      .subscribe((products) => {
+        const safeProducts = Array.isArray(products) ? products : [];
+        
+        // Handtaschen filtern
+        this.handtaschenProducts = safeProducts.filter(
+          (p) => p && p.category && (
+            p.category.toLowerCase().trim() === 'handtasche' ||
+            p.category.toLowerCase().trim() === 'handtaschen'
+          )
+        );
+        
+        // Schmuck filtern
+        this.schmuckProducts = safeProducts.filter(
+          (p) => p && p.category && p.category.toLowerCase().trim() === 'schmuck'
+        );
+      });
   }
 
   // Methoden für Platzhalter-Berechnung
   getShowListPlaceholderCount(products: Product[]): number {
-    return Math.max(0, this.SHOW_LIST_COUNT - products.length);
+    return Math.max(0, this.SHOW_LIST_COUNT - (products?.length || 0));
   }
 
   getNormalListPlaceholderCount(products: Product[]): number {
-    const remainingProducts = Math.max(0, products.length - this.SHOW_LIST_COUNT);
+    const remainingProducts = Math.max(0, (products?.length || 0) - this.SHOW_LIST_COUNT);
     return Math.max(0, this.TOTAL_PRODUCTS_PER_CATEGORY - this.SHOW_LIST_COUNT - remainingProducts);
   }
 

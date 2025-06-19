@@ -8,6 +8,8 @@ dist/
 build/
 */dist/
 */build/
+.angular/
+*/.angular/
 
 # Debug logs
 npm-debug.log*
@@ -25,9 +27,21 @@ yarn-error.log*
 .npm
 .eslintcache
 .cache
+.tsbuildinfo
+*/.tsbuildinfo
 
 # IDE specific files
 .idea/
+.vscode/
+*.code-workspace
+.history/
+
+# Database related files
+*.sql
+database.js
+server.js
+**/database_backup/
+_backup_before_db_removal/
 .vscode/
 *.swp
 *.swo

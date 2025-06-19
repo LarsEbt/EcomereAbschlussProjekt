@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { Observable, from } from 'rxjs';
+import { Observable, from, catchError, of } from 'rxjs';
 
 // Produkt-Interface
 export interface Product {
   id: number;
   Marke: string;
+  marke?: string; // Alternative für Datenbankspalte mit Kleinbuchstaben
   name: string;
   description: string;
   price: number;
@@ -21,13 +22,17 @@ export interface Product {
 })
 export class ProductService {
   private supabase: SupabaseClient;
-
   // Trage hier deine Supabase-URL und den API-Key ein:
-  private supabaseUrl = 'hhttps://iyurydzutlzictqulskw.supabase.co';
+  private supabaseUrl = 'https://iyurydzutlzictqulskw.supabase.co';
   private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5dXJ5ZHp1dGx6aWN0cXVsc2t3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5MDUwMDcsImV4cCI6MjA2MzQ4MTAwN30.JnC90EvVAq0aOcd5_vq-VNT5Uz-nBMbEvNSPE2uvE9E';
 
   constructor() {
-    this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+    try {
+      this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+    } catch (error) {
+      console.error('Fehler beim Erstellen des Supabase-Clients:', error);
+      throw error;
+    }
   }
 
   // Holt alle Produkte aus der Supabase-Tabelle "products"
@@ -36,7 +41,18 @@ export class ProductService {
       this.supabase
         .from('products')
         .select('*')
-        .then((result) => result.data as Product[])
+        .then((result) => {
+          if (result.error) {
+            console.error('Supabase Fehler:', result.error);
+            return [] as Product[];
+          }
+          return result.data as Product[];
+        })
+    ).pipe(
+      catchError((error) => {
+        console.error('Fehler bei Supabase-Abfrage:', error);
+        return of([]);
+      })
     );
   }
 
@@ -47,7 +63,18 @@ export class ProductService {
         .from('products')
         .select('*')
         .eq('category', category)
-        .then((result) => result.data as Product[])
+        .then((result) => {
+          if (result.error) {
+            console.error('Supabase Fehler:', result.error);
+            return [] as Product[];
+          }
+          return result.data as Product[];
+        })
+    ).pipe(
+      catchError((error) => {
+        console.error('Fehler bei Supabase-Abfrage:', error);
+        return of([]);
+      })
     );
   }
 }
