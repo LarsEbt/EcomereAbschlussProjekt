@@ -1,9 +1,12 @@
 .footer-line {
   border: none;
   height: 1px;
-  background-color: #ccc; /* oder #000 für schwarz */
-  margin: 64px 0 2rem; /* Abstand oben und unten, kein seitlicher Abstand */
-  width: 100vw; /* Volle Viewport-Breite */
+  background-color: #ccc;
+  /* oder #000 für schwarz */
+  margin: 64px 0 2rem;
+  /* Abstand oben und unten, kein seitlicher Abstand */
+  width: 100vw;
+  /* Volle Viewport-Breite */
   position: relative;
   left: 50%;
   right: 50%;
@@ -15,7 +18,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 2rem 100px; /* Konsistente 100px Padding links und rechts */
+  padding: 2rem 100px;
+  /* Konsistente 100px Padding links und rechts */
   background-color: white;
   flex-wrap: wrap;
 }
@@ -52,16 +56,22 @@ li {
   gap: 1.5rem;
 }
 
+#footer-social a {
+  text-decoration: none;
+  display: inline-block;
+}
+
 #footer-social img {
   width: 24px;
   height: 24px;
   filter: grayscale(1);
   cursor: pointer;
-  transition: filter 0.3s ease;
+  transition: filter 0.3s ease, transform 0.2s ease;
 }
 
 #footer-social img:hover {
   filter: grayscale(0);
+  transform: scale(1.1);
 }
 
 #footer-links ul {
