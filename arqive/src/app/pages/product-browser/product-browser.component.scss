@@ -656,19 +656,19 @@
   box-sizing: border-box;
 }
 
-.showList h3 {
+.showList h3:not(.product-name):not(.price) {
   font-size: 1.2rem;
   margin: 10px 0 5px;
   font-weight: bold;
 }
 
-.showList p {
+.showList p:not(.product-brand) {
   font-size: 0.9rem;
   color: #666;
   margin: 5px 0;
 }
 
-.showList .price {
+.showList .price:not(.product-name) {
   font-weight: bold;
   color: #333;
   margin-top: 10px;
@@ -686,17 +686,17 @@
     width: 100%;
   }
 
-  h3 {
+  h3:not(.product-name):not(.price) {
     font-size: 1.5rem;
     margin-top: 15px;
   }
 
-  p {
+  p:not(.product-brand) {
     font-size: 1rem;
     line-height: 1.4;
   }
 
-  .price {
+  .price:not(.product-name) {
     font-size: 1.3rem;
     margin-top: 15px;
   }
@@ -758,8 +758,8 @@
 .NormalProductListItem {
   width: 100%;
   /* Füllt die gesamte Breite der Grid-Zelle */
-  height: 370px;
-  /* Basiswert, wird durch Media Queries überschrieben */
+  height: 400px;
+  /* Mehr Höhe für Produkte mit mehrzeiligem Namen */
   border: 1px solid #eee;
   border-radius: 8px;
   padding: 15px;
@@ -768,6 +768,48 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  .product-name {
+    font-size: 18px;
+    /* Kleinere Schrift als in ShowList */
+    line-height: 130%;
+    /* Engerer Zeilenabstand */
+    margin: 5px 0 3px;
+    /* Kleinere Abstände */
+    max-height: 70px;
+    /* Begrenzt die Höhe für 3 Zeilen */
+    overflow: hidden;
+    /* Verhindert Überlauf */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Maximal 3 Zeilen */
+    line-clamp: 3;
+    /* Standard-Eigenschaft für Kompatibilität */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    /* Zeigt ... an bei zu langem Text */
+  }
+
+  .product-brand {
+    font-size: 16px;
+    /* Kleinere Schrift */
+    line-height: 130%;
+    margin: 3px 0;
+    /* Kleinere Abstände */
+  }
+
+  .price {
+    font-size: 18px;
+    /* Kleinere Schrift */
+    margin-top: 5px;
+    /* Kleinerer Abstand */
+  }
+
+  /* Mehr Platz für das Bild */
+  .image-wrapper {
+    margin-bottom: 5px;
+    /* Kleinerer Abstand */
+  }
 }
 
 .NormalProductListItem:hover {
@@ -780,15 +822,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  max-height: 60%;
+  margin-bottom: 5px;
+  /* Reduzierter Abstand */
+  max-height: 55%;
+  /* Reduzierte Höhe für mehr Text-Platz */
   width: 100%;
   /* Füllt die gesamte Breite aus */
 }
 
 .NormalProductList .image-wrapper img {
   width: 100%;
-  height: 220px;
+  height: 200px;
+  /* Reduzierte Höhe für mehr Text-Platz */
   /* Standardhöhe, wird durch Media Queries angepasst */
   object-fit: contain;
   border: 1px solid #ededed;
@@ -798,18 +843,18 @@
   box-sizing: border-box;
 }
 
-.NormalProductList h3 {
+.NormalProductList h3:not(.product-name):not(.price) {
   font-size: 1.2rem;
   margin: 10px 0 5px;
 }
 
-.NormalProductList p {
+.NormalProductList p:not(.product-brand) {
   font-size: 0.9rem;
   color: #666;
   margin: 5px 0;
 }
 
-.NormalProductList .price {
+.NormalProductList .price:not(.product-name) {
   font-weight: bold;
   color: #333;
   margin-top: 10px;
@@ -891,7 +936,8 @@
   }
 
   .NormalProductListItem {
-    height: 450px;
+    height: 470px;
+    /* Mehr Höhe für mehrzeiligen Namen */
   }
 }
 
@@ -910,7 +956,8 @@
   }
 
   .NormalProductListItem {
-    height: 420px;
+    height: 440px;
+    /* Mehr Höhe für mehrzeiligen Namen */
   }
 }
 
@@ -930,7 +977,8 @@
   }
 
   .NormalProductListItem {
-    height: 380px;
+    height: 410px;
+    /* Mehr Höhe für mehrzeiligen Namen */
   }
 }
 
@@ -950,7 +998,8 @@
   }
 
   .NormalProductListItem {
-    height: 350px;
+    height: 380px;
+    /* Mehr Höhe für mehrzeiligen Namen */
   }
 }
 
@@ -970,7 +1019,8 @@
   }
 
   .NormalProductListItem {
-    height: 330px;
+    height: 360px;
+    /* Mehr Höhe für mehrzeiligen Namen */
   }
 
   .shop-content {
@@ -1050,5 +1100,59 @@ body {
   .handtaschen h1,
   .schmuck h1 {
     font-size: 32px;
+  }
+}
+
+/* Neue Styling-Regeln für Produkttext nach Design-Vorgaben */
+.product-name {
+  font-size: 24px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0%;
+  color: #000000;
+  margin: 10px 0 5px;
+}
+
+.product-brand {
+  font-size: 20px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0%;
+  color: #828282;
+  margin: 5px 0;
+}
+
+.price {
+  font-size: 24px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0%;
+  color: #000000;
+  margin-top: 10px;
+}
+
+/* Überschreiben der bestehenden Stile für ShowList */
+.showList h3.product-name,
+.showList p.product-brand,
+.showList h3.price {
+  /* Die neuen Stile werden von den obigen Klassen übernommen */
+  font-family: Inter, sans-serif;
+}
+
+/* Spezielle Anpassungen für das große Element in der showList */
+.showListItem:nth-child(1) {
+  .product-name {
+    font-size: 28px;
+  }
+
+  .product-brand {
+    font-size: 24px;
+  }
+
+  .price {
+    font-size: 28px;
   }
 }

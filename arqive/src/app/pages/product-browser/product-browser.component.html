@@ -102,8 +102,8 @@
             <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name"
               onerror="this.src='placeholder1.jpg'" [class.large-image]="i === 0" [class.small-image]="i > 0" />
           </div>
-          <h3>{{ product.marke || product.Marke }}</h3>
-          <p>{{ product.name }}</p>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-brand">{{ product.marke || product.Marke }}</p>
           <h3 class="price">{{ product.price || 0 }}€</h3>
         </li>
 
@@ -115,8 +115,8 @@
               [class.large-image]="idx === 0 && handtaschenProducts.length === 0"
               [class.small-image]="idx > 0 || handtaschenProducts.length > 0" />
           </div>
-          <h3>Marke</h3>
-          <p>Produktname</p>
+          <h3 class="product-name">Produktname</h3>
+          <p class="product-brand">Marke</p>
           <h3 class="price">0.00€</h3>
         </li>
       </ul>
@@ -127,8 +127,8 @@
             <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name"
               onerror="this.src='placeholder1.jpg'" />
           </div>
-          <h3>{{ product.marke || product.Marke }}</h3>
-          <p>{{ product.name }}</p>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-brand">{{ product.marke || product.Marke }}</p>
           <h3 class="price">{{ product.price || 0 }}€</h3>
         </li>
 
@@ -138,8 +138,8 @@
           <div class="image-wrapper">
             <img src="placeholder1.jpg" alt="Platzhalter" />
           </div>
-          <h3>Marke</h3>
-          <p>Produktname</p>
+          <h3 class="product-name">Produktname</h3>
+          <p class="product-brand">Marke</p>
           <h3 class="price">0.00€</h3>
         </li>
       </ul>
@@ -153,8 +153,8 @@
             <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name"
               onerror="this.src='placeholder3.jpg'" [class.large-image]="i === 0" [class.small-image]="i > 0" />
           </div>
-          <h3>{{ product.marke || product.Marke }}</h3>
-          <p>{{ product.name }}</p>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-brand">{{ product.marke || product.Marke }}</p>
           <h3 class="price">{{ product.price || 0 }}€</h3>
         </li>
 
@@ -166,8 +166,8 @@
               [class.large-image]="idx === 0 && schmuckProducts.length === 0"
               [class.small-image]="idx > 0 || schmuckProducts.length > 0" />
           </div>
-          <h3>Marke</h3>
-          <p>Produktname</p>
+          <h3 class="product-name">Produktname</h3>
+          <p class="product-brand">Marke</p>
           <h3 class="price">0.00€</h3>
         </li>
       </ul>
@@ -179,8 +179,8 @@
             <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name"
               onerror="this.src='placeholder3.jpg'" />
           </div>
-          <h3>{{ product.marke || product.Marke }}</h3>
-          <p>{{ product.name }}</p>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-brand">{{ product.marke || product.Marke }}</p>
           <h3 class="price">{{ product.price || 0 }}€</h3>
         </li>
 
@@ -189,8 +189,8 @@
           <div class="image-wrapper">
             <img src="placeholder3.jpg" alt="Platzhalter" />
           </div>
-          <h3>Marke</h3>
-          <p>Produktname</p>
+          <h3 class="product-name">Produktname</h3>
+          <p class="product-brand">Marke</p>
           <h3 class="price">0.00€</h3>
         </li>
       </ul>
