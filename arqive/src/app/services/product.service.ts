@@ -81,4 +81,68 @@ export class ProductService {
       return productCategory.includes(searchCategory);
     });
   }
+
+  // Ein einzelnes Produkt anhand der ID abrufen
+  getProductById(id: number): Observable<Product> {
+    console.log(`ProductService: Hole Produkt mit ID ${id}...`);
+    
+    const headers = new HttpHeaders({
+      'apikey': this.apiKey,
+      'Content-Type': 'application/json'
+    });
+    
+    return this.http.get<Product[]>(`${this.apiUrl}?id=eq.${id}&select=*`, { headers }).pipe(
+      map(data => {
+        if (data && data.length > 0) {
+          console.log('Produkt gefunden:', data[0]);
+          
+          // Bild-URL korrigieren
+          let product = data[0];
+          if (product.imageUrl) {
+            // Backslashes durch Slashes ersetzen
+            let fixedPath = product.imageUrl.replace(/\\/g, '/');
+            
+            // Prüfen, ob es ein relativer Pfad ist und entsprechend anpassen
+            if (fixedPath.startsWith('arqive/public/') || fixedPath.startsWith('arqive\\public\\')) {
+              fixedPath = fixedPath.replace(/^arqive[\\\/]public[\\\/]/, '');
+            }
+            
+            // Sicherstellen, dass die URL mit / beginnt, wenn sie relativ ist
+            if (!fixedPath.startsWith('http') && !fixedPath.startsWith('/')) {
+              fixedPath = '/' + fixedPath;
+            }
+            
+            console.log(`Bild-URL korrigiert: "${product.imageUrl}" -> "${fixedPath}"`);
+            product.imageUrl = fixedPath;
+          }
+          
+          return product;
+        } else {
+          console.error(`Produkt mit ID ${id} nicht gefunden`);
+          throw new Error(`Produkt mit ID ${id} nicht gefunden`);
+        }
+      })
+    );
+  }
+  
+  // Verwandte Produkte abrufen (gleiche Kategorie, andere Produkte)
+  getRelatedProducts(product: Product, limit: number = 8): Observable<Product[]> {
+    console.log(`ProductService: Hole verwandte Produkte für Kategorie ${product.category}...`);
+    
+    return this.getProducts().pipe(
+      map(products => {
+        // Produkte der gleichen Kategorie finden, aber die aktuelle ID ausschließen
+        const relatedProducts = products.filter(p => 
+          p.category.toLowerCase().includes(product.category.toLowerCase()) && 
+          p.id !== product.id
+        );
+        
+        // Zufällige Sortierung für abwechslungsreiche Vorschläge
+        const shuffled = [...relatedProducts].sort(() => 0.5 - Math.random());
+        
+        // Nur die angegebene Anzahl zurückgeben
+        return shuffled.slice(0, limit);
+      })
+    );
+  }
 }

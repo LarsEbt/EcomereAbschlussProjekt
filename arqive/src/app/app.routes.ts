@@ -20,9 +20,8 @@ export const routes: Routes = [
     path: 'home',
     redirectTo: '',
     pathMatch: 'full',
-  },
-  {
-    path: 'product-page',
+  },  {
+    path: 'product-page/:id',
     component: ProductPageComponent,
     title: 'Produktseite',
   },

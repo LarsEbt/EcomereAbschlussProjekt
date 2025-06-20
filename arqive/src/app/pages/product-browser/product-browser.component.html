@@ -12,7 +12,6 @@
       </div>
     </div>
   </div>
-  <a routerLink="/product-page">Product page</a>
 
   <div class="shop-content content-wrapper">
     <div class="filter">
@@ -94,10 +93,10 @@
     </div>
     <div class="handtaschen">
       <h1>Handtaschen</h1>
-
       <ul class="showList">
         <!-- Die ersten 3 Handtaschen-Produkte aus der Datenbank -->
-        <li class="showListItem" *ngFor="let product of handtaschenProducts.slice(0, SHOW_LIST_COUNT); let i = index">
+        <li class="showListItem" *ngFor="let product of handtaschenProducts.slice(0, SHOW_LIST_COUNT); let i = index"
+          [routerLink]="['/product-page', product.id]">
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name"
               onerror="this.src='placeholder1.jpg'" [class.large-image]="i === 0" [class.small-image]="i > 0" />
@@ -122,7 +121,8 @@
       </ul>
       <ul class="NormalProductList">
         <!-- Restliche Handtaschen-Produkte (ab dem 4. Produkt) - slice(SHOW_LIST_COUNT) zeigt Produkte ab Index 3 -->
-        <li class="NormalProductListItem" *ngFor="let product of handtaschenProducts.slice(SHOW_LIST_COUNT)">
+        <li class="NormalProductListItem" *ngFor="let product of handtaschenProducts.slice(SHOW_LIST_COUNT)"
+          [routerLink]="['/product-page', product.id]">
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name"
               onerror="this.src='placeholder1.jpg'" />
@@ -148,7 +148,8 @@
       <h1>Accessoirs & Schmuck</h1>
       <ul class="showList">
         <!-- Die ersten 3 Schmuck-Produkte aus der Datenbank -->
-        <li class="showListItem" *ngFor="let product of schmuckProducts.slice(0, SHOW_LIST_COUNT); let i = index">
+        <li class="showListItem" *ngFor="let product of schmuckProducts.slice(0, SHOW_LIST_COUNT); let i = index"
+          [routerLink]="['/product-page', product.id]">
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name"
               onerror="this.src='placeholder3.jpg'" [class.large-image]="i === 0" [class.small-image]="i > 0" />
@@ -171,10 +172,10 @@
           <h3 class="price">0.00€</h3>
         </li>
       </ul>
-
       <ul class="NormalProductList">
         <!-- Restliche Schmuck-Produkte (ab dem 4. Produkt) -->
-        <li class="NormalProductListItem" *ngFor="let product of schmuckProducts.slice(SHOW_LIST_COUNT)">
+        <li class="NormalProductListItem" *ngFor="let product of schmuckProducts.slice(SHOW_LIST_COUNT)"
+          [routerLink]="['/product-page', product.id]">
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder3.jpg'" [alt]="product.name"
               onerror="this.src='placeholder3.jpg'" />

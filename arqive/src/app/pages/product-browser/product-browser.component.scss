@@ -574,6 +574,8 @@
   margin: 0;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  /* Zeigt an, dass das Element klickbar ist */
 }
 
 .showList {
@@ -768,6 +770,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
+  /* Zeigt an, dass das Element klickbar ist */
 
   .product-name {
     font-size: 18px;
