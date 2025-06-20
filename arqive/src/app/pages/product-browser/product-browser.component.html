@@ -51,9 +51,9 @@
         </div>
         <div class="price-slider">
           <input type="range" min="0" max="10000" [(ngModel)]="minPrice" step="100" class="price-range min-range"
-            id="minPriceRange" (change)="applyFilters()" />
+            id="minPriceRange" />
           <input type="range" min="0" max="10000" [(ngModel)]="maxPrice" step="100" class="price-range max-range"
-            id="maxPriceRange" (change)="applyFilters()" />
+            id="maxPriceRange" />
         </div>
       </div>
 
@@ -117,9 +117,8 @@
           <h3 class="price">0.00€</h3>
         </li>
       </ul>
-
       <ul class="NormalProductList">
-        <!-- Restliche Handtaschen-Produkte (ab dem 4. Produkt) -->
+        <!-- Restliche Handtaschen-Produkte (ab dem 4. Produkt) - slice(SHOW_LIST_COUNT) zeigt Produkte ab Index 3 -->
         <li class="NormalProductListItem" *ngFor="let product of handtaschenProducts.slice(SHOW_LIST_COUNT)">
           <div class="image-wrapper">
             <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name" />

@@ -3,8 +3,6 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({  
   selector: 'app-product-browser',
@@ -18,7 +16,7 @@ export class ProductBrowserComponent implements OnInit {
   handtaschenProducts: Product[] = [];
   schmuckProducts: Product[] = [];
 
-  // Filter-Zustand (nur für UI, keine Funktionalität)
+  // Filter-UI-Zustand (Dummy, keine Funktionalität)
   minPrice: number = 0;
   maxPrice: number = 10000;
   selectedColors: string[] = [];
@@ -30,50 +28,48 @@ export class ProductBrowserComponent implements OnInit {
 
   // Konstanten für die Anzahl der Produkte
   readonly SHOW_LIST_COUNT = 3;
-  readonly TOTAL_PRODUCTS_PER_CATEGORY = 12;
+  readonly NORMAL_LIST_COUNT = 12;
+  readonly TOTAL_PRODUCTS_PER_CATEGORY = 15;
   
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    // Produkte beim Initialisieren der Komponente laden
     this.loadProducts();
   }
 
-  // Methode zum Laden der Produkte mit dem Service
   loadProducts(): void {
-    this.productService.getProducts()
-      .pipe(
-        catchError(error => {
-          console.error('Fehler beim Laden der Produkte:', error);
-          return of([]);
-        })
-      )
-      .subscribe((products) => {
-        const safeProducts = Array.isArray(products) ? products : [];
+    this.productService.getProducts().subscribe({
+      next: (products) => {        console.log('Alle Produkte geladen:', products.length);
         
-        // Handtaschen filtern
-        this.handtaschenProducts = safeProducts.filter(
-          (p) => p && p.category && (
-            p.category.toLowerCase().trim() === 'handtasche' ||
-            p.category.toLowerCase().trim() === 'handtaschen'
-          )
-        );
+        // Produkte nach Kategorie filtern
+        this.handtaschenProducts = this.productService.filterProductsByCategory(products, 'Handtasche');
+        this.schmuckProducts = this.productService.filterProductsByCategory(products, 'Schmuck');
         
-        // Schmuck filtern
-        this.schmuckProducts = safeProducts.filter(
-          (p) => p && p.category && p.category.toLowerCase().trim() === 'schmuck'
-        );
-      });
+        console.log('Handtaschen:', this.handtaschenProducts.length);
+        console.log('Schmuck:', this.schmuckProducts.length);
+        
+        // Für jeden Typ Debug-Info ausgeben
+        if (this.handtaschenProducts.length > 0) {
+          console.log('Beispiel Handtasche:', this.handtaschenProducts[0]);
+        }
+        if (this.schmuckProducts.length > 0) {
+          console.log('Beispiel Schmuck:', this.schmuckProducts[0]);
+        }
+      },
+      error: (error) => {
+        console.error('Fehler beim Laden der Produkte:', error);
+      }
+    });
   }
 
   // Methoden für Platzhalter-Berechnung
   getShowListPlaceholderCount(products: Product[]): number {
-    return Math.max(0, this.SHOW_LIST_COUNT - (products?.length || 0));
+    return Math.max(0, this.SHOW_LIST_COUNT - Math.min(products?.length || 0, this.SHOW_LIST_COUNT));
   }
 
   getNormalListPlaceholderCount(products: Product[]): number {
-    const remainingProducts = Math.max(0, (products?.length || 0) - this.SHOW_LIST_COUNT);
-    return Math.max(0, this.TOTAL_PRODUCTS_PER_CATEGORY - this.SHOW_LIST_COUNT - remainingProducts);
+    const availableForNormal = Math.max(0, (products?.length || 0) - this.SHOW_LIST_COUNT);
+    return Math.max(0, this.NORMAL_LIST_COUNT - availableForNormal);
   }
 
   // Helper-Methode für Platzhalter-Arrays
@@ -81,45 +77,28 @@ export class ProductBrowserComponent implements OnInit {
     return Array(count).fill(0).map((_, i) => i);
   }
 
-  // Handler für Typ-Änderungen
+  // UI Handler (Dummy)
   handleTypeChange(event: any, type: string): void {
     if (event.target.checked) {
       this.selectedTypes.push(type);
     } else {
       this.selectedTypes = this.selectedTypes.filter((t) => t !== type);
     }
-    this.applyFilters();
   }
 
-  // Handler für Farb-Änderungen
   handleColorChange(event: any, color: string): void {
     if (event.target.checked) {
       this.selectedColors.push(color);
     } else {
       this.selectedColors = this.selectedColors.filter((c) => c !== color);
     }
-    this.applyFilters();
   }
 
-  // Handler für Größen-Änderungen
   handleSizeChange(event: any, size: string): void {
     if (event.target.checked) {
       this.selectedSizes.push(size);
     } else {
       this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
     }
-    this.applyFilters();
-  }
-
-  // Leere Methoden für UI-Elemente, die keine Funktionalität haben sollen
-  applyFilters(): void {
-    // Keine Backend-Filterung mehr, ggf. Filter-Logik für Dummy-Produkte hier einbauen
-    this.loadProducts();
-  }
-
-  // Methode zum Aktualisieren der Preisfilter (für die Range-Inputs)
-  updatePriceFilter(min: number, max: number): void {
-    this.minPrice = min;
-    this.maxPrice = max;
   }
 }
