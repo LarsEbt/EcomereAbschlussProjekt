@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-page',
@@ -16,10 +17,11 @@ export class ProductPageComponent implements OnInit {
   productId: number = 0;
   loading: boolean = true;
   error: string | null = null;
-
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private router: Router,
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -73,5 +75,23 @@ export class ProductPageComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  addToCart(): void {
+    if (this.product) {
+      this.cartService.addToCart(this.product);
+      // Optional: Feedback an den Benutzer (Toast, Meldung, etc.)
+      console.log(`Produkt ${this.product.name} zum Warenkorb hinzugefügt`);
+      
+      // Optional: Zur Warenkorb-Seite navigieren oder einen Toast anzeigen
+      // this.router.navigate(['/basket']);
+    }
+  }
+  
+  buyNow(): void {
+    if (this.product) {
+      this.cartService.addToCart(this.product);
+      this.router.navigate(['/basket']);
+    }
   }
 }

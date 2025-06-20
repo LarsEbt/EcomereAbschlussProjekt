@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({  
   selector: 'app-product-browser',
@@ -31,7 +32,10 @@ export class ProductBrowserComponent implements OnInit {
   readonly NORMAL_LIST_COUNT = 12;
   readonly TOTAL_PRODUCTS_PER_CATEGORY = 15;
   
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -103,5 +107,13 @@ export class ProductBrowserComponent implements OnInit {
     } else {
       this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
     }
+  }
+
+  addToCart(product: Product, event: MouseEvent): void {
+    // Verhindert, dass das Klick-Event auch den Link auslöst
+    event.stopPropagation();
+    
+    this.cartService.addToCart(product);
+    console.log(`Produkt ${product.name} zum Warenkorb hinzugefügt`);
   }
 }

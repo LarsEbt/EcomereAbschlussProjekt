@@ -1,60 +1,45 @@
 <div id="basket">
     <div id="basket-list">
-        <ul>
-            <li>
-                <img src="prod2.png" alt="Produkt 1">
+        <h1 *ngIf="cartItems.length === 0" class="empty-cart-message">Dein Warenkorb ist leer</h1>
+
+        <ul *ngIf="cartItems.length > 0">
+            <li *ngFor="let item of cartItems">
+                <img [src]="item.product.imageUrl || 'placeholder1.jpg'" [alt]="item.product.name"
+                    onerror="this.src='placeholder1.jpg'">
                 <div class="product-details">
-                    <h2>Produktname</h2>
-                    <p>Size: X</p>
-                    <h3>10,99€</h3>
+                    <h2>{{ item.product.name }}</h2>
+                    <p>{{ item.product.marke || item.product.Marke }}</p>
+                    <h3>{{ item.product.price }}€</h3>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" (click)="decreaseQuantity(item)">-</button>
+                        <span class="quantity">{{ item.quantity }}</span>
+                        <button class="quantity-btn" (click)="increaseQuantity(item)">+</button>
+                    </div>
                 </div>
-                <button class="remove">×</button>
+                <button class="remove" (click)="removeItem(item.product.id)">×</button>
             </li>
-            <li>
-                <img src="prod2.png" alt="Produkt 2">
-                <div class="product-details">
-                    <h2>Produktname 2</h2>
-                    <p>Size: X</p>
-                    <h3>15,49€</h3>
-                </div>
-                <button class="remove">×</button>
-            </li>
-            <li>
-                <img src="prod2.png" alt="Produkt 3">
-                <div class="product-details">
-                    <h2>Produktname</h2>
-                    <p>Size: X</p>
-                    <h3>7,99€</h3>
-                </div>
-                <button class="remove">×</button>
-            </li>
-            <li>
-                <img src="prod2.png" alt="Produkt 4">
-                <div class="product-details">
-                    <h2>Produktname</h2>
-                    <p>Size: X</p>
-                    <h3>9,99€</h3>
-                </div>
-                <button class="remove">×</button>
         </ul>
     </div>
-    <div class="total">
+    <div class="total" *ngIf="cartItems.length > 0">
         <div class="price-table">
             <div class="price-row">
                 <h2>Produktpreise</h2>
-                <span class="price">34,47€</span>
+                <span class="price">{{ subtotal.toFixed(2) }}€</span>
             </div>
             <div class="price-row border-bottom">
                 <h2>Versandkosten</h2>
-                <span class="price">4,99€</span>
+                <span class="price">{{ shipping.toFixed(2) }}€</span>
             </div>
             <div class="price-row">
                 <h2>Gesamtbetrag</h2>
-                <span class="price">39,46€</span>
+                <span class="price">{{ total.toFixed(2) }}€</span>
             </div>
         </div>
-        <button class="checkout" routerLink="/product-browser">Weiter einkaufen</button>
-        <button class="checkout" routerLink="/payment">Bezahlen</button>
+        <div class="basket-actions">
+            <button class="clear-cart" (click)="clearCart()">Warenkorb leeren</button>
+            <button class="checkout" routerLink="/product-browser">Weiter einkaufen</button>
+            <button class="checkout" routerLink="/payment">Bezahlen</button>
+        </div>
 
         <div class="benefit-item">
             <div class="benefit-header">

@@ -1,53 +1,182 @@
-<div class="contact-container">
-    <h1>Kontaktinformationen</h1>
-    <h2>Vorname</h2>
-    <input type="text" placeholder="Vorname">
-    <h2>Nachname</h2>
-    <input type="text" placeholder="Nachname">
-    <h2>Email</h2>
-    <input type="email" placeholder="Email">
-    <button>Speichern</button>
-</div>
-<div class="shipping-container">
-    <h1>Versandinformationen</h1>
-    <h2>Adresse</h2>
-    <input type="text" placeholder="Straße und Hausnummer">
-    <h2>Stadt</h2>
-    <input type="text" placeholder="Stadt">
-    <h2>Postleitzahl</h2>
-    <input type="text" placeholder="Postleitzahl">
-    <button>Speichern</button>
-</div>
-<div class="payment-container">
-    <h1>Zahlungsinformationen</h1>
-    <h2>Kreditkartennummer</h2>
-    <input type="text" placeholder="Kreditkartennummer">
-    <h2>Gültig bis</h2>
-    <input type="text" placeholder="MM/JJ">
-    <h2>Sicherheitscode</h2>
-    <input type="text" placeholder="CVV">
-    <button>Bezahlen</button>
-</div>
-<div class="summary-container">
-    <h1>Bestellübersicht</h1>
-    <ul>
-        <li>
-            <span>Produktname 1</span>
-            <span>10,99€</span>
-        </li>
-        <li>
-            <span>Produktname 2</span>
-            <span>15,49€</span>
-        </li>
-        <li>
-            <span>Produktname 3</span>
-            <span>7,99€</span>
-        </li>
-    </ul>
-    <h2>Gesamtbetrag: 34,47€</h2>
-    <button>Bestellung abschließen</button>
+<div class="payment-page-container" *ngIf="!checkoutComplete">
+    <div class="forms-container">
+        <div class="contact-container">
+            <h1>Kontaktinformationen</h1>
+            <form [formGroup]="contactForm">
+                <div class="form-field">
+                    <label for="firstName">Vorname</label>
+                    <input type="text" id="firstName" formControlName="firstName" placeholder="Vorname"
+                        [class.invalid]="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched">
+                    <div class="error-message"
+                        *ngIf="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched">
+                        Bitte geben Sie Ihren Vornamen ein.
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="lastName">Nachname</label>
+                    <input type="text" id="lastName" formControlName="lastName" placeholder="Nachname"
+                        [class.invalid]="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched">
+                    <div class="error-message"
+                        *ngIf="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched">
+                        Bitte geben Sie Ihren Nachnamen ein.
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" formControlName="email" placeholder="Email"
+                        [class.invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                    <div class="error-message"
+                        *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                        Bitte geben Sie eine gültige Email-Adresse ein.
+                    </div>
+                </div>
+
+                <button (click)="saveContactInfo()" [disabled]="contactForm.invalid">Speichern</button>
+            </form>
+        </div>
+
+        <div class="shipping-container">
+            <h1>Versandinformationen</h1>
+            <form [formGroup]="shippingForm">
+                <div class="form-field">
+                    <label for="address">Adresse</label>
+                    <input type="text" id="address" formControlName="address" placeholder="Straße und Hausnummer"
+                        [class.invalid]="shippingForm.get('address')?.invalid && shippingForm.get('address')?.touched">
+                    <div class="error-message"
+                        *ngIf="shippingForm.get('address')?.invalid && shippingForm.get('address')?.touched">
+                        Bitte geben Sie eine gültige Adresse ein.
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="city">Stadt</label>
+                    <input type="text" id="city" formControlName="city" placeholder="Stadt"
+                        [class.invalid]="shippingForm.get('city')?.invalid && shippingForm.get('city')?.touched">
+                    <div class="error-message"
+                        *ngIf="shippingForm.get('city')?.invalid && shippingForm.get('city')?.touched">
+                        Bitte geben Sie eine Stadt ein.
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="postalCode">Postleitzahl</label>
+                    <input type="text" id="postalCode" formControlName="postalCode" placeholder="Postleitzahl"
+                        [class.invalid]="shippingForm.get('postalCode')?.invalid && shippingForm.get('postalCode')?.touched">
+                    <div class="error-message"
+                        *ngIf="shippingForm.get('postalCode')?.invalid && shippingForm.get('postalCode')?.touched">
+                        Bitte geben Sie eine gültige Postleitzahl ein (5 Ziffern).
+                    </div>
+                </div>
+
+                <button (click)="saveShippingInfo()" [disabled]="shippingForm.invalid">Speichern</button>
+            </form>
+        </div>
+
+        <div class="payment-container">
+            <h1>Zahlungsinformationen</h1>
+            <form [formGroup]="paymentForm">
+                <div class="form-field">
+                    <label for="cardNumber">Kreditkartennummer</label>
+                    <input type="text" id="cardNumber" formControlName="cardNumber"
+                        placeholder="Kreditkartennummer (16 Ziffern)"
+                        [class.invalid]="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched">
+                    <div class="error-message"
+                        *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched">
+                        Bitte geben Sie eine gültige Kreditkartennummer ein (16 Ziffern).
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="expiryDate">Gültig bis</label>
+                    <input type="text" id="expiryDate" formControlName="expiryDate" placeholder="MM/JJ"
+                        [class.invalid]="paymentForm.get('expiryDate')?.invalid && paymentForm.get('expiryDate')?.touched">
+                    <div class="error-message"
+                        *ngIf="paymentForm.get('expiryDate')?.invalid && paymentForm.get('expiryDate')?.touched">
+                        Bitte geben Sie ein gültiges Ablaufdatum ein (MM/JJ).
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="cvv">Sicherheitscode</label>
+                    <input type="text" id="cvv" formControlName="cvv" placeholder="CVV (3 Ziffern)"
+                        [class.invalid]="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched">
+                    <div class="error-message"
+                        *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched">
+                        Bitte geben Sie einen gültigen Sicherheitscode ein (3 Ziffern).
+                    </div>
+                </div>
+
+                <button (click)="processPayment()" [disabled]="paymentForm.invalid || processingPayment"
+                    [class.processing]="processingPayment">
+                    {{ processingPayment ? 'Verarbeite Zahlung...' : 'Bezahlen' }}
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="summary-container">
+        <h1>Bestellübersicht</h1>
+        <div class="cart-empty" *ngIf="cartItems.length === 0">
+            <p>Ihr Warenkorb ist leer</p>
+            <button routerLink="/product-browser" class="return-btn">Zurück zum Shop</button>
+        </div>
+
+        <div *ngIf="cartItems.length > 0">
+            <ul class="cart-items">
+                <li *ngFor="let item of cartItems">
+                    <div class="item-info">
+                        <img [src]="item.product.imageUrl || '/placeholder1.jpg'" [alt]="item.product.name"
+                            onerror="this.src='/placeholder1.jpg'">
+                        <div class="item-details">
+                            <h3>{{ item.product.name }}</h3>
+                            <p>{{ item.product.marke || item.product.Marke }}</p>
+                            <p class="item-quantity">Menge: {{ item.quantity }}</p>
+                        </div>
+                    </div>
+                    <span class="item-price">{{ (item.product.price * item.quantity).toFixed(2) }}€</span>
+                </li>
+            </ul>
+
+            <div class="price-summary">
+                <div class="price-row">
+                    <span>Produktpreise</span>
+                    <span>{{ subtotal.toFixed(2) }}€</span>
+                </div>
+                <div class="price-row">
+                    <span>Versandkosten</span>
+                    <span>{{ shipping.toFixed(2) }}€</span>
+                </div>
+                <div class="price-row total">
+                    <span>Gesamtbetrag</span>
+                    <span>{{ total.toFixed(2) }}€</span>
+                </div>
+            </div>
+
+            <button class="checkout-button" [disabled]="!isFormValid || processingPayment" (click)="processPayment()">
+                Bestellung abschließen
+            </button>
+
+            <button routerLink="/basket" class="back-button">
+                Zurück zum Warenkorb
+            </button>
+        </div>
+    </div>
 </div>
 
-
-
-    
+<div class="checkout-success" *ngIf="checkoutComplete">
+    <div class="success-content">
+        <h1>Vielen Dank für Ihre Bestellung!</h1>
+        <div class="success-icon">✓</div>
+        <p>Ihre Bestellung wurde erfolgreich abgeschlossen.</p>
+        <p>Eine Bestätigungs-E-Mail wurde an Sie gesendet.</p>
+        <div class="order-summary">
+            <p class="order-number">Bestellnummer: {{ orderNumber }}</p>
+            <p class="order-total">Gesamtbetrag: {{ total.toFixed(2) }}€</p>
+            <p class="order-items">Anzahl der Artikel: {{ getItemCount() }}</p>
+        </div> <button (click)="returnToShopping()" class="continue-shopping">
+            Weiter einkaufen
+        </button>
+    </div>
+</div>

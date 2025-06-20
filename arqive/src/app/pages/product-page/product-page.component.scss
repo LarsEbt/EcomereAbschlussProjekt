@@ -25,9 +25,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     white-space: nowrap;
-    /* Verhindert Textumbruch */
-    margin-top: 20px;
-    /* Abstand nach oben */
+
 }
 
 .add-to-cart:hover {
@@ -218,6 +216,45 @@
             background-color: #333;
         }
     }
+}
+
+/* Styling für die Aktions-Buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.add-to-cart,
+.buy-now {
+    flex: 1;
+    height: 52px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.add-to-cart {
+    background-color: #000000;
+    color: #fff;
+}
+
+.add-to-cart:hover {
+    background-color: #333;
+}
+
+.buy-now {
+    background-color: #f5f5f5;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.buy-now:hover {
+    background-color: #e0e0e0;
 }
 
 /* Responsive Design */

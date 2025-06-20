@@ -878,6 +878,8 @@
 .details h1 {
   font-size: 48px;
   margin-top: 0;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .detailsList {
@@ -1159,4 +1161,26 @@ body {
   .price {
     font-size: 28px;
   }
+}
+
+.add-to-cart-btn {
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #333;
+}
+
+/* Verstecke den Button bei Platzhaltern */
+li:not([routerLink]) .add-to-cart-btn {
+  display: none;
 }

@@ -17,8 +17,11 @@
       <li class="icon">
         <a href=""><img src="/user.png" alt="User" width="48" height="48" /></a>
       </li>
-      <li class="icon">
-        <a routerLink="/basket"><img src="/warenkorb.png" alt="Warenkorb" width="48" height="48" /></a>
+      <li class="icon cart-icon">
+        <a routerLink="/basket">
+          <img src="/warenkorb.png" alt="Warenkorb" width="48" height="48" />
+          <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+        </a>
       </li>
     </div>
   </div>

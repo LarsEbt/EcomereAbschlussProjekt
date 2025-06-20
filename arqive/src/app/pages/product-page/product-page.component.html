@@ -17,7 +17,10 @@
         <h2>{{ product.marke || product.Marke }}</h2>
         <h3>{{ product.price }}€</h3>
         <p>{{ product.description }}</p>
-        <button class="add-to-cart">In den Warenkorb</button>
+        <div class="action-buttons">
+            <button class="add-to-cart" (click)="addToCart()">In den Warenkorb</button>
+            <button class="buy-now" (click)="buyNow()">Jetzt kaufen</button>
+        </div>
     </div>
 </div>
 
