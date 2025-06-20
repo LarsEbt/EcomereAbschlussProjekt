@@ -173,12 +173,12 @@
 }
 
 .shop-content {
-  width: 100%;
+  width: calc(100% - 200px);
   max-width: 1600px;
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-top: 50px;
-  padding: 0;
+  margin: 50px auto 0;
+  /* Zentriert den Inhalt mit auto links und rechts, 50px oben */
+  padding: 0 100px;
+  /* 100px Padding links und rechts */
   font-family: Inter, sans-serif;
   box-sizing: border-box;
   position: relative;
