@@ -2,9 +2,14 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    max-width: 1200px;
-    margin: 0 100px;
-    padding: 20px;
+    width: 100%;
+    max-width: 1920px;
+    /* Konsistent mit anderen Seiten für 4K-Unterstützung */
+    margin: 0 auto;
+    /* Auto margins für Zentrierung */
+    padding: 20px 100px;
+    /* 100px Padding links und rechts, konsistent mit anderen Seiten */
+    box-sizing: border-box;
 }
 
 .add-to-cart {
@@ -49,38 +54,53 @@
 
 /* Styling für den unteren Bereich */
 #unten {
-    max-width: 1200px;
-    margin: 30px 100px;
-    /* Abstand oben und unten, links und rechts */
-    padding: 20px;
+    width: 100%;
+    max-width: 1920px;
+    /* Konsistent mit anderen Seiten für 4K-Unterstützung */
+    margin: 10px auto;
+    /* Auto margins für Zentrierung */
+    padding: 0 100px;
+    /* 100px Padding links und rechts, konsistent mit anderen Seiten */
+    box-sizing: border-box;
 }
 
-#unten h1 {
+#unten>h1 {
+    margin-top: 30px;
     margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000b2;
 }
 
 #unten ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    /* Reduzieren des Abstands zwischen den Elementen */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 Spalten mit gleicher Breite */
+    gap: 20px;
+    /* Gleicher Abstand wie auf anderen Seiten */
     list-style: none;
     padding: 0;
-    margin: 0 -7.5px;
-    /* Negativer Margin zum Ausgleich des Gaps */
+    margin: 0;
+    width: 100%;
+    max-width: 1680px;
+    /* Gleiche maximale Breite wie auf Product-Browser */
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    margin-top: 25px;
 }
 
 #unten li {
-    flex: 0 0 calc(25% - 15px);
-    /* Anpassung für 4 Elemente pro Zeile */
+    width: 100%;
+    /* Füllt die gesamte Breite der Grid-Zelle */
     border: 1px solid #eee;
     border-radius: 8px;
     padding: 15px;
     transition: transform 0.3s ease;
     box-sizing: border-box;
-    /* Stellt sicher, dass Padding nicht zur Breite addiert wird */
-    margin: 0 0 15px 0;
-    /* Unten etwas Abstand */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #unten li:hover {
@@ -94,18 +114,19 @@
     object-fit: contain;
 }
 
-#unten h1 {
+#unten li h1 {
     font-size: 1.2rem;
     margin: 10px 0 5px;
+    font-weight: normal;
 }
 
-#unten h2 {
+#unten li h2 {
     font-size: 0.9rem;
     color: #666;
     margin: 5px 0;
 }
 
-#unten p {
+#unten li p {
     font-weight: bold;
     color: #333;
     margin-top: 10px;
@@ -127,13 +148,56 @@
         margin-top: 20px;
     }
 
-    #unten li {
-        flex: 0 0 calc(50% - 20px);
+    #unten ul {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 Spalten auf Tablets */
     }
 }
 
 @media (max-width: 480px) {
-    #unten li {
-        flex: 0 0 100%;
+    #unten ul {
+        grid-template-columns: 1fr;
+        /* 1 Spalte auf Mobilgeräten */
+    }
+}
+
+/* Responsive Media Queries für verschiedene Bildschirmgrößen */
+/* 4K Bildschirme */
+@media (min-width: 2560px) {
+    #unten ul {
+        max-width: 2240px;
+    }
+}
+
+/* Große Desktop-Bildschirme */
+@media (min-width: 1921px) and (max-width: 2559px) {
+    #unten ul {
+        max-width: 1840px;
+    }
+}
+
+/* Standard Desktop (1080p) */
+@media (min-width: 1441px) and (max-width: 1920px) {
+    #unten ul {
+        max-width: 1680px;
+    }
+}
+
+/* Kleinere Desktop-Bildschirme und Laptops */
+@media (min-width: 1281px) and (max-width: 1440px) {
+    #unten ul {
+        max-width: 1320px;
+    }
+}
+
+/* Tablet Landscape und kleine Laptops */
+@media (min-width: 1024px) and (max-width: 1280px) {
+    #unten ul {
+        max-width: 1000px;
+    }
+
+    #top,
+    #unten {
+        padding: 0 50px;
     }
 }
