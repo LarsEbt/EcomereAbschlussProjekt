@@ -36,7 +36,6 @@ export class ProductBrowserComponent implements OnInit {
   ngOnInit(): void {
     this.loadProducts();
   }
-
   loadProducts(): void {
     this.productService.getProducts().subscribe({
       next: (products) => {        console.log('Alle Produkte geladen:', products.length);
@@ -44,6 +43,10 @@ export class ProductBrowserComponent implements OnInit {
         // Produkte nach Kategorie filtern
         this.handtaschenProducts = this.productService.filterProductsByCategory(products, 'Handtasche');
         this.schmuckProducts = this.productService.filterProductsByCategory(products, 'Schmuck');
+        
+        // Produkte nach ID sortieren (aufsteigend)
+        this.handtaschenProducts.sort((a, b) => a.id - b.id);
+        this.schmuckProducts.sort((a, b) => a.id - b.id);
         
         console.log('Handtaschen:', this.handtaschenProducts.length);
         console.log('Schmuck:', this.schmuckProducts.length);
