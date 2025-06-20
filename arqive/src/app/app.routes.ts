@@ -30,8 +30,7 @@ export const routes: Routes = [
     path: 'basket',
     component: BasketComponent,
     title: 'Warenkorb',
-  },
-  {
+  },  {
     path: 'payment',
     component: PaymentComponent,
     title: 'Bezahlung',
