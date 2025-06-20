@@ -524,8 +524,8 @@
   grid-template-areas:
     "item1 item2"
     "item1 item3";
-  height: 1000px;
-  /* Höhe auf 1000px gesetzt */
+  height: 900px;
+  /* Optimierte Höhe für besseres Bildverhältnis */
   margin-bottom: 40px;
   justify-content: center;
   /* Zentriert das Grid */
@@ -558,6 +558,7 @@
   box-sizing: border-box;
   margin-bottom: 20px;
   height: 75%;
+  position: relative;
 }
 
 .showList .image-wrapper img {
@@ -590,7 +591,13 @@
 /* Spezielle Anpassungen für das große Bild in der showList */
 .showListItem:nth-child(1) {
   .image-wrapper {
-    height: 80%;
+    height: 85%;
+  }
+
+  .image-wrapper img {
+    object-position: center;
+    height: 100%;
+    width: 100%;
   }
 
   h3 {
@@ -616,10 +623,26 @@
 
 .showListItem:nth-child(2) {
   grid-area: item2;
+
+  .image-wrapper {
+    padding: 10px;
+  }
+
+  .image-wrapper img {
+    object-fit: contain;
+  }
 }
 
 .showListItem:nth-child(3) {
   grid-area: item3;
+
+  .image-wrapper {
+    padding: 10px;
+  }
+
+  .image-wrapper img {
+    object-fit: contain;
+  }
 }
 
 .NormalProductList {
@@ -740,6 +763,20 @@
   }
 }
 
+@media (max-width: 1400px) {
+  .showList {
+    grid-template-columns: 600px 600px;
+    height: 700px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .showList {
+    grid-template-columns: 700px 700px;
+    height: 800px;
+  }
+}
+
 @media (max-width: 1380px) {
   .showList {
     grid-template-columns: 500px 500px;
@@ -757,4 +794,23 @@
       "item3";
     height: auto;
   }
+}
+
+.large-image {
+  object-fit: cover !important;
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  transition: transform 0.3s ease;
+}
+
+.large-image:hover {
+  transform: scale(1.02);
+}
+
+.small-image {
+  object-fit: contain !important;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  padding: 5px !important;
 }

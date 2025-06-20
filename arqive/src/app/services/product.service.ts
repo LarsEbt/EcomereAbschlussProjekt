@@ -36,15 +36,34 @@ export class ProductService {
     const headers = new HttpHeaders({
       'apikey': this.apiKey,
       'Content-Type': 'application/json'
-    });
-
-    return this.http.get<Product[]>(`${this.apiUrl}?select=*`, { headers }).pipe(
+    });    return this.http.get<Product[]>(`${this.apiUrl}?select=*`, { headers }).pipe(
       map(data => {
         console.log('Produkte erfolgreich geladen:', data.length);
         if (data && data.length > 0) {
           console.log('Beispiel-Produkt:', data[0]);
         }
-        return data;
+        
+        // Bild-URLs korrigieren
+        return data.map(product => {
+          if (product.imageUrl) {
+            // Backslashes durch Slashes ersetzen
+            let fixedPath = product.imageUrl.replace(/\\/g, '/');
+            
+            // Prüfen, ob es ein relativer Pfad ist und entsprechend anpassen
+            if (fixedPath.startsWith('arqive/public/') || fixedPath.startsWith('arqive\\public\\')) {
+              fixedPath = fixedPath.replace(/^arqive[\\\/]public[\\\/]/, '');
+            }
+            
+            // Sicherstellen, dass die URL mit / beginnt, wenn sie relativ ist
+            if (!fixedPath.startsWith('http') && !fixedPath.startsWith('/')) {
+              fixedPath = '/' + fixedPath;
+            }
+            
+            console.log(`Bild-URL korrigiert: "${product.imageUrl}" -> "${fixedPath}"`);
+            product.imageUrl = fixedPath;
+          }
+          return product;
+        });
       })
     );
   }
