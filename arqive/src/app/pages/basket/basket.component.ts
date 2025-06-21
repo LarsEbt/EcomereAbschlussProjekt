@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartService, CartItem } from '../../services/cart.service';
+import { PricePipe } from '../../pipes/price.pipe';
 
 @Component({
   selector: 'app-basket',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PricePipe],
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.scss'
 })

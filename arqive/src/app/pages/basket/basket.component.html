@@ -9,7 +9,7 @@
                 <div class="product-details">
                     <h2>{{ item.product.name }}</h2>
                     <p>{{ item.product.marke || item.product.Marke }}</p>
-                    <h3>{{ item.product.price }}€</h3>
+                    <h3>{{ item.product.price | price }}</h3>
                     <div class="quantity-controls">
                         <button class="quantity-btn" (click)="decreaseQuantity(item)">-</button>
                         <span class="quantity">{{ item.quantity }}</span>
@@ -24,15 +24,15 @@
         <div class="price-table">
             <div class="price-row">
                 <h2>Produktpreise</h2>
-                <span class="price">{{ subtotal.toFixed(2) }}€</span>
+                <span class="price">{{ subtotal | price }}</span>
             </div>
             <div class="price-row border-bottom">
                 <h2>Versandkosten</h2>
-                <span class="price">{{ shipping.toFixed(2) }}€</span>
+                <span class="price">{{ shipping | price }}</span>
             </div>
             <div class="price-row">
                 <h2>Gesamtbetrag</h2>
-                <span class="price">{{ total.toFixed(2) }}€</span>
+                <span class="price">{{ total | price }}</span>
             </div>
         </div>
         <div class="basket-actions">

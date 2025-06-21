@@ -93,8 +93,7 @@
     </div>
     <div class="handtaschen">
       <h1>Handtaschen</h1>
-      <ul class="showList">
-        <!-- Die ersten 3 Handtaschen-Produkte aus der Datenbank -->
+      <ul class="showList"> <!-- Die ersten 3 Handtaschen-Produkte aus der Datenbank -->
         <li class="showListItem" *ngFor="let product of handtaschenProducts.slice(0, SHOW_LIST_COUNT); let i = index"
           [routerLink]="['/product-page', product.id]">
           <div class="image-wrapper">
@@ -103,7 +102,7 @@
           </div>
           <h3 class="product-name">{{ product.name }}</h3>
           <p class="product-brand">{{ product.marke || product.Marke }}</p>
-          <h3 class="price">{{ product.price || 0 }}€</h3>
+          <h3 class="price">{{ product.price | price }}</h3>
           <button class="add-to-cart-btn" (click)="addToCart(product, $event)">In den Warenkorb</button>
         </li>
 
@@ -130,7 +129,7 @@
           </div>
           <h3 class="product-name">{{ product.name }}</h3>
           <p class="product-brand">{{ product.marke || product.Marke }}</p>
-          <h3 class="price">{{ product.price || 0 }}€</h3>
+          <h3 class="price">{{ product.price | price }}</h3>
           <button class="add-to-cart-btn" (click)="addToCart(product, $event)">In den Warenkorb</button>
         </li>
 
@@ -148,8 +147,7 @@
     </div>
     <div class="schmuck">
       <h1>Accessoirs & Schmuck</h1>
-      <ul class="showList">
-        <!-- Die ersten 3 Schmuck-Produkte aus der Datenbank -->
+      <ul class="showList"> <!-- Die ersten 3 Schmuck-Produkte aus der Datenbank -->
         <li class="showListItem" *ngFor="let product of schmuckProducts.slice(0, SHOW_LIST_COUNT); let i = index"
           [routerLink]="['/product-page', product.id]">
           <div class="image-wrapper">
@@ -158,7 +156,7 @@
           </div>
           <h3 class="product-name">{{ product.name }}</h3>
           <p class="product-brand">{{ product.marke || product.Marke }}</p>
-          <h3 class="price">{{ product.price || 0 }}€</h3>
+          <h3 class="price">{{ product.price | price }}</h3>
           <button class="add-to-cart-btn" (click)="addToCart(product, $event)">In den Warenkorb</button>
         </li>
 
@@ -175,8 +173,7 @@
           <h3 class="price">0.00€</h3>
         </li>
       </ul>
-      <ul class="NormalProductList">
-        <!-- Restliche Schmuck-Produkte (ab dem 4. Produkt) -->
+      <ul class="NormalProductList"> <!-- Restliche Schmuck-Produkte (ab dem 4. Produkt) -->
         <li class="NormalProductListItem" *ngFor="let product of schmuckProducts.slice(SHOW_LIST_COUNT)"
           [routerLink]="['/product-page', product.id]">
           <div class="image-wrapper">
@@ -185,7 +182,7 @@
           </div>
           <h3 class="product-name">{{ product.name }}</h3>
           <p class="product-brand">{{ product.marke || product.Marke }}</p>
-          <h3 class="price">{{ product.price || 0 }}€</h3>
+          <h3 class="price">{{ product.price | price }}</h3>
           <button class="add-to-cart-btn" (click)="addToCart(product, $event)">In den Warenkorb</button>
         </li>
 

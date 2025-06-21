@@ -3,11 +3,12 @@ import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { PricePipe } from '../../pipes/price.pipe';
 
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, PricePipe],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss',
 })

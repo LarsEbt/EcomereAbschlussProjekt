@@ -11,11 +11,10 @@
     <div class="imgWrapper">
         <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name" onerror="this.src='placeholder1.jpg'">
     </div>
-
     <div id="rechteSeite">
         <h1>{{ product.name }}</h1>
         <h2>{{ product.marke || product.Marke }}</h2>
-        <h3>{{ product.price }}€</h3>
+        <h3>{{ product.price | price }}</h3>
         <p>{{ product.description }}</p>
         <div class="action-buttons">
             <button class="add-to-cart" (click)="addToCart()">In den Warenkorb</button>
@@ -27,12 +26,12 @@
 <div *ngIf="product && !loading && relatedProducts.length > 0" id="unten">
     <h1>Verwandte Produkte</h1>
     <ul>
-        <li *ngFor="let relatedProduct of relatedProducts" [routerLink]="['/product-page', relatedProduct.id]">
-            <img [src]="relatedProduct.imageUrl || 'placeholder1.jpg'" [alt]="relatedProduct.name"
+        <li *ngFor="let relatedProduct of relatedProducts" [routerLink]="['/product-page', relatedProduct.id]"> <img
+                [src]="relatedProduct.imageUrl || 'placeholder1.jpg'" [alt]="relatedProduct.name"
                 onerror="this.src='placeholder1.jpg'">
             <h1>{{ relatedProduct.name }}</h1>
             <h2>{{ relatedProduct.marke || relatedProduct.Marke }}</h2>
-            <p>{{ relatedProduct.price }}€</p>
+            <p>{{ relatedProduct.price | price }}</p>
         </li>
     </ul>
 </div>

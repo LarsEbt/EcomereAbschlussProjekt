@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { PricePipe } from '../../pipes/price.pipe';
 
 @Component({  
   selector: 'app-product-browser',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, PricePipe],
   templateUrl: './product-browser.component.html',
   styleUrls: ['./product-browser.component.scss'],
 })
