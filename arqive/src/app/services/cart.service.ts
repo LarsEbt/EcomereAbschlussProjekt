@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product, ProductService } from './product.service';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface CartItem {
   product: Product;
@@ -20,10 +21,18 @@ export class CartService {
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   private cartTotalSubject = new BehaviorSubject<number>(0);
   private cartLoaded = false;
+  private isBrowser: boolean;
 
-  constructor(private productService: ProductService) {
+  constructor(
+    private productService: ProductService,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    
     // Beim Start versuchen, den gespeicherten Warenkorb aus dem localStorage zu laden
-    this.loadCart();
+    if (this.isBrowser) {
+      this.loadCart();
+    }
   }
 
   getCartItems(): Observable<CartItem[]> {
@@ -112,17 +121,19 @@ export class CartService {
 
   private updateCart(): void {
     // BehaviorSubjects mit aktuellen Werten aktualisieren
-    this.cartItemsSubject.next([...this.cartItems]);
-    this.cartTotalSubject.next(this.calculateTotal());
+    this.cartItemsSubject.next([...this.cartItems]);    this.cartTotalSubject.next(this.calculateTotal());
     
     // Warenkorb im localStorage speichern
-    this.saveCart();
+    if (this.isBrowser) {
+      this.saveCart();
+    }
     
     console.log('Warenkorb aktualisiert:', this.cartItems);
     console.log('Gesamtsumme:', this.calculateTotal());
   }
-
   private saveCart(): void {
+    if (!this.isBrowser) return;
+    
     try {
       // Da Product-Objekte Methoden oder zirkuläre Referenzen enthalten könnten,
       // speichern wir nur die notwendigen Daten
@@ -136,8 +147,9 @@ export class CartService {
       console.error('Fehler beim Speichern des Warenkorbs:', error);
     }
   }
-
   private loadCart(): void {
+    if (!this.isBrowser) return;
+    
     try {
       const savedCart = localStorage.getItem('cart');
       
