@@ -94,9 +94,20 @@ export class CartService {
   getItemCount(): number {
     return this.cartItems.reduce((count, item) => count + item.quantity, 0);
   }
-
   calculateTotal(): number {
-    return this.cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+    // Sicherstellen, dass der Preis als Zahl verarbeitet wird
+    return this.cartItems.reduce((total, item) => {
+      const price = typeof item.product.price === 'string' 
+        ? parseFloat(item.product.price) 
+        : item.product.price;
+        
+      if (isNaN(price)) {
+        console.error('Ungültiger Preis für Produkt:', item.product);
+        return total;
+      }
+      
+      return total + (price * item.quantity);
+    }, 0);
   }
 
   private updateCart(): void {

@@ -50,9 +50,16 @@ export class BasketComponent implements OnInit {
   clearCart(): void {
     this.cartService.clearCart();
   }
-
   calculateTotals(): void {
     this.subtotal = this.cartService.calculateTotal();
+    
+    // Sicherstellen, dass der Subtotal gültig ist
+    if (isNaN(this.subtotal)) {
+      console.error('Ungültiger Subtotal-Wert:', this.subtotal);
+      this.subtotal = 0;
+    }
+    
     this.total = this.subtotal + this.shipping;
+    console.log('Warenkorb Summen berechnet:', { subtotal: this.subtotal, shipping: this.shipping, total: this.total });
   }
 }

@@ -42,9 +42,17 @@ export class ProductService {
         if (data && data.length > 0) {
           console.log('Beispiel-Produkt:', data[0]);
         }
-        
-        // Bild-URLs korrigieren
+          // Bild-URLs korrigieren und Preise als Zahlen sicherstellen
         return data.map(product => {
+          // Preis als Zahl sicherstellen
+          if (typeof product.price === 'string') {
+            product.price = parseFloat(product.price);
+            if (isNaN(product.price)) {
+              console.error('Ungültiger Preis für Produkt:', product);
+              product.price = 0; // Default-Wert setzen
+            }
+          }
+          
           if (product.imageUrl) {
             // Backslashes durch Slashes ersetzen
             let fixedPath = product.imageUrl.replace(/\\/g, '/');
@@ -95,9 +103,18 @@ export class ProductService {
       map(data => {
         if (data && data.length > 0) {
           console.log('Produkt gefunden:', data[0]);
-          
-          // Bild-URL korrigieren
+            // Bild-URL korrigieren
           let product = data[0];
+          
+          // Preis als Zahl sicherstellen
+          if (typeof product.price === 'string') {
+            product.price = parseFloat(product.price);
+            if (isNaN(product.price)) {
+              console.error('Ungültiger Preis für Produkt:', product);
+              product.price = 0; // Default-Wert setzen
+            }
+          }
+          
           if (product.imageUrl) {
             // Backslashes durch Slashes ersetzen
             let fixedPath = product.imageUrl.replace(/\\/g, '/');
