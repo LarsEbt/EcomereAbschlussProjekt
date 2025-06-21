@@ -1,10 +1,43 @@
 :host {
     display: block;
+    position: relative;
+    z-index: 1000;
+    /* Höher als andere Elemente */
 }
 
 /* Flowise chatbot styling */
 :root {
-    --color-chatbot: #D0E7F9;
-    /* Default chatbot color */
-    //#4b49ac
+    --color-chatbot: #D4AF37;
+    /* Gold Chatbot Farbe */
+}
+
+/* Icon styling für den Chatbot-Button */
+.fw-chat-btn svg,
+.fw-chat-btn img {
+    width: 24px !important;
+    height: 24px !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Erhöht die Sichtbarkeit des Chatbot-Buttons */
+#flowise-container {
+    position: relative;
+    z-index: 9999 !important;
+    /* Sicherstellen, dass es über anderen Elementen liegt */
+}
+
+/* Zusätzliche Styles für den Flowise Chatbot-Button */
+.fw-chat-btn {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    /* Stärkerer Schatten */
+    transition: transform 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.fw-chat-btn:hover {
+    transform: scale(1.1) !important;
+    /* Leichter Hover-Effekt */
 }
