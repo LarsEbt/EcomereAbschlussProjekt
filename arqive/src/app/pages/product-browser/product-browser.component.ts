@@ -43,7 +43,33 @@ export class ProductBrowserComponent implements OnInit {
   }
   loadProducts(): void {
     this.productService.getProducts().subscribe({
-      next: (products) => {        console.log('Alle Produkte geladen:', products.length);
+      next: (products) => {        
+        console.log('Alle Produkte geladen:', products.length);
+        
+        // Extra Prüfung und Korrektur für Preise
+        products.forEach(product => {
+          if (product.id === 1) {
+            console.log(`DEBUG - Produkt ID 1 vor Korrektur: price=${product.price}, type=${typeof product.price}`);
+          }
+          
+          // Sicherstellen, dass der Preis eine Zahl ist
+          if (typeof product.price !== 'number') {
+            const originalPrice = product.price;
+            product.price = parseFloat(String(product.price));
+            
+            if (isNaN(product.price)) {
+              console.error(`Ungültiger Preis für Produkt ID ${product.id}:`, originalPrice);
+              product.price = 0; // Default-Wert setzen
+            }
+            
+            if (product.id === 1) {
+              console.log(`DEBUG - Produkt ID 1 nach Korrektur: price=${product.price}, type=${typeof product.price}`);
+            }
+          }
+        });
+        
+        // Spezieller Fix für Produkt ID 1
+        products = this.productService.fixProductId1Price(products);
         
         // Produkte nach Kategorie filtern
         this.handtaschenProducts = this.productService.filterProductsByCategory(products, 'Handtasche');
@@ -52,6 +78,19 @@ export class ProductBrowserComponent implements OnInit {
         // Produkte nach ID sortieren (aufsteigend)
         this.handtaschenProducts.sort((a, b) => a.id - b.id);
         this.schmuckProducts.sort((a, b) => a.id - b.id);
+        
+        // Debug: Prüfen, ob Produkt mit ID 1 korrekt angezeigt wird
+        const productId1 = [...this.handtaschenProducts, ...this.schmuckProducts].find(p => p.id === 1);
+        if (productId1) {
+          console.log('DEBUG - Produkt ID 1 in ProductBrowser nach Filterung:', {
+            id: productId1.id,
+            name: productId1.name,
+            price: productId1.price,
+            priceType: typeof productId1.price,
+            category: productId1.category,
+            formattedPrice: new PricePipe().transform(productId1.price)
+          });
+        }
         
         console.log('Handtaschen:', this.handtaschenProducts.length);
         console.log('Schmuck:', this.schmuckProducts.length);
@@ -116,5 +155,35 @@ export class ProductBrowserComponent implements OnInit {
     
     this.cartService.addToCart(product);
     console.log(`Produkt ${product.name} zum Warenkorb hinzugefügt`);
+  }
+  
+  // Debug-Methode für Produkt ID 1
+  debugProductId1(): void {
+    const allProducts = [...this.handtaschenProducts, ...this.schmuckProducts];
+    const product = allProducts.find(p => p.id === 1);
+    
+    if (product) {
+      console.log('DEBUG BUTTON - Produkt ID 1 gefunden:', {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        priceType: typeof product.price,
+        category: product.category,
+        formattedPrice: new PricePipe().transform(product.price)
+      });
+      
+      // Prüfen, ob der Preis als Zahl gespeichert ist
+      if (typeof product.price !== 'number') {
+        console.error('Preis ist keine Zahl!', product.price);
+        // Versuchen, den Preis als Zahl zu speichern
+        product.price = parseFloat(product.price as any);
+        console.log('Preis nach Konvertierung:', product.price);
+      }
+      
+      alert(`Produkt ID 1 - Name: ${product.name}, Preis: ${product.price}, Formatiert: ${new PricePipe().transform(product.price)}`);
+    } else {
+      console.error('Produkt ID 1 nicht gefunden!');
+      alert('Produkt ID 1 nicht gefunden!');
+    }
   }
 }

@@ -48,6 +48,17 @@ export class ProductPageComponent implements OnInit {
         this.product = product;
         console.log('Produkt geladen:', product);
         
+        // Debug: Für Produkt ID 1 detaillierten Preis prüfen
+        if (product.id === 1) {
+          console.log('DEBUG - Produkt ID 1 in ProductPage:', {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            priceType: typeof product.price,
+            formattedPrice: product.price.toFixed(2) + '€'
+          });
+        }
+        
         // Verwandte Produkte laden
         this.loadRelatedProducts();
       },
