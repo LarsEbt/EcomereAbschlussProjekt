@@ -4,6 +4,7 @@ import { ProductBrowserComponent } from './pages/product-browser/product-browser
 import { ProductPageComponent } from './pages/product-page/product-page.component';
 import { BasketComponent } from './pages/basket/basket.component';
 import { PaymentComponent } from './pages/payment/payment.component';
+import { BekkiComponent } from './pages/bekki/bekki.component';
 
 export const routes: Routes = [
   {
@@ -20,7 +21,8 @@ export const routes: Routes = [
     path: 'home',
     redirectTo: '',
     pathMatch: 'full',
-  },  {
+  },
+  {
     path: 'product-page/:id',
     component: ProductPageComponent,
     title: 'Produktseite',
@@ -29,9 +31,15 @@ export const routes: Routes = [
     path: 'basket',
     component: BasketComponent,
     title: 'Warenkorb',
-  },  {
+  },
+  {
     path: 'payment',
     component: PaymentComponent,
     title: 'Bezahlung',
+  },
+  {
+    path: 'bekki',
+    component: BekkiComponent,
+    title: 'Bekki - Unser Chatbot',
   },
 ];
