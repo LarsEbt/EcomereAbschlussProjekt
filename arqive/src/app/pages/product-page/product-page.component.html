@@ -24,7 +24,7 @@
 </div>
 
 <div *ngIf="product && !loading && relatedProducts.length > 0" id="unten">
-    <h1>Verwandte Produkte</h1>
+    <h1>Vervollständige Sie Ihren Look</h1>
     <ul>
         <li *ngFor="let relatedProduct of relatedProducts" [routerLink]="['/product-page', relatedProduct.id]"> <img
                 [src]="relatedProduct.imageUrl || 'placeholder1.jpg'" [alt]="relatedProduct.name"
