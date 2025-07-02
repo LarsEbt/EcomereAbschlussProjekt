@@ -22,8 +22,8 @@ export interface Product {
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'https://iyurydzutlzictqulskw.supabase.co/rest/v1/products';
-  private apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5dXJ5ZHp1dGx6aWN0cXVsc2t3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5MDUwMDcsImV4cCI6MjA2MzQ4MTAwN30.JnC90EvVAq0aOcd5_vq-VNT5Uz-nBMbEvNSPE2uvE9E';
+  private apiUrl = 'https://gixrdgaioogyighziggk.supabase.co/rest/v1/products';
+  private apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdpeHJkZ2Fpb29neWlnaHppZ2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE0ODk2MzQsImV4cCI6MjA2NzA2NTYzNH0.hjfoLnBLrHDnZpK-dbKwwE-ZtNPwRx8xXuPemm52v-A';
 
   constructor(private http: HttpClient) {
     console.log('ProductService: Initialisiert');
@@ -64,6 +64,12 @@ export class ProductService {
               product.price = 0; // Default-Wert setzen
             }
           }
+          
+          // Zeichenkodierung für Texte korrigieren
+          if (product.name) product.name = this.fixEncoding(product.name);
+          if (product.description) product.description = this.fixEncoding(product.description);
+          if (product.Marke) product.Marke = this.fixEncoding(product.Marke);
+          if (product.marke) product.marke = this.fixEncoding(product.marke);
           
           // Debug: Nach der Verarbeitung für Produkt ID 1
           if (product.id === 1) {
@@ -158,6 +164,12 @@ export class ProductService {
             console.log(`Spezieller Fix für Produkt ID 1 in getProductById - Neuer Preis: ${product.price}`);
           }
           
+          // Zeichenkodierung für Texte korrigieren
+          if (product.name) product.name = this.fixEncoding(product.name);
+          if (product.description) product.description = this.fixEncoding(product.description);
+          if (product.Marke) product.Marke = this.fixEncoding(product.Marke);
+          if (product.marke) product.marke = this.fixEncoding(product.marke);
+          
           if (product.imageUrl) {
             // Backslashes durch Slashes ersetzen
             let fixedPath = product.imageUrl.replace(/\\/g, '/');
@@ -221,5 +233,61 @@ export class ProductService {
     }
     
     return products;
+  }
+
+  // Hilfsfunktion zur Korrektur von Zeichenkodierungsproblemen
+  private fixEncoding(text: string): string {
+    if (!text) return text;
+    
+    // Methode 1: UTF-8 Dekodierung versuchen
+    try {
+      const decoded = decodeURIComponent(escape(text));
+      if (decoded !== text) {
+        return decoded;
+      }
+    } catch (e) {
+      // Ignorieren und weitermachen
+    }
+    
+    // Methode 2: Universelle Lösung mit TextDecoder
+    try {
+      // Text als UTF-8 neu kodieren
+      const encoder = new TextEncoder();
+      const decoder = new TextDecoder('utf-8');
+      const bytes = encoder.encode(text);
+      const correctText = decoder.decode(bytes);
+      
+      if (correctText !== text) {
+        return correctText;
+      }
+    } catch (e) {
+      // Ignorieren wenn Browser keine TextEncoder/TextDecoder unterstützt
+    }
+    
+    // Methode 3: Häufige spezielle Fälle manuell ersetzen
+    let result = text
+      // Französische Zeichen
+      .replace(/Ã©/g, 'é')
+      .replace(/Ã¨/g, 'è')
+      .replace(/Ã«/g, 'ë')
+      .replace(/Ã‰/g, 'É')
+      .replace(/CHLOÃ‰/g, 'CHLOÉ')
+      // Deutsche Umlaute
+      .replace(/Ã¶/g, 'ö')
+      .replace(/Ã¼/g, 'ü')
+      .replace(/Ã¤/g, 'ä')
+      .replace(/Ã–/g, 'Ö')
+      .replace(/Ãœ/g, 'Ü')
+      .replace(/Ã„/g, 'Ä')
+      .replace(/ÃŸ/g, 'ß');
+      
+    // Für CHLOÉ spezifisch
+    if (text.includes('CHLO')) {
+      result = result
+        .replace(/CHLOÃ‰/g, 'CHLOÉ')
+        .replace(/CHLOÃ‹/g, 'CHLOË');
+    }
+    
+    return result;
   }
 }
