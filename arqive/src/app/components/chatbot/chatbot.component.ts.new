@@ -1,0 +1,397 @@
+import { Component, OnInit, NgZone, AfterViewInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
+import { ProductService, Product } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
+
+// Interface für ChatbotToolCall
+interface ChatbotToolCall {
+  tool: string;
+  toolInput?: {
+    Query?: string;
+    filter?: string;
+    SKU?: string;
+    productId?: number;
+    Products?: string;
+    SKUs?: string;
+    page?: string;       // Für allgemeine Seitennavigation
+    category?: string;   // Für Kategorie-Filter im Product-Browser
+  };
+}
+
+@Component({
+  selector: 'app-chatbot',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './chatbot.component.html',
+  styleUrl: './chatbot.component.scss'
+})
+export class ChatbotComponent implements OnInit, AfterViewInit, OnDestroy {
+  private chatbotInitialized = false;
+  private initAttempts = 0;
+  private maxInitAttempts = 3;
+  private isProcessingToolCall = false; // Flag, um mehrfache Tool-Aufrufe zu verhindern
+  private pendingProductIds: number[] = []; // Liste der Produkt-IDs, die gerade geladen werden
+  private isBrowser: boolean;
+  
+  // Variable für Consent Dialog
+  showConsentDialog = false;
+  private consentGiven = false;
+
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+    private router: Router,
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  ngOnInit() {
+    // Browser-Funktionen nur ausführen, wenn im Browser
+    if (this.isBrowser) {
+      // Lade das Flowise Chatbot Skript nach dem Initialisieren der Komponente
+      this.loadFlowiseScript();
+      
+      // Event-Listener für Tool-Calls vom Chatbot - wird nur einmal registriert
+      this.setupToolCallListener();
+      
+      // Prüfe, ob der Benutzer bereits zugestimmt hat
+      const consentGiven = localStorage.getItem('chatbotConsentGiven');
+      this.consentGiven = consentGiven === 'true';
+    }
+  }
+
+  ngAfterViewInit() {
+    // Browser-Funktionen nur ausführen, wenn im Browser
+    if (this.isBrowser) {
+      // Prüfe nach einem kurzen Timeout, ob der Chatbot-Button sichtbar ist
+      setTimeout(() => {
+        this.checkChatbotVisibility();
+      }, 3000);
+      
+      // Erneuter Check nach 5 Sekunden, falls der Button noch nicht geladen wurde
+      setTimeout(() => {
+        this.checkChatbotVisibility();
+      }, 5000);
+    }
+  }
+
+  ngOnDestroy() {
+    // Event-Listener entfernen, um Memory-Leaks zu vermeiden
+    if (this.isBrowser) {
+      window.removeEventListener('flowiseToolCall', this.handleToolCallEvent);
+      console.log('ChatbotComponent zerstört, Event-Listener entfernt');
+    }
+  }
+  
+  /**
+   * Zeigt den Consent-Dialog an und initialisiert den Chat nach Zustimmung
+   */
+  showConsentAndInitChat() {
+    if (!this.consentGiven) {
+      this.showConsentDialog = true;
+    } else {
+      this.initFlowiseChat();
+    }
+  }
+  
+  /**
+   * Akzeptiert die Nutzung des Chatbots
+   */
+  acceptChatbot() {
+    this.consentGiven = true;
+    localStorage.setItem('chatbotConsentGiven', 'true');
+    this.showConsentDialog = false;
+    this.initFlowiseChat();
+  }
+  
+  /**
+   * Lehnt die Nutzung des Chatbots ab
+   */
+  rejectChatbot() {
+    this.showConsentDialog = false;
+    // Optional: Deaktiviere den Chatbot komplett
+    const fallbackButton = document.getElementById('chatbot-fallback');
+    if (fallbackButton) {
+      fallbackButton.style.display = 'none';
+    }
+  }
+
+  /**
+   * Prüft, ob der Chatbot sichtbar ist und zeigt ggf. den Fallback-Button an
+   */
+  checkChatbotVisibility() {
+    if (!this.isBrowser) return;
+    
+    const chatbotButton = document.querySelector('.fw-chat-btn');
+    const fallbackButton = document.getElementById('chatbot-fallback');
+    
+    if (!chatbotButton && fallbackButton) {
+      console.log('Chatbot Button nicht gefunden, zeige Fallback an');
+      fallbackButton.style.display = 'block';
+      
+      // Erneuter Initialisierungsversuch
+      if (this.initAttempts < this.maxInitAttempts && this.consentGiven) {
+        this.initAttempts++;
+        this.initFlowiseChat();
+      }
+    }
+  }
+
+  /**
+   * Flowise Script dynamisch laden
+   */  
+  loadFlowiseScript() {
+    if (!this.isBrowser) return;
+    
+    // Dynamisch Flowise Script laden
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js';
+    script.type = 'module';
+    script.onload = () => {
+      // Nachdem das Script geladen wurde, initialisieren wir den Chatbot wenn Consent gegeben
+      if (this.consentGiven) {
+        this.initFlowiseChat();
+      }
+    };
+    
+    document.head.appendChild(script);
+  }
+
+  /**
+   * Initialisiere den Flowise Chatbot nach dem Script-Laden
+   */
+  initFlowiseChat() {
+    if (!this.isBrowser) return;
+    
+    // @ts-ignore - Chatbot wird dynamisch geladen
+    const Chatbot = window.Chatbot;
+    
+    if (!Chatbot) {
+      console.error('Flowise Chatbot konnte nicht geladen werden');
+      return;
+    }
+    
+    try {
+      console.log('Initialisiere Flowise Chatbot...');
+      
+      Chatbot.init({
+        chatflowid: "8e13a63c-06a1-44fb-8d19-faed0dc4a3d4",
+        apiHost: "https://cloud.flowiseai.com",        
+        theme: {            
+          button: {            
+            backgroundColor: "#D4AF37", // Goldfarbe beibehalten
+            right: 25,
+            bottom: 25,
+            size: 58,
+            iconColor: "#ffffff" // Weißes Icon
+          },
+          chatWindow: {
+            title: "ARQIVE Assistent - Bekki",
+            welcomeMessage: "",
+            backgroundColor: "#f8f9fa",
+            fontSize: 16,
+            height: 800, // Höhe des Chat-Fensters
+            width: 450, // Breite des Chat-Fensters
+            starterPrompts: ["Suche nach Produkten", "Öffne den Warenkorb"],
+            botMessage: {
+              backgroundColor: "#ffffff"
+            },
+            userMessage: {
+              backgroundColor: "#D4AF37"
+            },
+            textInput: {
+              placeholder: "Stellen Sie eine Frage...",
+              maxChars: 200
+            }
+          },
+          customCSS: `
+            .fw-chat-container {
+              border-radius: 16px !important; /* Rundere Ecken für das Chat-Fenster */
+              overflow: hidden;
+            }
+            .fw-chat-header {
+              border-top-left-radius: 16px !important;
+              border-top-right-radius: 16px !important;
+            }
+          `
+        },
+        // Beobachter-Konfiguration für Nachrichten und Ladezustand
+        observersConfig: {
+          // Der Bot-Nachrichtenstapel hat sich geändert
+          observeMessages: function(messages: any) {
+            console.log('Chatbot Nachrichten:', messages);
+            if (messages && messages.length > 0) {
+              const lastMessage = messages[messages.length - 1];
+              if (lastMessage && lastMessage.type === 'apiMessage' && lastMessage.usedTools && lastMessage.usedTools.length > 0) {
+                // Extrahiere den letzten verwendeten Tool-Aufruf
+                const toolCall = lastMessage.usedTools[lastMessage.usedTools.length - 1];
+                window.dispatchEvent(new CustomEvent('flowiseToolCall', { detail: toolCall }));
+              }
+            }
+          },
+          // Der Bot-Ladezustand hat sich geändert
+          observeLoading: function(loading: boolean) {
+            console.log('Chatbot Ladezustand:', loading);
+          },
+        }
+      });
+      console.log('Flowise Chatbot initialisiert');
+    } catch (error) {
+      console.error('Fehler bei der Initialisierung des Flowise Chatbots:', error);
+    }
+  }
+
+  /**
+   * Registriert den Event-Listener für Tool-Calls (nur einmal)
+   */
+  private setupToolCallListener() {
+    if (!this.isBrowser) return;
+    
+    // Entferne zuerst alle bestehenden Event-Listener für dieses Event
+    window.removeEventListener('flowiseToolCall', this.handleToolCallEvent);
+    
+    // Füge den Event-Listener neu hinzu
+    window.addEventListener('flowiseToolCall', this.handleToolCallEvent);
+  }
+
+  /**
+   * Event-Handler für Tool-Aufrufe vom Chatbot
+   */
+  private handleToolCallEvent = (event: any) => {
+    const toolCall = event.detail;
+    console.log('Tool-Aufruf empfangen:', toolCall);
+    
+    // Führe die Verarbeitung im Angular-Kontext aus
+    this.ngZone.run(() => {
+      this.handleToolCall(toolCall);
+    });
+  };
+
+  /**
+   * Verarbeitet alle Tool-Aufrufe aus einer Bot-Nachricht
+   */
+  private processToolCalls(message: any) {
+    if (message && message.usedTools && message.usedTools.length > 0) {
+      message.usedTools.forEach((toolCall: any) => {
+        this.handleToolCall(toolCall);
+      });
+    }
+  }
+
+  /**
+   * Behandelt einen einzelnen Tool-Aufruf vom Chatbot
+   */  
+  private handleToolCall(toolCall: ChatbotToolCall) {
+    if (this.isProcessingToolCall) {
+      console.log('Es wird bereits ein Tool-Aufruf verarbeitet, überspringe:', toolCall);
+      return;
+    }
+    
+    // Setze das Flag, um mehrfache gleichzeitige Aufrufe zu verhindern
+    this.isProcessingToolCall = true;
+    
+    try {
+      console.log('Verarbeite Tool-Aufruf:', toolCall);
+      
+      switch (toolCall.tool) {
+        case 'searchProducts':
+          // Produkte suchen
+          if (toolCall.toolInput && toolCall.toolInput.Query) {
+            console.log('Suche nach Produkten mit Query:', toolCall.toolInput.Query);
+            // Hier würde Produktsuche implementiert werden
+          }
+          break;
+          
+        case 'openProductPage':
+          // Produktseite öffnen
+          if (toolCall.toolInput && toolCall.toolInput.productId) {
+            const productId = Number(toolCall.toolInput.productId);
+            console.log('Öffne Produktseite für ID:', productId);
+            this.router.navigate(['/product-page', productId]);
+          }
+          break;
+          
+        case 'addToBasket':
+          // Produkt zum Warenkorb hinzufügen
+          if (toolCall.toolInput && toolCall.toolInput.productId) {
+            const productId = Number(toolCall.toolInput.productId);
+            console.log('Füge Produkt zum Warenkorb hinzu, ID:', productId);
+            this.addProductToBasket(productId);
+          }
+          break;
+          
+        case 'openBasket':
+          // Warenkorb öffnen
+          console.log('Öffne Warenkorb');
+          this.router.navigate(['/basket']);
+          break;
+          
+        case 'navigateTo':
+          // Zu bestimmter Seite navigieren
+          if (toolCall.toolInput && toolCall.toolInput.page) {
+            console.log('Navigiere zu Seite:', toolCall.toolInput.page);
+            switch (toolCall.toolInput.page.toLowerCase()) {
+              case 'home':
+                this.router.navigate(['/']);
+                break;
+              case 'products':
+              case 'product-browser':
+                // Optional mit Kategorie-Filter
+                if (toolCall.toolInput.category) {
+                  this.router.navigate(['/product-browser'], { queryParams: { category: toolCall.toolInput.category } });
+                } else {
+                  this.router.navigate(['/product-browser']);
+                }
+                break;
+              case 'basket':
+              case 'cart':
+                this.router.navigate(['/basket']);
+                break;
+              default:
+                console.log('Unbekannte Seite:', toolCall.toolInput.page);
+            }
+          }
+          break;
+          
+        default:
+          console.log('Unbekannter Tool-Aufruf:', toolCall.tool);
+      }
+    } catch (error) {
+      console.error('Fehler bei der Verarbeitung des Tool-Aufrufs:', error);
+    } finally {
+      // Setze das Flag zurück, um weitere Aufrufe zu ermöglichen
+      this.isProcessingToolCall = false;
+    }
+  }
+
+  /**
+   * Fügt ein Produkt zum Warenkorb hinzu
+   */
+  private addProductToBasket(productId: number) {
+    // Prüfe, ob das Produkt bereits geladen wird
+    if (this.pendingProductIds.includes(productId)) {
+      console.log('Produkt wird bereits geladen:', productId);
+      return;
+    }
+    
+    // Zu den ausstehenden Produkten hinzufügen
+    this.pendingProductIds.push(productId);
+    
+    this.productService.getProductById(productId).subscribe({
+      next: (product) => {
+        this.cartService.addToCart(product, 1);
+        console.log('Produkt zum Warenkorb hinzugefügt:', product);
+        // Aus der Liste der ausstehenden Produkte entfernen
+        this.pendingProductIds = this.pendingProductIds.filter((id: number) => id !== productId);
+      },
+      error: (error) => {
+        console.error('Fehler beim Laden des Produkts:', error);
+        // Aus der Liste der ausstehenden Produkte entfernen
+        this.pendingProductIds = this.pendingProductIds.filter((id: number) => id !== productId);
+      }
+    });
+  }
+}

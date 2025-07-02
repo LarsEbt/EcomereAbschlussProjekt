@@ -3,7 +3,7 @@
 
 <!-- Fallback-Button, falls der Chatbot nicht automatisch geladen wird -->
 <div id="chatbot-fallback" style="display: none; position: fixed; bottom: 25px; right: 25px; z-index: 9999;">
-    <button (click)="initFlowiseChat()"
+    <button (click)="showConsentAndInitChat()"
         style="width: 58px; height: 58px; border-radius: 50%; background-color: #D4AF37; border: none; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;">
         <!-- Standard Flowise Chat Icon -->
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
