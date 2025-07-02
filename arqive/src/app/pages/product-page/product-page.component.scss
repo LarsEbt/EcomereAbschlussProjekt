@@ -10,6 +10,15 @@
     padding: 20px 100px;
     /* 100px Padding links und rechts, konsistent mit anderen Seiten */
     box-sizing: border-box;
+
+    @media (max-width: 1200px) {
+        padding: 20px 60px;
+    }
+
+    @media (max-width: 768px) {
+        padding: 20px;
+        flex-direction: column;
+    }
 }
 
 .add-to-cart {
@@ -26,6 +35,16 @@
     transition: background-color 0.3s ease;
     white-space: nowrap;
 
+    @media (max-width: 768px) {
+        font-size: 20px;
+        height: 48px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 18px;
+        height: 44px;
+        padding: 0.6rem 1.2rem;
+    }
 }
 
 .add-to-cart:hover {
@@ -37,6 +56,12 @@
     flex: 0 0 45%;
     /* Bild nimmt 45% der Breite ein */
     margin-right: 5%;
+
+    @media (max-width: 768px) {
+        flex: 0 0 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
 }
 
 .imgWrapper img {
@@ -47,11 +72,26 @@
     border-radius: 8px;
     padding: 15px;
     box-sizing: border-box;
+
+    @media (max-width: 1200px) {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+    }
+
+    @media (max-width: 768px) {
+        max-height: 400px;
+    }
 }
 
 #rechteSeite {
     flex: 0 0 50%;
     /* Rechte Seite nimmt 50% der Breite ein */
+
+    @media (max-width: 768px) {
+        flex: 0 0 100%;
+        width: 100%;
+    }
 }
 
 /* Styling für die Textinhalte auf der rechten Seite */
@@ -62,6 +102,19 @@
     line-height: 120.00000476837158%;
     letter-spacing: 0%;
     margin-bottom: 24px;
+
+    @media (max-width: 1200px) {
+        font-size: 32px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 28px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
 }
 
 #rechteSeite h2 {

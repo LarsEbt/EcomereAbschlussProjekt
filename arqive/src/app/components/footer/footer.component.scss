@@ -22,6 +22,16 @@
   /* Konsistente 100px Padding links und rechts */
   background-color: white;
   flex-wrap: wrap;
+
+  @media (max-width: 1200px) {
+    padding: 2rem 60px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 20px;
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
 
 h1 {
@@ -80,10 +90,49 @@ li {
   margin: 0;
   display: flex;
   gap: 3rem;
+
+  @media (max-width: 768px) {
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 480px) {
+    gap: 1.5rem;
+    flex-direction: column;
+  }
 }
 
 #footer-links li {
   font-size: 1rem;
   color: #333;
   cursor: pointer;
+}
+
+/* Additional responsive adjustments */
+@media (max-width: 768px) {
+  .footer-line {
+    margin: 40px 0 1.5rem;
+  }
+
+  #footer-social {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  #footer {
+    text-align: center;
+  }
+
+  #footer-left {
+    align-items: center;
+  }
+
+  #footer-social {
+    justify-content: center;
+  }
+
+  #footer-links ul {
+    justify-content: center;
+  }
 }

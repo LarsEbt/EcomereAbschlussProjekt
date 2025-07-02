@@ -32,8 +32,16 @@
   /* 100px Padding links und rechts */
   box-sizing: border-box;
   align-items: center;
-  padding: 0 100px;
-  /* Konsistentes Padding von 100px links und rechts */
+
+  /* Responsive padding adjustments */
+  @media (max-width: 1200px) {
+    padding: 0 60px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+    height: 90px;
+  }
 }
 
 .logo-hidden {
@@ -55,6 +63,20 @@
 
   /* 4) schärfere Kanten auf Webkit */
   -webkit-font-smoothing: antialiased;
+
+  /* Responsive font size */
+  @media (max-width: 1200px) {
+    font-size: 36px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 22px;
+    letter-spacing: 0.2em;
+  }
 }
 
 .logo a {
@@ -119,6 +141,14 @@
   align-items: center;
   list-style: none;
   padding: 0;
+
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 15px;
+  }
 }
 
 .icon {
@@ -134,6 +164,16 @@
 
     img {
       transition: transform 0.3s ease;
+
+      @media (max-width: 768px) {
+        width: 40px;
+        height: 40px;
+      }
+
+      @media (max-width: 480px) {
+        width: 32px;
+        height: 32px;
+      }
     }
 
     &:hover img {

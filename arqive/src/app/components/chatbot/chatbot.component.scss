@@ -41,3 +41,31 @@
     transform: scale(1.1) !important;
     /* Leichter Hover-Effekt */
 }
+
+/* Responsive chat window */
+@media (max-width: 768px) {
+    .fw-chat-container {
+        width: calc(100% - 20px) !important;
+        max-width: 420px !important;
+        height: 700px !important;
+        bottom: 75px !important;
+        right: 10px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .fw-chat-container {
+        width: calc(100% - 20px) !important;
+        max-width: 350px !important;
+        height: 600px !important;
+        bottom: 70px !important;
+        right: 10px !important;
+    }
+
+    .fw-chat-btn {
+        width: 50px !important;
+        height: 50px !important;
+        right: 15px !important;
+        bottom: 15px !important;
+    }
+}

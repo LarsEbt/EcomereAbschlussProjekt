@@ -10,6 +10,17 @@
     padding: 20px 50px;
     /* Moved side spacing to padding */
     gap: 50px;
+
+    @media (max-width: 1200px) {
+        padding: 20px 30px;
+        gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        padding: 20px 20px;
+        gap: 30px;
+    }
 }
 
 #basket-list {
@@ -17,6 +28,11 @@
     max-width: calc(50% - 25px);
     /* Ensures exactly 50% minus half the gap */
     margin-right: 5%;
+
+    @media (max-width: 768px) {
+        max-width: 100%;
+        margin-right: 0;
+    }
 
     ul {
         list-style: none;
@@ -35,6 +51,12 @@
             position: relative;
             /* Added for absolute positioning of remove button */
 
+            @media (max-width: 480px) {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
             &:hover {
                 transform: translateY(-3px);
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -46,6 +68,10 @@
                 object-fit: contain;
                 margin: 0 20px 0 0;
                 align-self: center;
+
+                @media (max-width: 480px) {
+                    margin: 0 0 15px 0;
+                }
             }
 
             .product-details {
@@ -110,6 +136,15 @@
     border-radius: 8px;
     position: sticky;
     top: 20px;
+
+    @media (max-width: 768px) {
+        max-width: 100%;
+        position: static;
+    }
+
+    @media (max-width: 480px) {
+        padding: 20px;
+    }
 
     .price-table {
         margin-bottom: 20px;
