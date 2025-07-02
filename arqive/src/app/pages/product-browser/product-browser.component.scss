@@ -60,6 +60,19 @@
   width: 100%;
   padding: 0 100px;
   /* Behält die 100px Seitenabstände bei */
+  box-sizing: border-box;
+
+  @media (max-width: 1200px) {
+    padding: 0 60px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 30px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 20px;
+  }
 
   h1 {
     font-family: "Michroma", sans-serif;
@@ -72,6 +85,20 @@
     /* Stärkerer Schatten */
     transition: all 0.5s ease;
     position: relative;
+
+    @media (max-width: 1200px) {
+      font-size: 54px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 42px;
+      letter-spacing: 0.2em;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 32px;
+      letter-spacing: 0.15em;
+    }
 
     &:hover {
       letter-spacing: 0.3em;
@@ -113,6 +140,14 @@
     transition: all 0.5s ease;
     position: relative;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 16px;
+    }
 
     &:hover {
       font-weight: 500;
@@ -212,18 +247,14 @@
   flex-wrap: wrap;
   gap: 24px;
   background-color: #f9f9f9;
-  padding: 0;
+  padding: 24px;
   border-radius: 12px;
   border: 1px solid #e0e0e0;
   justify-content: space-between;
-  padding-bottom: 44px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   position: relative;
   box-sizing: border-box;
-  padding-top: 24px;
-  padding-left: 24px;
-  padding-right: 24px;
 
   &::before {
     content: '';
@@ -311,10 +342,12 @@
     }
   }
 
-  #price-filter {
+  #price-filter,
+  .chekbox,
+  .color-checkbox,
+  .size-checkbox {
     flex: 0 0 calc(25% - 24px);
     max-width: 260px;
-    /* 30px breiter */
     min-height: 130px;
     background-color: white;
     padding: 20px;
@@ -326,7 +359,9 @@
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
       transform: translateY(-2px);
     }
+  }
 
+  #price-filter {
     .price-inputs {
       display: flex;
       align-items: center;
@@ -476,28 +511,6 @@
       }
     }
   }
-
-  .chekbox,
-  .color-checkbox,
-  .size-checkbox {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 0 0 calc(25% - 24px);
-    max-width: 260px;
-    /* 30px breiter */
-    min-height: 130px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
-    transition: all 0.3s ease;
-
-    &:hover {
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-      transform: translateY(-2px);
-    }
-  }
 }
 
 /* Responsive Layout für Filter */
@@ -600,10 +613,9 @@
 }
 
 .showList {
-  padding: 0;
   display: grid;
-  grid-template-columns: 830px 830px;
-  /* Basiswert, wird durch Media Queries überschrieben */
+  grid-template-columns: 1fr 1fr;
+  /* Flexible Spalten statt fester Breite */
   grid-template-rows: 1fr 1fr;
   gap: 20px;
   grid-template-areas:
@@ -612,6 +624,9 @@
   height: 900px;
   /* Basiswert, wird durch Media Queries überschrieben */
   margin-bottom: 20px;
+  /* Matches NormalProductList margin-bottom */
+  margin-top: 0;
+  /* Matches NormalProductList margin-top */
   justify-content: space-between;
   /* Verteilt den Platz gleichmäßig */
   max-width: 1680px;
@@ -620,6 +635,26 @@
   margin-right: auto;
   /* Zentriert die Liste */
   width: 100%;
+  box-sizing: border-box;
+  /* Wichtig für korrektes Padding-Verhalten */
+
+  @media (max-width: 1200px) {
+    height: 850px;
+    /* Slightly reduce height on smaller screens */
+  }
+
+  @media (max-width: 768px) {
+    height: 800px;
+    /* Slightly reduce height on smaller screens */
+  }
+
+  @media (max-width: 480px) {
+    height: 750px;
+    /* Further reduce height on mobile */
+    grid-template-areas:
+      "item1 item1"
+      "item2 item3";
+  }
 }
 
 /* Weitere Verbesserungen der Rasterplatzverteilung */
@@ -649,6 +684,7 @@
   padding: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
+  background-color: white;
 }
 
 .showListItem:hover {
@@ -668,6 +704,7 @@
   position: relative;
   max-height: calc(100% - 100px);
   /* Verhindert, dass der Container zu groß wird */
+  width: 100%;
 }
 
 .showList .image-wrapper img {
@@ -799,13 +836,14 @@
   border: 1px solid #eee;
   border-radius: 8px;
   padding: 15px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
   /* Zeigt an, dass das Element klickbar ist */
+  background-color: white;
 
   @media (max-width: 768px) {
     height: 350px;
@@ -874,6 +912,7 @@
   /* Reduzierte Höhe für mehr Text-Platz */
   width: 100%;
   /* Füllt die gesamte Breite aus */
+  overflow: hidden;
 }
 
 .NormalProductList .image-wrapper img {
@@ -972,7 +1011,7 @@
 /* 4K Bildschirme */
 @media (min-width: 2560px) {
   .showList {
-    grid-template-columns: 1110px 1110px;
+    grid-template-columns: 1fr 1fr;
     height: 1100px;
     max-width: 2240px;
     /* 4 * 550px + 3 * 20px = 2240px */
@@ -992,7 +1031,7 @@
 /* Große Desktop-Bildschirme */
 @media (min-width: 1921px) and (max-width: 2559px) {
   .showList {
-    grid-template-columns: 910px 910px;
+    grid-template-columns: 1fr 1fr;
     height: 1000px;
     max-width: 1840px;
     /* 4 * 450px + 3 * 20px = 1840px */
@@ -1012,8 +1051,7 @@
 /* Standard Desktop (1080p) */
 @media (min-width: 1441px) and (max-width: 1920px) {
   .showList {
-    grid-template-columns: 830px 830px;
-    /* Korrekte Breite, um 1680px auszufüllen */
+    grid-template-columns: 1fr 1fr;
     height: 900px;
     max-width: 1680px;
     /* 4 * 400px + 3 * 20px = 1680px */
@@ -1033,8 +1071,7 @@
 /* Kleinere Desktop-Bildschirme und Laptops */
 @media (min-width: 1281px) and (max-width: 1440px) {
   .showList {
-    grid-template-columns: 650px 650px;
-    /* Breitere Spalten, um den Platz zu füllen */
+    grid-template-columns: 1fr 1fr;
     height: 800px;
     max-width: 1320px;
     /* 4 * 320px + 3 * 20px = 1320px */
@@ -1054,8 +1091,8 @@
 /* Tablet Landscape und kleine Laptops */
 @media (min-width: 1024px) and (max-width: 1280px) {
   .showList {
-    grid-template-columns: 490px 490px;
-    /* Angepasste Breite mit Gap (490*2 + 20 = 1000px) */
+    grid-template-columns: 1fr 1fr;
+    /* Use flexible columns */
     height: 700px;
     max-width: 1000px;
     /* 3 * 320px + 2 * 20px = 1000px, bei 3 Spalten */
@@ -1071,8 +1108,50 @@
     /* Mehr Höhe für mehrzeiligen Namen */
   }
 
-  .shop-content {
-    padding: 0 50px;
+
+}
+
+/* Tablet Portrait und große Mobilgeräte */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .showList {
+    grid-template-columns: 1fr 1fr;
+    height: 650px;
+  }
+
+  .NormalProductList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .handtaschen h1,
+  .schmuck h1 {
+    font-size: 28px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+  }
+}
+
+/* Kleinere Mobilgeräte */
+@media (max-width: 767px) {
+  .showList {
+    grid-template-areas:
+      "item1 item1"
+      "item2 item3";
+    height: 600px;
+  }
+
+  .banner-overlay h1 {
+    font-size: 32px;
+  }
+
+  .banner-overlay p {
+    font-size: 18px;
+  }
+
+  .handtaschen h1,
+  .schmuck h1 {
+    font-size: 24px;
+    margin-top: 25px;
+    margin-bottom: 20px;
   }
 }
 
@@ -1080,14 +1159,13 @@
 @media (max-width: 1023px) {
   .shop-content {
     padding: 0 20px;
-    min-width: 1024px;
-    /* Verhindert zu starkes Schrumpfen */
   }
 
+  /* Entfernen der festen Mindestbreite für bessere Responsivität */
   .shop-page {
-    min-width: 1024px;
-    overflow-x: auto;
-    /* Ermöglicht Scrollen statt Inhalte abzuschneiden */
+    min-width: auto;
+    width: 100%;
+    overflow-x: visible;
   }
 }
 
@@ -1102,6 +1180,69 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure all elements respect border-box */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .showList {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "item1"
+      "item2"
+      "item3";
+    height: auto;
+    gap: 15px;
+  }
+
+  .showListItem {
+    height: auto;
+    min-height: 300px;
+  }
+
+  .showListItem:nth-child(1) {
+    min-height: 350px;
+  }
+
+  .banner-overlay h1 {
+    font-size: 28px;
+    letter-spacing: 0.15em;
+  }
+
+  .banner-overlay p {
+    font-size: 16px;
+  }
+
+  .showListItem:nth-child(1) .product-name,
+  .showListItem:nth-child(1) .price {
+    font-size: 22px;
+  }
+
+  .showListItem:nth-child(1) .product-brand {
+    font-size: 18px;
+  }
+
+  .handtaschen h1,
+  .schmuck h1 {
+    font-size: 22px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+
+  .filter {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+
+  .NormalProductList {
+    gap: 15px;
+  }
 }
 
 /* Zusätzliche Optimierung für Container */
@@ -1160,6 +1301,14 @@ body {
   letter-spacing: 0%;
   color: #000000;
   margin: 10px 0 5px;
+
+  @media (max-width: 1200px) {
+    font-size: 22px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 }
 
 .product-brand {
@@ -1170,6 +1319,14 @@ body {
   letter-spacing: 0%;
   color: #828282;
   margin: 5px 0;
+
+  @media (max-width: 1200px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 .price {
@@ -1180,6 +1337,14 @@ body {
   letter-spacing: 0%;
   color: #000000;
   margin-top: 10px;
+
+  @media (max-width: 1200px) {
+    font-size: 22px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 }
 
 /* Überschreiben der bestehenden Stile für ShowList */
@@ -1194,14 +1359,50 @@ body {
 .showListItem:nth-child(1) {
   .product-name {
     font-size: 28px;
+
+    @media (max-width: 1200px) {
+      font-size: 26px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 22px;
+    }
   }
 
   .product-brand {
     font-size: 24px;
+
+    @media (max-width: 1200px) {
+      font-size: 22px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 18px;
+    }
   }
 
   .price {
     font-size: 28px;
+
+    @media (max-width: 1200px) {
+      font-size: 26px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 22px;
+    }
   }
 }
 
