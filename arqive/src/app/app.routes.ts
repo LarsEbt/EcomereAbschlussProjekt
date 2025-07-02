@@ -5,6 +5,7 @@ import { ProductPageComponent } from './pages/product-page/product-page.componen
 import { BasketComponent } from './pages/basket/basket.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { BekkiComponent } from './pages/bekki/bekki.component';
+import { ImpressumComponent } from './pages/impressum/impressum.component';
 
 export const routes: Routes = [
   {
@@ -41,5 +42,10 @@ export const routes: Routes = [
     path: 'bekki',
     component: BekkiComponent,
     title: 'Bekki - Unser Chatbot',
+  },
+  {
+    path: 'impressum',
+    component: ImpressumComponent,
+    title: 'Impressum',
   },
 ];
