@@ -3,6 +3,19 @@
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    gap: 4%;
+    /* 4% gap between the two columns */
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.product-page-wrapper {
+    width: 100%;
     max-width: 1920px;
     /* Konsistent mit anderen Seiten für 4K-Unterstützung */
     margin: 0 auto;
@@ -17,7 +30,6 @@
 
     @media (max-width: 768px) {
         padding: 20px;
-        flex-direction: column;
     }
 }
 
@@ -53,20 +65,22 @@
 }
 
 .imgWrapper {
-    flex: 0 0 45%;
-    /* Bild nimmt 45% der Breite ein */
-    margin-right: 5%;
+    flex: 0 0 48%;
+    /* Image takes 48% width */
+    margin: 0;
+    padding: 0;
 
     @media (max-width: 768px) {
         flex: 0 0 100%;
-        margin-right: 0;
         margin-bottom: 20px;
     }
 }
 
 .imgWrapper img {
-    width: 830px;
-    height: 610px;
+    width: 100%;
+    max-width: 830px;
+    height: auto;
+    max-height: 610px;
     object-fit: contain;
     border: 1px solid #eee;
     border-radius: 8px;
@@ -74,8 +88,6 @@
     box-sizing: border-box;
 
     @media (max-width: 1200px) {
-        width: 100%;
-        height: auto;
         max-height: 500px;
     }
 
@@ -85,12 +97,15 @@
 }
 
 #rechteSeite {
-    flex: 0 0 50%;
-    /* Rechte Seite nimmt 50% der Breite ein */
+    flex: 0 0 48%;
+    /* Right side takes 48% width */
+    margin: 0;
+    padding: 0;
 
     @media (max-width: 768px) {
         flex: 0 0 100%;
         width: 100%;
+        margin-top: 20px;
     }
 }
 
@@ -149,15 +164,10 @@
 /* Styling für den unteren Bereich */
 #unten {
     width: 100%;
-    max-width: 1920px;
-    /* Konsistent mit anderen Seiten für 4K-Unterstützung */
-    margin: 0 auto;
-    /* Auto margins für Zentrierung */
-    padding: 0 100px;
-    /* 100px Padding links und rechts, konsistent mit anderen Seiten */
     box-sizing: border-box;
     margin-top: 100px;
     /* 100px Abstand unter dem Bild */
+    padding: 0;
 }
 
 #unten>h1 {
@@ -242,6 +252,7 @@
     min-height: 300px;
     font-size: 24px;
     color: #333;
+    width: 100%;
 }
 
 .error-message {
@@ -253,6 +264,7 @@
     font-size: 18px;
     color: #d32f2f;
     text-align: center;
+    width: 100%;
 
     button {
         margin-top: 20px;
@@ -316,16 +328,6 @@
         flex-direction: column;
     }
 
-    .imgWrapper,
-    #rechteSeite {
-        flex: 0 0 100%;
-        margin-right: 0;
-    }
-
-    #rechteSeite {
-        margin-top: 20px;
-    }
-
     #unten ul {
         grid-template-columns: repeat(2, 1fr);
         /* 2 Spalten auf Tablets */
@@ -372,10 +374,5 @@
 @media (min-width: 1024px) and (max-width: 1280px) {
     #unten ul {
         max-width: 1000px;
-    }
-
-    #top,
-    #unten {
-        padding: 0 50px;
     }
 }

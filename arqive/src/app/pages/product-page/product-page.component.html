@@ -1,42 +1,45 @@
-<div *ngIf="loading" class="loading-spinner">
-    <p>Produkt wird geladen...</p>
-</div>
-
-<div *ngIf="error" class="error-message">
-    <p>{{ error }}</p>
-    <button routerLink="/product-browser">Zurück zur Produktübersicht</button>
-</div>
-
-<div *ngIf="product && !loading" id="top">
-    <div class="imgWrapper">
-        <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name" onerror="this.src='placeholder1.jpg'">
+<div class="product-page-wrapper">
+    <div *ngIf="loading" class="loading-spinner">
+        <p>Produkt wird geladen...</p>
     </div>
-    <div id="rechteSeite">
-        <h1>{{ product.name }}</h1>
-        <h2>{{ product.marke || product.Marke }}</h2>
-        <h3>{{ product.price | price }}</h3>
-        <p>{{ product.description }}</p>
-        <div class="action-buttons">
-            <button class="add-to-cart" (click)="addToCart()">In den Warenkorb</button>
-            <button class="buy-now" (click)="buyNow()">Jetzt kaufen</button>
+
+    <div *ngIf="error" class="error-message">
+        <p>{{ error }}</p>
+        <button routerLink="/product-browser">Zurück zur Produktübersicht</button>
+    </div>
+
+    <div *ngIf="product && !loading" id="top">
+        <div class="imgWrapper">
+            <img [src]="product.imageUrl || 'placeholder1.jpg'" [alt]="product.name"
+                onerror="this.src='placeholder1.jpg'">
+        </div>
+        <div id="rechteSeite">
+            <h1>{{ product.name }}</h1>
+            <h2>{{ product.marke || product.Marke }}</h2>
+            <h3>{{ product.price | price }}</h3>
+            <p>{{ product.description }}</p>
+            <div class="action-buttons">
+                <button class="add-to-cart" (click)="addToCart()">In den Warenkorb</button>
+                <button class="buy-now" (click)="buyNow()">Jetzt kaufen</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div *ngIf="product && !loading && relatedProducts.length > 0" id="unten">
-    <h1>Vervollständige Sie Ihren Look</h1>
-    <ul>
-        <li *ngFor="let relatedProduct of relatedProducts" [routerLink]="['/product-page', relatedProduct.id]"> <img
-                [src]="relatedProduct.imageUrl || 'placeholder1.jpg'" [alt]="relatedProduct.name"
-                onerror="this.src='placeholder1.jpg'">
-            <h1>{{ relatedProduct.name }}</h1>
-            <h2>{{ relatedProduct.marke || relatedProduct.Marke }}</h2>
-            <p>{{ relatedProduct.price | price }}</p>
-        </li>
-    </ul>
-</div>
+    <div *ngIf="product && !loading && relatedProducts.length > 0" id="unten">
+        <h1>Vervollständige Sie Ihren Look</h1>
+        <ul>
+            <li *ngFor="let relatedProduct of relatedProducts" [routerLink]="['/product-page', relatedProduct.id]"> <img
+                    [src]="relatedProduct.imageUrl || 'placeholder1.jpg'" [alt]="relatedProduct.name"
+                    onerror="this.src='placeholder1.jpg'">
+                <h1>{{ relatedProduct.name }}</h1>
+                <h2>{{ relatedProduct.marke || relatedProduct.Marke }}</h2>
+                <p>{{ relatedProduct.price | price }}</p>
+            </li>
+        </ul>
+    </div>
 
-<div *ngIf="!product && !loading && !error" class="error-message">
-    <p>Produkt nicht gefunden</p>
-    <button routerLink="/product-browser">Zurück zur Produktübersicht</button>
+    <div *ngIf="!product && !loading && !error" class="error-message">
+        <p>Produkt nicht gefunden</p>
+        <button routerLink="/product-browser">Zurück zur Produktübersicht</button>
+    </div>
 </div>
