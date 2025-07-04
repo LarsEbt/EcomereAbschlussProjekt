@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// Produkt-Interface
 export interface Product {
   id: number;
   Marke: string;
@@ -29,7 +28,6 @@ export class ProductService {
     console.log('ProductService: Initialisiert');
   }
 
-  // Alle Produkte holen
   getProducts(): Observable<Product[]> {
     console.log('ProductService: Hole alle Produkte...');
     
@@ -43,20 +41,7 @@ export class ProductService {
           console.log('Beispiel-Produkt:', data[0]);
         }
         
-        // Debug: Prüfen, ob Produkt mit ID 1 existiert und Preis anzeigen
-        const productId1 = data.find(p => p.id === 1);
-        if (productId1) {
-          console.log('DEBUG - Produkt ID 1 vor Verarbeitung:', {
-            id: productId1.id,
-            name: productId1.name,
-            price: productId1.price,
-            priceType: typeof productId1.price
-          });
-        }
-          
-        // Bild-URLs korrigieren und Preise als Zahlen sicherstellen
         return data.map(product => {
-          // Preis als Zahl sicherstellen
           if (typeof product.price === 'string') {
             product.price = parseFloat(product.price);
             if (isNaN(product.price)) {
